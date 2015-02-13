@@ -6,25 +6,16 @@
 	<artifactId>zhiweifenxi</artifactId>
 	<version>${project-version}</version>
 	<packaging>pom</packaging>
-	<name>project-parent</name>
+	<name>zhiweifenxi</name>
 
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project-version>0.0.1-SNAPSHOT</project-version>
 	</properties>
+ 
 
-	<dependencies>
-		 
-	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			
-		</dependencies>
-	</dependencyManagement>
-
-
+ 
 
 
 	<repositories>

@@ -102,7 +102,7 @@
 				<h2>实时</h2>
 				<p>我们会在每天、每周、每月为您提供实时的职位的动态变化，并提供过去的职位变化的趋势图，为您找到 一个满意的工作而提供决策！</p>
 				<p>
-					<a class="btn btn-default" href="#" role="button">View details&raquo;</a>
+					<a class="btn btn-default" href="#" role="button">详情&raquo;</a>
 				</p>
 			</div>
 			
@@ -113,7 +113,7 @@
 				<h2>个性化</h2>
 				<p>为了能为用户提供良好的服务，我们会针对不同的用户提供个性的职位分析数据，尽最大努力让实现个性 化，让用户早日找到自己心仪的职位。</p>
 				<p>
-					<a class="btn btn-default" href="#" role="button">View details&raquo;</a>
+					<a class="btn btn-default" href="#" role="button">详情&raquo;</a>
 				</p>
 			</div>
 			
@@ -124,7 +124,7 @@
 				<h2>专注</h2>
 				<p>本站专注于职位的分析，为广大用户提供最专业的数据！</p>
 				<p>
-					<a class="btn btn-default" href="#" role="button">View details&raquo;</a>
+					<a class="btn btn-default" href="#" role="button">详情&raquo;</a>
 				</p>
 			</div>
 		</div>
