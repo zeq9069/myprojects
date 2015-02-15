@@ -100,10 +100,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-
-
-
-
 	<repositories>
 		<repository>
 			<id>oschina</id>

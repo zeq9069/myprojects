@@ -12,7 +12,7 @@
 <meta name="author" content="">
 <!-- <link rel="icon" href="../../favicon.ico"> -->
 
-<title>职位分析${ webRoot }</title>
+<title>职位分析</title>
 
 <link href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
 <script src="${webRoot}/${initParam.resourceRoot}/js/ie-emulation-modes-warning.js"></script>
@@ -35,7 +35,7 @@
 		</ol>
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
-				<img src="resources/images/background.jpg" alt="First slide">
+				<img src="${webRoot}/${initParam.resourceRoot}/images/background.jpg" alt="First slide">
 				<div class="container">
 					<div class="carousel-caption">
 						<!-- <h1>Example headline.</h1>
@@ -53,7 +53,7 @@
 				</div>
 			</div>
 			<div class="item">
-				<img src="resources/images/background2.jpg" alt="Second slide">
+				<img src="${webRoot}/${initParam.resourceRoot}/images/background2.jpg" alt="Second slide">
 				<div class="container">
 					<div class="carousel-caption">
 						<!-- <h1>Another example headline.</h1>
@@ -67,7 +67,7 @@
 				</div>
 			</div>
 			<div class="item">
-				<img src="resources/images/background3.jpg" alt="Third slide" >
+				<img src="${webRoot}/${initParam.resourceRoot}/images/background3.jpg" alt="Third slide" >
 				<div class="container">
 					<div class="carousel-caption">
 					<!-- 	<h1>One more for good measure.</h1>
