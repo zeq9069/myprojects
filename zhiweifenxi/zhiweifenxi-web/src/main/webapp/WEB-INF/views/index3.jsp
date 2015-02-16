@@ -47,7 +47,7 @@
 											美团云主机提供弹性的计算资源。在一两分钟内，可以快速部署开通一台或者多台云主机。根据应用访问的具体情况，用户能够在5分钟内完成主机相关资源以及带宽资源的在线动态调整
 									</div>
 									<div class="col-md-5">
-										<img class="featurette-image img-responsive" src="resources/images/stat_1.jpg"
+										<img class="featurette-image img-responsive" src="${webRoot}/${initParam.resourceRoot}/images/stat_1.jpg"
 											alt="Generic placeholder image" >
 									</div>
 								</div>
@@ -67,7 +67,7 @@
 				 			<div class="row">
 								<div class="row featurette">
 									<div class="col-md-2">
-										<img class="featurette-image img-responsive" src="resources/images/stat_1.jpg"
+										<img class="featurette-image img-responsive" src="${webRoot}/${initParam.resourceRoot}/images/stat_1.jpg"
 											alt="Generic placeholder image"  >
 									</div>
 									<div class="col-md-10">
@@ -84,7 +84,7 @@
 				 			<div class="row"  >
 								<div class="row featurette">
 									<div class="col-md-2">
-										<img class="featurette-image img-responsive" src="resources/images/stat_1.jpg"
+										<img class="featurette-image img-responsive" src="${webRoot}/${initParam.resourceRoot}/images/stat_1.jpg"
 											alt="Generic placeholder image">
 									</div>
 									<div class="col-md-10">
@@ -101,7 +101,7 @@
 				 			<div class="row"  >
 								<div class="row featurette" style="padding:10px">
 									<div class="col-md-2">
-										<img class="featurette-image img-responsive" src="resources/images/stat_1.jpg"
+										<img class="featurette-image img-responsive" src="${webRoot}/${initParam.resourceRoot}/images/stat_1.jpg"
 											alt="Generic placeholder image" >
 									</div>
 									<div class="col-md-10">

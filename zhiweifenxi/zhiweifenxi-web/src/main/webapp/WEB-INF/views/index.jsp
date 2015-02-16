@@ -98,7 +98,7 @@
 	<div class="container marketing">
  		<div class="row">
 			<div class="col-lg-4">
-				<img class="img-circle" src="resources/images/icon_01.jpg"
+				<img class="img-circle" src="${webRoot}/${initParam.resourceRoot}/images/icon_01.jpg"
 					alt="Generic placeholder image" style="width: 176px; height: 151px;">
 				<h2>实时</h2>
 				<p>我们会在每天、每周、每月为您提供实时的职位的动态变化，并提供过去的职位变化的趋势图，为您找到 一个满意的工作而提供决策！</p>
@@ -107,7 +107,7 @@
 				</p>
 			</div>
  			<div class="col-lg-4">
-				<img class="img-circle" src="resources/images/icon_02.png"
+				<img class="img-circle" src="${webRoot}/${initParam.resourceRoot}/images/icon_02.png"
 					alt="Generic placeholder image"
 					style="width: 140px; height: 140px;">
 				<h2>个性化</h2>
@@ -117,7 +117,7 @@
 				</p>
 			</div>
 			<div class="col-lg-4">
-				<img class="img-circle" src="resources/images/icon_03.png"
+				<img class="img-circle" src="${webRoot}/${initParam.resourceRoot}/images/icon_03.png"
 					alt="Generic placeholder image"
 					style="width: 140px; height: 140px;">
 				<h2>专注</h2>
@@ -139,7 +139,7 @@
 				<p class="lead"><blockquote>数据全部来自于对各大招聘网站的数据抓取和分析，对数据进行筛选和过滤，得到真正对我们有价值的信息，以此来为用户提供真实可靠的信息，帮助用户提供正确的决策！</blockquote> 
 			</div>
 			<div class="col-md-5">
-				<img class="featurette-image img-responsive" src="resources/images/stat_1.jpg"
+				<img class="featurette-image img-responsive" src="${webRoot}/${initParam.resourceRoot}/images/stat_1.jpg"
 					alt="Generic placeholder image" style="width:300px;height:300px;">
 			</div>
 		</div>
@@ -148,7 +148,7 @@
 
 		<div class="row featurette">
 			<div class="col-md-5">
-				<img class="featurette-image img-responsive" src="resources/images/stat_2.jpg"
+				<img class="featurette-image img-responsive" src="${webRoot}/${initParam.resourceRoot}/images/stat_2.jpg"
 					alt="Generic placeholder image" style="width:300px;height:300px;">
 			</div>
 			<div class="col-md-7">
@@ -167,7 +167,7 @@
 				<p class="lead"><blockquote>优质的服务是我们不变的承诺！你在使用过程中遇到任何问题都可以随时跟我们进行沟通，我们会尽最大努力帮您解决！</blockquote>
 			</div>
 			<div class="col-md-5">
-				<img class="featurette-image img-responsive" src="resources/images/stat_3.jpg"
+				<img class="featurette-image img-responsive" src="${webRoot}/${initParam.resourceRoot}/images/stat_3.jpg"
 					alt="Generic placeholder image" >
 			</div>
 		</div>

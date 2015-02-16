@@ -19,13 +19,13 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav ">
-					<li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">服务介绍</a></li>
+					<li class="active"><a href="/${webRoot}">首页 <span class="sr-only">(current)</span></a></li>
+					<li><a href="/${webRoot}">服务介绍</a></li>
 					<li><a href="#">动态</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a href="#">关于 <span class="sr-only">(current)</span></a></li>
+					<li class="active"><a href="">关于 <span class="sr-only">(current)</span></a></li>
 					<li><a href="#">加入我们</a></li>
 					<li><span>&nbsp;&nbsp;</span></li>
 					<li><a type="button" class="btn  btn-lg" data-toggle="modal"
