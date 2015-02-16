@@ -21,7 +21,7 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-			<!-- Servlet -->
+		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -67,10 +67,19 @@
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
 		</dependency>
-
 	</dependencies>
-	
+
 	<build>
 		<finalName>ROOT</finalName>
+		<plugins>
+			<plugin>
+			 <groupId>org.mortbay.jetty</groupId>
+        	 <artifactId>maven-jetty-plugin</artifactId>
+			 <version>6.1.26</version>
+			 <configuration>
+			 	<contextPath>/</contextPath>
+			 </configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>
