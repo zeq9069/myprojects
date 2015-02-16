@@ -14,7 +14,6 @@
 		<version>${project-version}</version>
 	</parent>
 
-
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.project.zhiweifenxi</groupId>
@@ -7,7 +8,6 @@
 	<version>${project-version}</version>
 	<packaging>pom</packaging>
 	<name>zhiweifenxi</name>
-
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,6 +17,7 @@
 		<mysql-version>5.1.34</mysql-version>
 		<c3p0-version>0.9.5</c3p0-version>
 		<log4j-version>1.2.17</log4j-version>
+		<jsoup-version>1.8.1</jsoup-version>
 	</properties>
 
 	<dependencyManagement>
@@ -92,13 +93,41 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
+
+			<!-- log -->
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
 				<version>${log4j-version}</version>
 			</dependency>
+
+			<!-- crawler 相关 -->
+			<dependency>
+				<groupId>org.jsoup</groupId>
+				<artifactId>jsoup</artifactId>
+				<version>${jsoup-version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
+
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.2</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
 
 	<repositories>
 		<repository>
@@ -143,6 +172,6 @@
 	</repositories>
 	<modules>
 		<module>zhiweifenxi-web</module>
-    <module>zhiweifenxi-crawler</module>
-  </modules>
+		<module>zhiweifenxi-crawler</module>
+	</modules>
 </project>
