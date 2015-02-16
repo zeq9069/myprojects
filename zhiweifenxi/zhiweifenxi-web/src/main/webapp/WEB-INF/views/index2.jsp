@@ -1,6 +1,6 @@
 <%@page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
-<c:set var="webRoot"    value="${pageContext.request.contextPath}'"/>
+<c:set var="webRoot"   value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +25,7 @@
 			<h1>职位分析</h1>
 			<p>这是一个为您提供职位分析的站点,通过对各大招聘网站职位和公司的抓取与分析，为您提供实时的职位选择方案！让您在选择职位的时候不在盲目海投，为双方节省时间！</p>
 			<p>
-				<a class="btn btn-primary btn-lg" href="${webRoot}/page/index5" role="button">控制台 &raquo;</a>
+				<a class="btn btn-primary btn-lg" href="/${webRoot}/page/index5" role="button">控制台 &raquo;</a>
 			</p>
 		</div>
 	</div>
