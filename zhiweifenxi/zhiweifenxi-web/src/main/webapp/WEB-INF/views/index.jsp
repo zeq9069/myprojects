@@ -1,4 +1,4 @@
-<%@page contentType="text/html; charset=utf-8" isELIgnored="false"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="webRoot"  value="${pageContext.request.contextPath}"/>
 
@@ -12,7 +12,7 @@
 <meta name="author" content="">
 <!-- <link rel="icon" href="../../favicon.ico"> -->
 
-<title>职位分析</title>
+<title>职位分析<c:out value="ww"></c:out></title>
 
 <link href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
 <script src="${webRoot}/${initParam.resourceRoot}/js/ie-emulation-modes-warning.js"></script>

@@ -9,5 +9,11 @@ import com.zhiweifenxi.web.pojo.User;
  */
 public interface UserDao {
 	public boolean add(User user);
-	public User get(String name );
+	public boolean delete(User user);
+	public boolean delById(String id);
+	public boolean delByName(String name);
+	public boolean update(User user);
+	
+	public User getByName(String name );
+	public User getById(String id);
 }

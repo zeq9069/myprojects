@@ -81,19 +81,24 @@
 				<version>1.2</version>
 				<type>jar</type>
 				<scope>compile</scope>
-			</dependency>
+			</dependency> 
 			<dependency>
 				<groupId>javax.servlet.jsp.jstl</groupId>
 				<artifactId>jstl-api</artifactId>
 				<version>1.2</version>
-				<exclusions>
+				<!-- <exclusions>
 					<exclusion>
 						<groupId>javax.servlet</groupId>
 						<artifactId>servlet-api</artifactId>
 					</exclusion>
-				</exclusions>
+				</exclusions> -->
 			</dependency>
-
+			<dependency>
+				<groupId>taglibs</groupId>
+				<artifactId>standard</artifactId>
+				<version>1.1.2</version>
+		</dependency>
+			
 			<!-- log -->
 			<dependency>
 				<groupId>log4j</groupId>
@@ -112,22 +117,27 @@
 	</dependencyManagement>
 
 
-	<build>
+	<!-- <build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.2</version>
+					<executions>
+						<execution>
+							<phase>compile</phase>
+						</execution>
+					</executions>
 					<configuration>
 						<source>1.7</source>
-						<target>1.7</target>
+						<target>7</target>
 					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
-	</build>
-
+	</build> -->
+	
 
 	<repositories>
 		<repository>

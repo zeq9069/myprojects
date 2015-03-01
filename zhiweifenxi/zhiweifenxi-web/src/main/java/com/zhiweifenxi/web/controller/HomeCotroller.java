@@ -32,6 +32,4 @@ public class HomeCotroller {
 	public String index5(){
  		return "index5";
 	}
-	
-	
 }

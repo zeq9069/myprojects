@@ -25,6 +25,7 @@ public class User  implements Serializable{
 
 	@Column(name="user_name",length=60,nullable=false,unique=true)
 	private String name;
+	
 	@Column(name="user_password")
 	private String password;
 	

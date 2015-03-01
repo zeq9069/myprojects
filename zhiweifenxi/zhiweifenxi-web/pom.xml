@@ -39,7 +39,10 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-
+		<dependency>
+				<groupId>taglibs</groupId>
+				<artifactId>standard</artifactId>
+		</dependency>
 		<!-- springmvc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -67,8 +70,16 @@
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
 		</dependency>
+		
+			<!-- log4j -->
+	<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+	</dependency>
 	</dependencies>
 
+
+	
 	<build>
 		<finalName>ROOT</finalName>
 		<plugins>

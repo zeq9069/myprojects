@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional(readOnly=true)
 	public boolean login(String name, String password) {
-		User user=userDao.get(name);
+		User user=userDao.getByName(name);
 		if(user==null){
 			return false;
 		}
@@ -39,6 +39,6 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public boolean isExit(User user){
-		return userDao.get(user.getName())!=null;
+		return userDao.getByName(user.getName())!=null;
 	}
 }
