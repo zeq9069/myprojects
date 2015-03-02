@@ -33,14 +33,28 @@
 	
 	  <beans:bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 	  	
-	
-	  
-	  
-	  
 	<beans:bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
 
 	  
 	<!-- User-defined @Controller beans that process client requests -->
 	<context:component-scan base-package="com.zhiweifenxi.web.controller" />
+	
+	
+	<!-- freemarker config-->
+
+	<beans:bean id="" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		
+	</beans:bean>
+	<beans:bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<beans:property name="templateLoaderPath" value="/WEB-INF/freemarker/templates/"/>
+	</beans:bean>
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<beans:property name="cache" value="true"/>
+		<beans:property name="prefix" value=""/>
+		<beans:property name="suffix" value=".ftl"/>
+	</beans:bean>
+	
+
+	
 	
  </beans:beans>
