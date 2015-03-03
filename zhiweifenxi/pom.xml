@@ -129,7 +129,7 @@
 	</dependencyManagement>
 
 
-	<!-- <build>
+	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -143,12 +143,12 @@
 					</executions>
 					<configuration>
 						<source>1.7</source>
-						<target>7</target>
+						<target>1.7</target>
 					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
-	</build> -->
+	</build>
 	
 
 	<repositories>

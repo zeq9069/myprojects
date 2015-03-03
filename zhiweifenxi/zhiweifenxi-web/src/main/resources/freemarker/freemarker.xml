@@ -10,32 +10,7 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-util.xsd">
 
- 	
-	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
-
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
-	<resources mapping="/resources/**" location="/resources/" />
-	<view-controller path="/"  view-name="index"/>
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	 	<beans:property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-	<!-- 
-	<interceptors  >
-	<interceptor>
-		<mapping path="/*" />
-		<beans:bean  id="auth"  class="com.zhiweifenxi.web.interceptor.AuthInterceptor"/>
-	</interceptor>
-	</interceptors> -->
-	
-	<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
-	  	
-	<beans:bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
-
-  	<!-- freemarker config-->
+	<!-- freemarker config-->
 	<beans:bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<beans:property name="templateLoaderPath" value="/WEB-INF/freemarker/templates/"/>
 		 <beans:property name="freemarkerSettings">
@@ -48,7 +23,7 @@
 	<beans:bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
 	    <beans:property name="viewNames" value="*.ftl"/>
-		<beans:property name="cache" value="false"/>
+		<beans:property name="cache" value="true"/>
 		<beans:property name="contentType" value="text/html; charset=utf-8"/>
 		<beans:property name="prefix" value=""/>
 		<beans:property name="suffix" value=""/>
@@ -58,8 +33,5 @@
 		<beans:property name="order" value="1"/>
 		<beans:property name="allowSessionOverride" value="true"/>
 	</beans:bean>
-	
-		<!-- User-defined @Controller beans that process client requests -->
-	<context:component-scan base-package="com.zhiweifenxi.web.controller" />
 	
  </beans:beans>
