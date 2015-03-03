@@ -20,16 +20,18 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
+	<!-- <beans:bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/> -->
+	
 	<beans:bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
-	    <beans:property name="viewNames" value="*.ftl"/>
+	    <beans:property name="viewNames" value="*.ftl"/><!-- 注意：一定要与jsp的试图解析区分开，否则会被jsp视图解析 -->
 		<beans:property name="cache" value="true"/>
 		<beans:property name="contentType" value="text/html; charset=utf-8"/>
 		<beans:property name="prefix" value=""/>
 		<beans:property name="suffix" value=""/>
 		<beans:property name="exposeRequestAttributes" value="true"/>
 		<beans:property name="exposeSessionAttributes" value="true"/>
-		<beans:property name="exposeSpringMacroHelpers" value="true"/>
+		<!-- <beans:property name="exposeSpringMacroHelpers" value="true"/> 默认为true-->
 		<beans:property name="order" value="1"/>
 		<beans:property name="allowSessionOverride" value="true"/>
 	</beans:bean>
