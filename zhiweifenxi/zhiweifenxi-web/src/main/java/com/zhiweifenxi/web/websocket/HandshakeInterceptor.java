@@ -7,6 +7,11 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
+/**
+ * web socket 拦截器
+ * @author kyrin
+ *
+ */
 public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor{
 
   @Override
