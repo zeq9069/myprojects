@@ -29,8 +29,7 @@ public class CompanyDaoImpl implements CompanyDao{
 	}
 
 	public void add(List<Company> list) {
-		Assert.assertNotNull(list);
-		Session session=this.getSession();
+ 		Session session=this.getSession();
 		int flag=0;
 		for(Company company:list){
 			session.save(company);

@@ -9,4 +9,8 @@ public class StringUtil {
 		}
 		return false;
 	}
+	
+	public static boolean isNull(Object obj){
+		return obj==null?true:false;
+	}
 }

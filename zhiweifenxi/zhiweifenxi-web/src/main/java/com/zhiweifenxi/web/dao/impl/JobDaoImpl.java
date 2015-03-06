@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zhiweifenxi.web.dao.JobDao;
 import com.zhiweifenxi.web.pojo.Job;
+import com.zhiweifenxi.web.util.StringUtil;
 
 /**
  * 职位持久层实现 
@@ -32,7 +33,9 @@ public class JobDaoImpl implements JobDao{
 	}
 
 	public void add(List<Job> list) {
-		Assert.assertNotNull(list);
+		if(StringUtil.isNull(list)){
+			return ;
+		}
 		Session session=this.getSession();
 		int y=0;
 		for(Job job:list){
