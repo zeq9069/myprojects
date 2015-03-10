@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-util.xsd">
+
+	<!-- freemarker config-->
+	<beans:bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<beans:property name="templateLoaderPath" value="/WEB-INF/freemarker/templates/"/>
+		 <beans:property name="freemarkerSettings">
+			<beans:props>
+				<beans:prop key="template_update_delay">0</beans:prop>
+				<beans:prop key="defaultEncoding">UTF-8</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	<!-- <beans:bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/> -->
+	
+	<beans:bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+	    <beans:property name="viewNames" value="*.ftl"/><!-- 注意：一定要与jsp的试图解析区分开，否则会被jsp视图解析 -->
+		<beans:property name="cache" value="true"/>
+		<beans:property name="contentType" value="text/html; charset=utf-8"/>
+		<beans:property name="prefix" value=""/>
+		<beans:property name="suffix" value=""/>
+		<beans:property name="exposeRequestAttributes" value="true"/>
+		<beans:property name="exposeSessionAttributes" value="true"/>
+		<!-- <beans:property name="exposeSpringMacroHelpers" value="true"/> 默认为true-->
+		<beans:property name="order" value="1"/>
+		<beans:property name="allowSessionOverride" value="true"/>
+	</beans:bean>
+	
+ </beans:beans>
