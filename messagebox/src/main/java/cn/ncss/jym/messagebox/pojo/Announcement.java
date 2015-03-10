@@ -77,10 +77,16 @@ public class Announcement implements Serializable {
 	@Column(name = "ONLINE", nullable = false, length = 32)
 	private String online;
 
+	/**
+	 * 自动生成group与accouncement的关系表
+	 */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "announ_group", joinColumns = { @JoinColumn(name = "announ_id", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "group_id", referencedColumnName = "ID") })
 	private Set<Group> groups = new HashSet<Group>();
 
+	/**
+	 * 自动加载该公告的浏览记录，与record建立关系
+	 */
 	@OneToMany(mappedBy = "announ", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Record> records = new HashSet<Record>();
 

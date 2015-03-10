@@ -50,9 +50,18 @@ public class Group implements Serializable {
 	@Column(name = "ONLINE", length = 24, updatable = false, nullable = false)
 	private String online = "true";
 
+	/**
+	 * 自动简历userInfo与group的映射关系表
+	 */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "group_user", joinColumns = { @JoinColumn(name = "group_id", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "u_id", referencedColumnName = "ID"), })
 	private Set<UserInfo> users = new HashSet<UserInfo>();
+
+	/**
+	 * 自动建立group与announcement的关系表
+	 */
+	@ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Announcement> announs = new HashSet<Announcement>();
 
 	public Set<Announcement> getAnnouns() {
 		return announs;
@@ -61,9 +70,6 @@ public class Group implements Serializable {
 	public void setAnnouns(Set<Announcement> announs) {
 		this.announs = announs;
 	}
-
-	@ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Announcement> announs = new HashSet<Announcement>();
 
 	public String getId() {
 		return id;

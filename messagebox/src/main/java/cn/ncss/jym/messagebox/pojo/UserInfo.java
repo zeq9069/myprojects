@@ -138,6 +138,9 @@ public class UserInfo implements Serializable {
 		this.records = records;
 	}
 
+	/**
+	 * 自动建立user与group的关系表
+	 */
 	@ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Group> groups = new HashSet<Group>();
 
