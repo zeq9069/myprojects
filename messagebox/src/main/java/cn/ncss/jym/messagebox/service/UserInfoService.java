@@ -3,6 +3,7 @@ package cn.ncss.jym.messagebox.service;
 import java.util.List;
 
 import cn.ncss.jym.messagebox.pojo.UserInfo;
+import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
 
 /**
  * *************************
@@ -15,10 +16,16 @@ import cn.ncss.jym.messagebox.pojo.UserInfo;
  */
 public interface UserInfoService {
 
-	public void add(UserInfo userInfo);
+	public boolean addOne(UserInfo userInfo);
 
-	public void addList(List<UserInfo> userList);
+//	public boolean addList(List<UserInfo> userList);
+	
+	public boolean deleteOne(UserInfo userInfo) ;
+	
+	public boolean update(UserInfo userInfo) ;
 
-	public UserInfo getUser(String areaCode, String orgCode, String orgName, String fxmc, String type);
+	public UserInfo get(String areacCode, String orgCode, String orgName, String fxmc, UserType type);
+	
+	public List<UserInfo> getList();
 
 }

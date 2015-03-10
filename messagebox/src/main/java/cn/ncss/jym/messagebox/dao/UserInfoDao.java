@@ -1,6 +1,9 @@
 package cn.ncss.jym.messagebox.dao;
 
+import java.util.List;
+
 import cn.ncss.jym.messagebox.pojo.UserInfo;
+import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
 
 /**
  * ************************
@@ -12,12 +15,15 @@ import cn.ncss.jym.messagebox.pojo.UserInfo;
  */
 public interface UserInfoDao {
 
-	public void addOne(UserInfo userInfo);
+	public boolean addOne(UserInfo userInfo);
 
-	public void deleteOne(UserInfo userInfo);
+	public boolean deleteOne(UserInfo userInfo);
 
-	public void update(UserInfo userInfo);
+	public boolean update(UserInfo userInfo);
 
-	public UserInfo get(String areacCode, String orgCode, String orgName, String fxmc, String type);
+	public UserInfo get(String areacCode, String orgCode, String orgName, String fxmc, UserType type);
+	
+	public List<UserInfo> getList();
 
+	
 }

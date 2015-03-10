@@ -1,5 +1,7 @@
 package cn.ncss.jym.messagebox.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.ncss.jym.messagebox.dao.UserInfoDao;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
+import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
 import cn.ncss.jym.messagebox.utils.StringUtil;
 
 /**
@@ -31,22 +34,25 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	}
 
 	@Override
-	public void addOne(UserInfo userInfo) {
+	public boolean addOne(UserInfo userInfo) {
 		this.getSession().save(userInfo);
+		return true;
 	}
 
 	@Override
-	public void deleteOne(UserInfo userInfo) {
+	public boolean deleteOne(UserInfo userInfo) {
 		this.getSession().delete(userInfo);
+		return true;
 	}
 
 	@Override
-	public void update(UserInfo userInfo) {
+	public boolean update(UserInfo userInfo) {
 		this.getSession().update(userInfo);
+		return true;
 	}
 
 	@Override
-	public UserInfo get(String areaCode, String orgCode, String orgName, String fxmc, String type) {
+	public UserInfo get(String areaCode, String orgCode, String orgName, String fxmc, UserType type) {
 		Criteria crit = this.getSession().createCriteria(UserInfo.class);
 		if (StringUtil.hasText(areaCode)) {
 			crit.add(Restrictions.eq("areaCode", areaCode));
@@ -60,9 +66,16 @@ public class UserInfoDaoImpl implements UserInfoDao {
 		if (StringUtil.hasText(fxmc)) {
 			crit.add(Restrictions.eq("fxmc", fxmc));
 		}
-		if (StringUtil.hasText(type)) {
 			crit.add(Restrictions.eq("userType", type));
-		}
 		return (UserInfo) crit.uniqueResult();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<UserInfo> getList(){
+		Criteria crit = this.getSession().createCriteria(UserInfo.class);
+		System.out.println("id:"+crit.list());
+		return crit.list();
+	}
+
+
 }

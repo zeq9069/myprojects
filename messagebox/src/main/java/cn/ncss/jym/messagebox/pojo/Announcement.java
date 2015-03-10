@@ -28,7 +28,7 @@ import org.joda.time.DateTime;
  *
  */
 @Entity
-@Table(name = "announ")
+@Table(name = "ANNOUNCEMENT")
 public class Announcement implements Serializable {
 
 	private static final long serialVersionUID = 7965777473746621699L;
@@ -39,7 +39,7 @@ public class Announcement implements Serializable {
 	@Id
 	@Column(name = "ID", length = 32)
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
+	private int id;
 
 	/*
 	 * 公告标题
@@ -81,7 +81,7 @@ public class Announcement implements Serializable {
 	 * 自动生成group与accouncement的关系表
 	 */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "announ_group", joinColumns = { @JoinColumn(name = "announ_id", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "group_id", referencedColumnName = "ID") })
+	@JoinTable(name = "ANNOUN_GROUP", joinColumns = { @JoinColumn(name = "ANNOUN_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "GROUP_ID", referencedColumnName = "ID") })
 	private Set<Group> groups = new HashSet<Group>();
 
 	/**
@@ -90,7 +90,7 @@ public class Announcement implements Serializable {
 	@OneToMany(mappedBy = "announ", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Record> records = new HashSet<Record>();
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -110,7 +110,7 @@ public class Announcement implements Serializable {
 		this.records = records;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

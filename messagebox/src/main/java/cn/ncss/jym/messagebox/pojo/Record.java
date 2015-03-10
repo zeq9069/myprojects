@@ -32,7 +32,7 @@ public class Record implements Serializable {
 	@Id
 	@Column(name = "ID", length = 32)
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
+	private int id;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "U_ID")
@@ -42,11 +42,11 @@ public class Record implements Serializable {
 	@JoinColumn(name = "ANNOUN_ID")
 	private Announcement announ;
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

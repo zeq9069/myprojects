@@ -36,13 +36,13 @@ public class Group implements Serializable {
 	@Id
 	@Column(name = "ID", length = 32)
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
+	private int id;
 
 	/*
 	 * 用户组名
 	 */
-	@Column(name = "GROUP_NAME", length = 24, updatable = false, nullable = false, unique = true)
-	private String groupName;
+	@Column(name = "GROUP_NAME", length = 32)
+	private String name;
 
 	/*
 	 * 是否上线
@@ -71,20 +71,22 @@ public class Group implements Serializable {
 		this.announs = announs;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getGroupName() {
-		return groupName;
+	
+
+	public String getName() {
+		return name;
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Set<UserInfo> getUsers() {
