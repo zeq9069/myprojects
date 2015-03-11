@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.UserInfoService;
@@ -24,15 +24,14 @@ import cn.ncss.jym.messagebox.utils.Constant;
  * @author kyrin [2015年3月10日]
  *
  */
-@Controller
-@RequestMapping(value="home")
+@RestController
+@RequestMapping(value="/home")
 public class LoginController {
 	
 	@Autowired
 	private UserInfoService userInfoService;
 	
 	@RequestMapping(value="login",method=RequestMethod.GET)
-	@ResponseBody
 	public String login(String name,String password,HttpServletRequest request){
 		if("kyrin".equals(name) && "123".equals(password)){
 			HttpSession session=request.getSession();
@@ -42,11 +41,15 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping(value="users",method=RequestMethod.GET,produces="application/json")
-	@ResponseBody
+	@RequestMapping(value="users",method=RequestMethod.GET)
 	public List<UserInfo> users(){
 		return userInfoService.getList();
-		
+	}
+	
+	@RequestMapping(value="list",method=RequestMethod.GET)
+	public ModelAndView get(ModelAndView model){
+		model.setViewName("list");
+		return model;
 	}
 	
 	

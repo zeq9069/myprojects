@@ -12,7 +12,9 @@
 
  	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<!-- 注意：在这里 <annotation-driven /> 这种形式的配置，会出现 http 406的错误-->
+	<annotation-driven>
+	</annotation-driven>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
 	<resources mapping="/resources/**" location="/resources/" />
