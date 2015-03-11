@@ -14,14 +14,16 @@ import cn.ncss.jym.messagebox.pojo.Group;
  */
 public interface GroupDao {
 
-	public void add(Group group);
+	public boolean add(Group group);
 
-	public void delete(Group group);
+	public boolean delete(Group group);
 
-	public void update(Group group);
+	public boolean update(Group group);
 
 	public Group get(String name);
 
 	public List<Group> getList();
+	
+	public boolean isExists(Group group);
 
 }

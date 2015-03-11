@@ -32,13 +32,15 @@ public class RecordDaoImpl implements RecordDao {
 	}
 
 	@Override
-	public void add(Record record) {
-		this.add(record);
+	public boolean add(Record record) {
+		this.getSession().save(record);
+		return true;
 	}
 
 	@Override
-	public void delete(Record record) {
+	public boolean delete(Record record) {
 		this.getSession().delete(record);
+		return true;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -55,5 +57,13 @@ public class RecordDaoImpl implements RecordDao {
 		Criteria crit = this.getSession().createCriteria(Record.class);
 		crit.add(Restrictions.eq("announ", announ_id));
 		return crit.list();
+	}
+	
+	@Override
+	public  boolean isExists(Record record){
+		Criteria crit=this.getSession().createCriteria(Record.class);
+		crit.add(Restrictions.eq("user", record.getUser()));
+		crit.add(Restrictions.eq("announ",record.getAnnoun()));
+		return crit.uniqueResult()==null?false:true;
 	}
 }

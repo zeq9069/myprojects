@@ -14,12 +14,14 @@ import cn.ncss.jym.messagebox.pojo.Record;
  */
 public interface RecordDao {
 
-	public void add(Record record);
+	public boolean add(Record record);
 
-	public void delete(Record record);
+	public boolean delete(Record record);
 
 	public List<Record> getListByUId(String u_id);
 
 	public List<Record> getListByAnnounId(String announ_id);
+	
+	public  boolean isExists(Record record);
 
 }

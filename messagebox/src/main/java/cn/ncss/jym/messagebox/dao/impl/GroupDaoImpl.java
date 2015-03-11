@@ -33,18 +33,21 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public void add(Group group) {
+	public boolean add(Group group) {
 		this.getSessioin().save(group);
+		return false;
 	}
 
 	@Override
-	public void delete(Group group) {
+	public boolean delete(Group group) {
 		this.getSessioin().delete(group);
+		return true;
 	}
 
 	@Override
-	public void update(Group group) {
+	public boolean update(Group group) {
 		this.getSessioin().update(group);
+		return true;
 	}
 
 	@Override
@@ -59,6 +62,11 @@ public class GroupDaoImpl implements GroupDao {
 	public List<Group> getList() {
 		Criteria crit = this.getSessioin().createCriteria(Group.class);
 		return crit.list();
+	}
+
+	@Override
+	public boolean isExists(Group group) {
+		return this.get(group.getName())==null?false:true;
 	}
 
 }

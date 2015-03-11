@@ -31,18 +31,21 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	}
 
 	@Override
-	public void add(Announcement announ) {
+	public boolean add(Announcement announ) {
 		this.getSession().save(announ);
+		return true;
 	}
 
 	@Override
-	public void delete(Announcement announ) {
+	public boolean delete(Announcement announ) {
 		this.getSession().delete(announ);
+		return true;
 	}
 
 	@Override
-	public void update(Announcement announ) {
+	public boolean update(Announcement announ) {
 		this.getSession().update(announ);
+		return true;
 	}
 
 	@Override

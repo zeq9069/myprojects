@@ -15,11 +15,11 @@ import cn.ncss.jym.messagebox.pojo.Announcement;
  */
 public interface AnnouncementDao {
 
-	public void add(Announcement announ);
+	public boolean add(Announcement announ);
 
-	public void delete(Announcement announ);
+	public boolean delete(Announcement announ);
 
-	public void update(Announcement announ);
+	public boolean update(Announcement announ);
 
 	public Announcement get(String id);
 
