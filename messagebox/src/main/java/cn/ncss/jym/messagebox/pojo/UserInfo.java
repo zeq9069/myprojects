@@ -33,7 +33,7 @@ import org.springframework.util.StringUtils;
  *
  */
 @Entity
-@Table(name = "USERINFO")
+@Table(name = "USER_INFO")
 public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = 2758570929863603466L;
