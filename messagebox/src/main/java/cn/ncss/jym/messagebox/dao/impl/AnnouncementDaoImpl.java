@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;
+import cn.ncss.jym.messagebox.utils.StringUtil;
 
 /**
  * *************************
@@ -85,5 +86,14 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		crit.add(Restrictions.eq("publisher", publisher));
 		crit.add(Restrictions.eq("online", online + ""));
 		return crit.list();
+	}
+
+	@Override
+	public int getByStatus(String status) {
+			Criteria crit=this.getSession().createCriteria(Announcement.class);
+			if(StringUtil.hasText(status)){
+				crit.add(Restrictions.eq("online", status));
+			}
+		return crit.list().size();
 	}
 }

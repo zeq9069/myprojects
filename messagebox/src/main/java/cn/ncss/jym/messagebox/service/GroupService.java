@@ -1,6 +1,7 @@
 package cn.ncss.jym.messagebox.service;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.Group;
 
@@ -24,6 +25,12 @@ public interface GroupService {
 	public Group get(String name);
 
 	public List<Group> getList();
+	
+	/**
+	 * 获取所用的group信息
+	 * @return
+	 */
+	public Map<String,Integer> getGroupInfo();
 	
 	public boolean isExists(Group group);
 	

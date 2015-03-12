@@ -30,5 +30,12 @@ public interface AnnouncementDao {
 	public List<Announcement> getListByUser(String publisher);
 
 	public List<Announcement> getListByUser(String publisher, boolean online);
+	
+	/**
+	 * 根据online的状态获取相应的数量，null时时总的数量
+	 * @param status online的状态
+	 * @return
+	 */
+	public int getByStatus(String status);
 
 }

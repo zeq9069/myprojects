@@ -1,0 +1,35 @@
+	
+#dynamic-head{
+	border:0px;
+	font-size:20px;
+	color:#337ab7;
+}
+
+.row .featurette > .col-md-10{
+	margin-left:20px;
+}
+
+.list-group-item{
+	margin-top:10px;
+}
+
+#topic-title{
+	font-size:25px;
+}
+
+#topic-date{
+	color:#666666;
+}
+
+#topic-content{
+	color:#666666;
+	font-size:20px;
+}
+
+a.list-group-item:hover{
+	background-color: #dddddd;
+}
+
+.list-group>.list-group-item{
+	border-radius:10px;
+}

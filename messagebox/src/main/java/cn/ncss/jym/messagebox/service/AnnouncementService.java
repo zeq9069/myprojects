@@ -1,6 +1,7 @@
 package cn.ncss.jym.messagebox.service;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
 
@@ -30,5 +31,7 @@ public interface AnnouncementService {
 	public List<Announcement> getListByUser(String publisher);
 
 	public List<Announcement> getListByUser(String publisher, boolean online);
+	
+	public Map<String,Integer> getAnnounInfo();
 	
 }

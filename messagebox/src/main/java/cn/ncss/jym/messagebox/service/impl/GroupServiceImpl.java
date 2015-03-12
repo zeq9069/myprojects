@@ -1,6 +1,8 @@
 package cn.ncss.jym.messagebox.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +62,19 @@ public class GroupServiceImpl implements GroupService{
 	public List<Group> getList() {
 		return groupDao.getList();
 	}
+	@Transactional(readOnly=true)
+	@Override
+	public Map<String,Integer> getGroupInfo(){
+		Map<String,Integer> groups=new HashMap<String, Integer>();
+		List<Group> groupList=groupDao.getList();
+		if(groupList!=null && groupList.size()>0){
+			for(Group group:groupList){
+				groups.put(group.getName(),group.getUsers().size());
+			}
+		}
+		return groups;
+	}
+
 	@Transactional(readOnly=true)
 	@Override
 	public boolean isExists(Group group){
