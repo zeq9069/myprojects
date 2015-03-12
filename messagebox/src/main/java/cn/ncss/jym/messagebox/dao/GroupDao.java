@@ -21,7 +21,7 @@ public interface GroupDao {
 	 */
 	public String  add(Group group);
 
-	public boolean delete(Group group);
+	public boolean delete(String name);
 
 	public boolean update(Group group);
 
@@ -29,6 +29,6 @@ public interface GroupDao {
 
 	public List<Group> getList();
 	
-	public boolean isExists(Group group);
+	public boolean isExists(String name);
 
 }

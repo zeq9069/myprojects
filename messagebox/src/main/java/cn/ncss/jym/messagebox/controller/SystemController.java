@@ -35,11 +35,12 @@ public class SystemController {
 	}
 	
 	@RequestMapping(value="groups/add",method=RequestMethod.POST)
-	public Map<String,String> add(String name){
-		Group group=new Group();
-		group.setName(name);
+	public Map<String,String> add(Group group){
 		return systemService.addGroup(group);
 	}
 	
-	
+	@RequestMapping(value="groups/delete",method=RequestMethod.POST)
+	public Map<String,String> delete(String name){
+		return systemService.deletGroup(name);
+	}
 }

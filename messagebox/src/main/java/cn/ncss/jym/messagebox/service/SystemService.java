@@ -32,6 +32,13 @@ public interface SystemService {
 	 * @param group 群组
 	 * @return
 	 */
-	Map<String, String> addGroup(Group group);
+	public Map<String, String> addGroup(Group group);
+	
+	/**
+	 * 删除group
+	 * @param group 群组实体
+	 * @return
+	 */
+	public Map<String,String> deletGroup(String name);
 	
 }

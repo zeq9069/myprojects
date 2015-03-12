@@ -3,6 +3,7 @@ package cn.ncss.jym.messagebox.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -38,8 +39,11 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public boolean delete(Group group) {
-		this.getSessioin().delete(group);
+	public boolean delete(String name) {
+		String hql="delete from Group where name=:name";
+		Query query=this.getSessioin().createQuery(hql);
+		query.setParameter("name", name);
+		query.executeUpdate();
 		return true;
 	}
 
@@ -64,8 +68,8 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public boolean isExists(Group group) {
-		return this.get(group.getName())==null?false:true;
+	public boolean isExists(String name) {
+		return this.get(name)==null?false:true;
 	}
 
 }

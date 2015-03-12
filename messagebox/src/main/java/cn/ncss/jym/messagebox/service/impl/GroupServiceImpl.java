@@ -37,7 +37,7 @@ public class GroupServiceImpl implements GroupService{
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
 			resultMap.put(Constant.HTTP_MESSAGE, "群组名不能为空");
 			return resultMap;
-		}else if(isExists(group)){
+		}else if(isExists(group.getName())){
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
 			resultMap.put(Constant.HTTP_MESSAGE, "群组名已经存在");
 		}else{
@@ -50,16 +50,27 @@ public class GroupServiceImpl implements GroupService{
 
 	@Transactional(readOnly=false)
 	@Override
-	public boolean delete(Group group) {
-		if(!isExists(group)){
-			return false;
+	public Map<String,String> delete(String name) {
+		Map<String,String> resultMap=new HashMap<String, String>();
+		if(!StringUtil.hasText(name)){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "群组名不能为空");
+			return resultMap;
+		}else if(!isExists(name)){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "群组名不存在");
+			return resultMap;
+		}else{
+			boolean res=groupDao.delete(name);
+			resultMap.put(Constant.HTTP_STATUS, res==true?Constant.HTTP_SUCCESS:Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, res==true?"删除成功":"删除失败");
+			return resultMap;
 		}
-		return groupDao.delete(group);
 	}
 	@Transactional(readOnly=false)
 	@Override
 	public boolean update(Group group) {
-		if(!isExists(group)){
+		if(!isExists(group.getName())){
 			return false;
 		}
 		return groupDao.update(group);
@@ -89,8 +100,8 @@ public class GroupServiceImpl implements GroupService{
 
 	@Transactional(readOnly=true)
 	@Override
-	public boolean isExists(Group group){
-		return groupDao.isExists(group);
+	public boolean isExists(String name){
+		return groupDao.isExists(name);
 	}
 
 }

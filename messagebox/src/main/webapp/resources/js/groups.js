@@ -9,7 +9,7 @@ $(document).ready(function(){
 			if(data.status=="success"){
 				groupId=data.message;
 				$(".group-list>p").append("<span id='"+groupId+"'>"+groupName+"</span>");
-				alert("success! id="+groupId);
+				alert("添加成功!");
 			}else{
 				alert(data.message);
 			}
@@ -17,7 +17,23 @@ $(document).ready(function(){
 	});
 	
 	$(".group-list>p>span").dblclick(function(){
-		alert("这将会删除群组名"+this.id);
+		alert($(this).html());
+		var groupName=$(this).html();
+		var id=this.id;
+		$.ajax({
+			type:"POST",
+			url:"/messagebox/system/groups/delete",
+			data:{name:groupName},
+			dataType:"json",
+			success:function(data){
+				alert(data.message);
+				$("#"+id).remove();
+			},
+			error:function(request, textStatus){
+				alert(textStatus);
+			}
+		});
+		
 	});
 	
 });

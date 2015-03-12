@@ -55,6 +55,12 @@ public class SystemServiceImpl implements SystemService {
 	public Map<String,String> addGroup(Group group){
 		return groupService.add(group);
 	}
+	
+	@Override
+	public Map<String,String> deletGroup(String name){
+		return groupService.delete(name);
+	}
+
 
 	
 	

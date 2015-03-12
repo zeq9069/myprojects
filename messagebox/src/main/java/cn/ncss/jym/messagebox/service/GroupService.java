@@ -18,7 +18,7 @@ public interface GroupService {
 	
 	public Map<String,String> add(Group group);
 
-	public boolean delete(Group group);
+	public Map<String,String> delete(String name);
 
 	public boolean update(Group group);
 
@@ -32,6 +32,6 @@ public interface GroupService {
 	 */
 	public Map<String,Integer> getGroupInfo();
 	
-	public boolean isExists(Group group);
+	public boolean isExists(String name);
 	
 }
