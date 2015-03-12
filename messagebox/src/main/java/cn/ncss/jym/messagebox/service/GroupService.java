@@ -16,7 +16,7 @@ import cn.ncss.jym.messagebox.pojo.Group;
  */
 public interface GroupService {
 	
-	public boolean add(Group group);
+	public Map<String,String> add(Group group);
 
 	public boolean delete(Group group);
 

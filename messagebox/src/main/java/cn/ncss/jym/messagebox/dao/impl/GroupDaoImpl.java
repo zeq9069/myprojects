@@ -33,9 +33,8 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public boolean add(Group group) {
-		this.getSessioin().save(group);
-		return false;
+	public String add(Group group) {
+		return this.getSessioin().save(group).toString();
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public Group get(String name) {
 		Criteria crit = this.getSessioin().createCriteria(Group.class);
-		crit.add(Restrictions.eq("groupName", name));
+		crit.add(Restrictions.eq("name", name));
 		return (Group) crit.uniqueResult();
 	}
 

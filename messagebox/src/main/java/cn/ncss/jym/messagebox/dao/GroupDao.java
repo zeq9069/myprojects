@@ -14,7 +14,12 @@ import cn.ncss.jym.messagebox.pojo.Group;
  */
 public interface GroupDao {
 
-	public boolean add(Group group);
+	/**
+	 * 添加group
+	 * @param group
+	 * @return 返回ID
+	 */
+	public String  add(Group group);
 
 	public boolean delete(Group group);
 

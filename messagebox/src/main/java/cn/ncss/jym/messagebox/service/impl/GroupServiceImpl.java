@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.ncss.jym.messagebox.dao.GroupDao;
 import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.service.GroupService;
+import cn.ncss.jym.messagebox.utils.Constant;
+import cn.ncss.jym.messagebox.utils.StringUtil;
 
 /**
  * ***********************
@@ -29,11 +31,21 @@ public class GroupServiceImpl implements GroupService{
 	
 	@Transactional(readOnly=false)
 	@Override
-	public boolean add(Group group) {
-		if(isExists(group)){
-			return false;
+	public Map<String,String> add(Group group) {
+		Map<String,String> resultMap=new HashMap<String, String>();
+		if(!StringUtil.hasText(group.getName())){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "群组名不能为空");
+			return resultMap;
+		}else if(isExists(group)){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "群组名已经存在");
+		}else{
+			String id= groupDao.add(group);
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_SUCCESS);
+			resultMap.put(Constant.HTTP_MESSAGE, id);
 		}
-		return groupDao.add(group);
+		return resultMap;
 	}
 
 	@Transactional(readOnly=false)
