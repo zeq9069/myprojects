@@ -30,7 +30,7 @@ public class Relation implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "RELATION_ID", unique = true, nullable = false, precision = 12, scale = 0,insertable=false, updatable=false)  
+    @Column(name = "RELATION_ID")  
 	private int id;
 	
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)

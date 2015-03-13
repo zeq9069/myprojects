@@ -1,6 +1,5 @@
 package cn.ncss.jym.messagebox.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.GroupService;
 import cn.ncss.jym.messagebox.service.SystemService;
 
@@ -53,6 +51,7 @@ public class HomeController {
 	public ModelAndView users(ModelAndView model){
 		model.setViewName("/home/users");
 		model.addObject("users",systemService.getUsers());
+		model.addObject("groups", systemService.getGroups());
 		return model;
 	}
 }

@@ -11,13 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  * *************************
  * 		用户组
+ * 注意：要想删除级联关系表，必须去数据库进行手动配置级联
  * 
  * *************************
  * @author zeq [2015年3月10日]
