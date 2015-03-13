@@ -80,9 +80,8 @@ public class Announcement implements Serializable {
 	/**
 	 * 自动生成group与accouncement的关系表
 	 */
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "ANNOUN_GROUP", joinColumns = { @JoinColumn(name = "ANNOUN_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID") })
-	private Set<Group> groups = new HashSet<Group>();
+	@OneToMany(mappedBy = "announ", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Group_announ> group_announs = new HashSet<Group_announ>();
 
 	/**
 	 * 自动加载该公告的浏览记录，与record建立关系
@@ -94,12 +93,12 @@ public class Announcement implements Serializable {
 		return id;
 	}
 
-	public Set<Group> getGroups() {
-		return groups;
+	public Set<Group_announ> getGroups() {
+		return group_announs;
 	}
 
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
+	public void setGroups(Set<Group_announ> group_announs) {
+		this.group_announs = group_announs;
 	}
 
 	public Set<Record> getRecords() {

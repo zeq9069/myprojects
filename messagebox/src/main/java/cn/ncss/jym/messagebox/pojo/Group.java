@@ -58,15 +58,17 @@ public class Group implements Serializable {
 	/**
 	 * 自动建立group与announcement的关系表
 	 */
-	@ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Announcement> announs = new HashSet<Announcement>();
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="group")
+	private Set<Group_announ> group_announs = new HashSet<Group_announ>();
 
-	public Set<Announcement> getAnnouns() {
-		return announs;
+	
+
+	public Set<Group_announ> getGroup_announs() {
+		return group_announs;
 	}
 
-	public void setAnnouns(Set<Announcement> announs) {
-		this.announs = announs;
+	public void setGroup_announs(Set<Group_announ> group_announs) {
+		this.group_announs = group_announs;
 	}
 
 	public int getId() {
