@@ -81,7 +81,7 @@ public class Announcement implements Serializable {
 	 * 自动生成group与accouncement的关系表
 	 */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "ANNOUN_GROUP", joinColumns = { @JoinColumn(name = "ANNOUN_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "GROUP_ID", referencedColumnName = "ID") })
+	@JoinTable(name = "ANNOUN_GROUP", joinColumns = { @JoinColumn(name = "ANNOUN_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID") })
 	private Set<Group> groups = new HashSet<Group>();
 
 	/**

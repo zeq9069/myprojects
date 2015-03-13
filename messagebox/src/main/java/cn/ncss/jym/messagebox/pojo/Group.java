@@ -11,9 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -34,7 +33,7 @@ public class Group implements Serializable {
 	 * 组ID
 	 */
 	@Id
-	@Column(name = "ID", length = 32)
+	@Column(name = "GROUP_ID", length = 32)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
@@ -53,9 +52,8 @@ public class Group implements Serializable {
 	/**
 	 * 自动简历userInfo与group的映射关系表
 	 */
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "group_user", joinColumns = { @JoinColumn(name = "group_id", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "u_id", referencedColumnName = "ID"), })
-	private Set<UserInfo> users = new HashSet<UserInfo>();
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="group")
+	private Set<Relation> relations = new HashSet<Relation>();
 
 	/**
 	 * 自动建立group与announcement的关系表
@@ -89,12 +87,13 @@ public class Group implements Serializable {
 		this.name = name;
 	}
 
-	public Set<UserInfo> getUsers() {
-		return users;
+
+	public Set<Relation> getRelations() {
+		return relations;
 	}
 
-	public void setUsers(Set<UserInfo> users) {
-		this.users = users;
+	public void setRelations(Set<Relation> relations) {
+		this.relations = relations;
 	}
 
 	public String getOnline() {

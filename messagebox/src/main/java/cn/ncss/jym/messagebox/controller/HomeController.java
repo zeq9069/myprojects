@@ -50,10 +50,9 @@ public class HomeController {
 	
 	@RequestMapping(value="users",method=RequestMethod.GET)
 	@ResponseBody
-	public List<UserInfo> users(ModelAndView model){
-//		model.setViewName("/home/users");
-//		return model;
-		return systemService.getUsers();
+	public ModelAndView users(ModelAndView model){
+		model.setViewName("/home/users");
+		model.addObject("users",systemService.getUsers());
+		return model;
 	}
-	
 }

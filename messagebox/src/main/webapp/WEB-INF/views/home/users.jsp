@@ -76,17 +76,16 @@
 			</div>
 			<div id="content-right" class="col-md-10" >
 					<div class="body">
-						<p>群组统计：</p>
-						<ul>
-							<c:forEach items="${systemInfo.groups}" var="group">
-								<li>${group.key}:${group.value}人</li>
+						<table>
+							<tr>
+								<td>ID</td><td>真名</td>
+							</tr>
+							<c:forEach items="${users}" var="user">
+								<tr>
+									<td>${user.id}</td><td>${user.realName}</td>
+								</tr>
 							</c:forEach>
-						</ul>
-						<p>公告统计：</p>
-						<ul>
-							<li>上线数量:${systemInfo.announs.announ_online_num}</li>
-							<li>上下线数量:${systemInfo.announs.announ_offline_num}</li>
-						</ul>
+						</table>
 					</div> 
 			</div>
 		</div>

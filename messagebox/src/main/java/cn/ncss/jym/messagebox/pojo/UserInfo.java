@@ -15,7 +15,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -41,7 +40,7 @@ public class UserInfo implements Serializable {
 	 * 绑定的学信帐号的用户ID
 	 */
 	@Id
-	@Column(name = "ID", length = 32)
+	@Column(name = "USER_ID", length = 32)
 	private String id;
 	/*
 	 * 绑定的学信帐号的用户名
@@ -142,8 +141,8 @@ public class UserInfo implements Serializable {
 	 * 自动建立user与group的关系表
 	 */
 	//不可加(mappedBy = "users")，否则会出现userInfo加载group，group再加载userInfo的循环加载问题
-	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private Set<Group> groups = new HashSet<Group>();
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="userInfo")
+	private Set<Relation> relations = new HashSet<Relation>();
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Record> records = new HashSet<Record>();
@@ -156,13 +155,6 @@ public class UserInfo implements Serializable {
 		return UserType.school.equals(userType);
 	}
 
-	public Set<Group> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
-	}
 
 	/*
 	 * 判断是否为院系用户
@@ -323,6 +315,16 @@ public class UserInfo implements Serializable {
 	public void setAreaCode(String areaCode) {
 		this.areaCode = StringUtils.trimWhitespace(areaCode);
 	}
+	
+	
+
+	public Set<Relation> getRelations() {
+		return relations;
+	}
+
+	public void setRelations(Set<Relation> relations) {
+		this.relations = relations;
+	}
 
 	@Override
 	public String toString() {
@@ -334,6 +336,7 @@ public class UserInfo implements Serializable {
 			return String.format("%s [%s%s]", realName, orgName, fxmc);
 		}
 	}
+	
 
 	public enum UserType {
 		/**

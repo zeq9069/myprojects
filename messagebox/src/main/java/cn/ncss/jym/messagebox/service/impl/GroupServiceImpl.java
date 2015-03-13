@@ -92,7 +92,7 @@ public class GroupServiceImpl implements GroupService{
 		List<Group> groupList=groupDao.getList();
 		if(groupList!=null && groupList.size()>0){
 			for(Group group:groupList){
-				groups.put(group.getName(),group.getUsers().size());
+				groups.put(group.getName(),group.getRelations().size());
 			}
 		}
 		return groups;
