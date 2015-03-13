@@ -71,10 +71,12 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<UserInfo> getList(){
-		Criteria crit = this.getSession().createCriteria(UserInfo.class);
-		System.out.println("id:"+crit.list());
-		return crit.list();
+		Session session=this.getSession();
+		Criteria crit = session.createCriteria(UserInfo.class);
+		List<UserInfo> list=crit.list();
+		return list;
 	}
 
 

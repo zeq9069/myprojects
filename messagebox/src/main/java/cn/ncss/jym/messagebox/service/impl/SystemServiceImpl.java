@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.GroupService;
 import cn.ncss.jym.messagebox.service.SystemService;
+import cn.ncss.jym.messagebox.service.UserInfoService;
 import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
 
 /**
@@ -28,6 +30,9 @@ public class SystemServiceImpl implements SystemService {
 
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private UserInfoService userInfoService;
 
 	@Autowired
 	private AnnouncementService announcementService;
@@ -61,8 +66,8 @@ public class SystemServiceImpl implements SystemService {
 		return groupService.delete(name);
 	}
 
-
-	
-	
-
+	@Override
+	public List<UserInfo> getUsers() {
+		return userInfoService.getList();
+	}
 }

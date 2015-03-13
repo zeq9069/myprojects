@@ -1,8 +1,10 @@
 package cn.ncss.jym.messagebox.service;
 
+import java.util.List;
 import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
 
 /**
@@ -40,5 +42,11 @@ public interface SystemService {
 	 * @return
 	 */
 	public Map<String,String> deletGroup(String name);
+	
+	/**
+	 * 获取所有用户
+	 * @return
+	 */
+	public List<UserInfo> getUsers();
 	
 }

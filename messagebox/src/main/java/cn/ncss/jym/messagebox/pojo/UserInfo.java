@@ -141,7 +141,8 @@ public class UserInfo implements Serializable {
 	/**
 	 * 自动建立user与group的关系表
 	 */
-	@ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	//不可加(mappedBy = "users")，否则会出现userInfo加载group，group再加载userInfo的循环加载问题
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private Set<Group> groups = new HashSet<Group>();
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
