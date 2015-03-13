@@ -88,12 +88,13 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		return crit.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public int getByStatus(String status) {
+	public List<Announcement> getByStatus(String status) {
 			Criteria crit=this.getSession().createCriteria(Announcement.class);
 			if(StringUtil.hasText(status)){
 				crit.add(Restrictions.eq("online", status));
 			}
-		return crit.list().size();
+		return crit.list();
 	}
 }

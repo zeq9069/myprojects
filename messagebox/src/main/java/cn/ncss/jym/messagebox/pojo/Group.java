@@ -43,11 +43,7 @@ public class Group implements Serializable {
 	@Column(name = "GROUP_NAME", length = 32)
 	private String name;
 
-	/*
-	 * 是否上线
-	 */
-	@Column(name = "ONLINE", length = 24, updatable = false, nullable = false)
-	private String online = "true";
+	
 
 	/**
 	 * 自动简历userInfo与group的映射关系表
@@ -96,14 +92,6 @@ public class Group implements Serializable {
 
 	public void setRelations(Set<Relation> relations) {
 		this.relations = relations;
-	}
-
-	public String getOnline() {
-		return online;
-	}
-
-	public void setOnline(String online) {
-		this.online = online;
 	}
 
 }

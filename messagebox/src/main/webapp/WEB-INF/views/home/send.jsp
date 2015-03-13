@@ -1,6 +1,7 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
-<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="webRoot"  value="${pageContext.request.contextPath}"/>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="webRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,84 +11,102 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>messageBox</title>
-<link href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"
+	rel="stylesheet">
 <style type="text/css">
-.container{ 
-	margin-left:0px;
-	padding-left:150px;
+.container {
+	margin-left: 0px;
+	padding-left: 150px;
 	width: 90%;
 }
 
-#content{
-	margin-top:0px;
+#content {
+	margin-top: 0px;
 }
 
-#content-right{
-	padding-top:20px;
-	padding-left:30px
+#content-right {
+	padding-top: 20px;
+	padding-left: 30px
 }
- 
 </style>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<div class="navbar-header" >
+			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
 					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
 					aria-controls="navbar">
-					<span class="sr-only">messageBox</span> 
-					<span class="icon-bar"></span>
-                    <span class="icon-bar"></span> 
-                    <span class="icon-bar"></span>
+					<span class="sr-only">messageBox</span> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand " href="${webRoot}/">messageBox</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right" >
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false">admin
-								<span class="caret"></span>
-						</a>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false">admin
+							<span class="caret"></span>
+					</a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#">基本信息</a></li>
 							<li><a href="#">通知</a></li>
 							<li class="divider"></li>
 							<li><a href="#">退出</a></li>
-						</ul>
-				   	</li>
+						</ul></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
 
-	<div id="content" class="container" style="padding-top:50px;height:100%;width: 100%;padding-left:0px">
-		<div class="row" style="width: 100%;padding-left:0px" >
-			<div class="col-md-2" style="border:2px solid #eeeeee;height:800px;border-bottom:0px;">
- 				<div class="list-group" style="text-align:center;padding-top:30px;height:50%;">
-					<span  class="list-group-item active" style="font-size: 25px">控制台操作</span>
+	<div id="content" class="container"
+		style="padding-top: 50px; height: 100%; width: 100%; padding-left: 0px">
+		<div class="row" style="width: 100%; padding-left: 0px">
+			<div class="col-md-2"
+				style="border: 2px solid #eeeeee; height: 800px; border-bottom: 0px;">
+				<div class="list-group"
+					style="text-align: center; padding-top: 30px; height: 50%;">
+					<span class="list-group-item active" style="font-size: 25px">控制台操作</span>
 					<a href="${webRoot}/home/groups" class="list-group-item" id="groups">群组操作</a> 
 					<a href="${webRoot}/home/users" class="list-group-item" id="users">用户操作</a> 
 					<a href="${webRoot}/home/send" class="list-group-item" id="announ-send">发布公告</a> 
 					<a href="${webRoot}/home/announs" class="list-group-item" id="announs">已发布公告</a>
- 				</div>
+				</div>
 			</div>
-			<div id="content-right" class="col-md-10" >
-					<div class="body">
-						<p>群组统计：</p>
-						<ul>
-							<c:forEach items="${systemInfo.groups}" var="group">
-								<li>${group.key}:${group.value}人</li>
+			<div id="content-right" class="col-md-10">
+				<div class="body">
+					<form id="announ_form" name="announ_form">
+						<p>
+							<input type="text" name="title" id="title" >
+						</p>
+						<p>
+						
+							<c:forEach items="${groups}" var="group">
+								<input type="checkbox" name="group" id="${group.key}" value="${group.value}">${group.value}
 							</c:forEach>
-						</ul>
-						<p>公告统计：</p>
-						<ul>
-							<li>上线数量:${systemInfo.announs.announ_online_num}</li>
-							<li>上下线数量:${systemInfo.announs.announ_offline_num}</li>
-						</ul>
-					</div> 
+						</p>
+						<p>
+							<select id="type" name="type">
+								<option value="1">未知类型</option>
+							</select>
+						</p>
+						<p>
+							<input type="hidden" name="publisher" id="publisher" value="admin">
+						</p>
+						<p>
+						 	<input type="radio" name="online" id="online" value="true">上线 
+							<input type="radio" name="online" id="online" value="false">暂不上线
+						</p>
+						<p>
+							<textarea name="content" id="content" rows="20" cols="80"></textarea>
+						</p>
+						<p>
+							<button type="button" id="announ_submit" name="announ_submit">发布</button>
+						</p>
+					</form>
+				</div>
 			</div>
 		</div>
 		<hr>
@@ -96,5 +115,7 @@
 
 	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
+	<script src="${webRoot}/${initParam.resourceRoot}/js/send.js"></script>
+	
 </body>
 </html>

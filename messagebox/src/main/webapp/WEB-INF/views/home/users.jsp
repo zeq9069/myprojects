@@ -47,9 +47,15 @@
 }
 
 .user_table span {
-	border:1px solid #009966;
+	border:1px solid #eeeeee;
 	border-radius:5px;
 	margin-left:3px;
+	padding:2px 2px 2px 2px;
+}
+
+tr:hover{
+	background-color: #eeeeee;
+
 }
 </style>
 </head>

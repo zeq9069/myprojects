@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
@@ -33,7 +34,7 @@ public class SystemServiceImpl implements SystemService {
 	
 	@Autowired
 	private UserInfoService userInfoService;
-
+	
 	@Autowired
 	private AnnouncementService announcementService;
 
@@ -70,4 +71,13 @@ public class SystemServiceImpl implements SystemService {
 	public List<UserInfo> getUsers() {
 		return userInfoService.getList();
 	}
+	
+	@Override
+	public Map<String,String> publishAnnoun(Announcement announ){
+		return announcementService.add(announ);
+	}
+	public List<Announcement> getAnnouns(String online){
+		return announcementService.getListByOnline(online);
+	}
+
 }

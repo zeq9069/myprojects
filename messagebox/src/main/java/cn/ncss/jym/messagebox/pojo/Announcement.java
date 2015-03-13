@@ -1,6 +1,7 @@
 package cn.ncss.jym.messagebox.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
+
 
 /**
  * *************************
@@ -47,8 +49,8 @@ public class Announcement implements Serializable {
 	/*
 	 * 发布时间
 	 */
-	@Column(name = "DATE", nullable = false)
-	private DateTime date = new DateTime();
+	@Column(name = "DATE", nullable = false,length=255)
+	private Date date = new DateTime().toDate();
 
 	/*
 	 * 发布者
@@ -89,15 +91,7 @@ public class Announcement implements Serializable {
 	public int getId() {
 		return id;
 	}
-
-	public Set<Group_announ> getGroups() {
-		return group_announs;
-	}
-
-	public void setGroups(Set<Group_announ> group_announs) {
-		this.group_announs = group_announs;
-	}
-
+	 
 	public Set<Record> getRecords() {
 		return records;
 	}
@@ -118,12 +112,22 @@ public class Announcement implements Serializable {
 		this.title = title;
 	}
 
-	public DateTime getDate() {
+	 
+
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(DateTime date) {
+	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Set<Group_announ> getGroup_announs() {
+		return group_announs;
+	}
+
+	public void setGroup_announs(Set<Group_announ> group_announs) {
+		this.group_announs = group_announs;
 	}
 
 	public String getPublisher() {

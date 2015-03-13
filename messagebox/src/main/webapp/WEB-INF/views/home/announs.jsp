@@ -26,6 +26,34 @@
 	padding-top:20px;
 	padding-left:30px
 }
+
+.online_table {
+	margin-top: 40px; line-height : 30px;
+	text-align: center;
+	width: 100%;
+	line-height: 30px;
+}
+
+.online_table>thead {
+	background-color: #eeeeee;
+}
+
+.online_table>tr>td {
+	padding-top: 5px;
+	width: 20px;
+}
+
+.online_table span {
+	border:1px solid #eeeeee;
+	border-radius:5px;
+	margin-left:3px;
+	padding:2px 2px 2px 2px;
+}
+
+tr:hover{
+	background-color: #eeeeee;
+
+}
  
 </style>
 </head>
@@ -76,18 +104,40 @@
 			</div>
 			<div id="content-right" class="col-md-10" >
 					<div class="body">
-						<p>群组统计：</p>
-						<ul>
-							<c:forEach items="${systemInfo.groups}" var="group">
-								<li>${group.key}:${group.value}人</li>
-							</c:forEach>
-						</ul>
-						<p>公告统计：</p>
-						<ul>
-							<li>上线数量:${systemInfo.announs.announ_online_num}</li>
-							<li>上下线数量:${systemInfo.announs.announ_offline_num}</li>
-						</ul>
-					</div> 
+					
+					<table class="online_table">
+						<thead>
+							<tr>
+								<td>标题</td>
+								<td>发布者</td>
+								<td>发布时间</td>
+								<td>类型</td>
+								<td>内容</td>
+								<td>群组</td>
+								<td>是否上线</td>
+							</tr>
+						</thead>
+						<c:forEach items="${announs_online}" var="announ">
+							<tr>
+								<td>${announ.title}</td>
+								<td>${announ.publisher}</td>
+								<td>${announ.date}</td>
+								<td>${announ.type}</td>
+								<td>${announ.content}</td>
+								<td>
+									<c:forEach items="${announ.group_announs}" var="group_announ">
+										<c:if test="${!empty group_announ}">
+											<c:if test="${!empty group_announ.group}">
+												<span id="${group_announ.group.id}">${group_announ.group.name}</span>
+											</c:if>	
+										</c:if>									
+									</c:forEach>
+								</td>
+								<td>${announ.online}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 			</div>
 		</div>
 		<hr>

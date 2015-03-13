@@ -30,8 +30,17 @@ public class AnnouncementServiceImpl implements AnnouncementService{
 	private AnnouncementDao announcementDao;
 	@Transactional(readOnly=false)
 	@Override
-	public boolean add(Announcement announ) {
-		return announcementDao.add(announ);
+	public Map<String,String> add(Announcement announ) {
+		Map<String,String> resultMap=new HashMap<String, String>();
+		if(announ==null){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "公告不能为空");
+			return resultMap;
+		}
+		boolean res=announcementDao.add(announ);
+		resultMap.put(Constant.HTTP_STATUS,res==true?Constant.HTTP_SUCCESS:Constant.HTTP_ERROR);
+		resultMap.put(Constant.HTTP_MESSAGE, res==true?"发布成功":"发布失败");
+		return resultMap;
 	}
 
 	@Transactional(readOnly=false)
@@ -80,12 +89,17 @@ public class AnnouncementServiceImpl implements AnnouncementService{
 	@Override
 	public Map<String, Integer> getAnnounInfo() {
 		Map<String,Integer> announs_info=new HashMap<String, Integer>();
-		int online=announcementDao.getByStatus(Constant.ANNOUN_OFFLINE);
-		int offline=announcementDao.getByStatus(Constant.ANNOUN_OFFLINE);
+		int online=announcementDao.getByStatus(Constant.ANNOUN_OFFLINE).size();
+		int offline=announcementDao.getByStatus(Constant.ANNOUN_OFFLINE).size();
 		announs_info.put(Constant.ANNOUN_NUM, online+offline);
 		announs_info.put(Constant.ONLINE_NUM, online);
 		announs_info.put(Constant.OFFLINE_NUM, offline);
 		return announs_info;
+	}
+
+	@Override
+	public List<Announcement> getListByOnline(String online) {
+		return announcementDao.getByStatus(online);
 	}
 
 }

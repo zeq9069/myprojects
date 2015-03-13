@@ -36,6 +36,6 @@ public interface AnnouncementDao {
 	 * @param status online的状态
 	 * @return
 	 */
-	public int getByStatus(String status);
+	public List<Announcement> getByStatus(String status);
 
 }

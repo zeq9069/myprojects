@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.ncss.jym.messagebox.service.GroupService;
 import cn.ncss.jym.messagebox.service.SystemService;
+import cn.ncss.jym.messagebox.utils.Constant;
 
 /**
  * ***********************
@@ -52,6 +53,21 @@ public class HomeController {
 		model.setViewName("/home/users");
 		model.addObject("users",systemService.getUsers());
 		model.addObject("groups", systemService.getGroups());
+		return model;
+	}
+	@RequestMapping(value="send",method=RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView send(ModelAndView model){
+		model.setViewName("/home/send");
+		model.addObject("groups", systemService.getGroups());
+		return model;
+	}
+	@RequestMapping(value="announs",method=RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView announs(ModelAndView model){
+		model.setViewName("/home/announs");
+		model.addObject("announs_online", systemService.getAnnouns(Constant.ANNOUN_ONLINE));
+		model.addObject("announs_offline", systemService.getAnnouns(Constant.ANNOUN_OFFLINE));
 		return model;
 	}
 }

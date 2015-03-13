@@ -3,6 +3,7 @@ package cn.ncss.jym.messagebox.service;
 import java.util.List;
 import java.util.Map;
 
+import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
@@ -48,5 +49,19 @@ public interface SystemService {
 	 * @return
 	 */
 	public List<UserInfo> getUsers();
+	
+	/**
+	 * 发布公告
+	 * @param announ
+	 * @return
+	 */
+	public Map<String,String> publishAnnoun(Announcement announ);
+	
+	/**
+	 * 获取所有公告
+	 * @param online 是否上线
+	 * @return
+	 */
+	public List<Announcement> getAnnouns(String online);
 	
 }

@@ -16,7 +16,7 @@ import cn.ncss.jym.messagebox.pojo.Announcement;
  */
 public interface AnnouncementService {
 
-	public boolean add(Announcement announ);
+	public Map<String,String> add(Announcement announ);
 
 	public boolean delete(Announcement announ);
 
@@ -31,6 +31,8 @@ public interface AnnouncementService {
 	public List<Announcement> getListByUser(String publisher);
 
 	public List<Announcement> getListByUser(String publisher, boolean online);
+	
+	public List<Announcement> getListByOnline(String online);
 	
 	public Map<String,Integer> getAnnounInfo();
 	
