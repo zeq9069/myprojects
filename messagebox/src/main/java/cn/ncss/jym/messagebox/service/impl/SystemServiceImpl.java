@@ -68,8 +68,8 @@ public class SystemServiceImpl implements SystemService {
 	}
 
 	@Override
-	public List<UserInfo> getUsers() {
-		return userInfoService.getList();
+	public List<UserInfo> getUsers(int page,int pageSize) {
+		return userInfoService.getList(page,pageSize);
 	}
 	
 	@Override
@@ -78,6 +78,23 @@ public class SystemServiceImpl implements SystemService {
 	}
 	public List<Announcement> getAnnouns(String online){
 		return announcementService.getListByOnline(online);
+	}
+
+	@Override
+	public List<UserInfo> getUsersByGroup(int page,int pageSize,String groupName){
+		Group group=groupService.get(groupName);
+		return userInfoService.getUsersByGroup(page, pageSize, group);
+	}
+	
+	@Override
+	public int getCount() {
+		return userInfoService.getCount();
+	}
+
+	@Override
+	public int getCountByGroup(String groupName) {
+		Group group=groupService.get(groupName);
+		return userInfoService.getCountByGroup(group);
 	}
 
 }

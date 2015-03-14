@@ -1,6 +1,9 @@
 package cn.ncss.jym.messagebox.dao.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -10,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.ncss.jym.messagebox.dao.UserInfoDao;
+import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
 import cn.ncss.jym.messagebox.utils.StringUtil;
@@ -72,12 +77,54 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UserInfo> getList(){
+	public List<UserInfo> getList(int page,int pageSize){
 		Session session=this.getSession();
 		Criteria crit = session.createCriteria(UserInfo.class);
+		crit.setFirstResult((page-1)*pageSize);
+		crit.setMaxResults(pageSize);
 		List<UserInfo> list=crit.list();
 		return list;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserInfo> getUsersByGroup(int page, int pageSize,Group group) {
+		Session session=this.getSession();
+		Criteria crit = session.createCriteria(Relation.class);
+		crit.add(Restrictions.eq("group", group));
+		crit.setFirstResult((page-1)*pageSize);
+		crit.setMaxResults(pageSize);
+		List<Relation> list=crit.list();
+		List<UserInfo> userList=new ArrayList<UserInfo>();
+		for(Relation ra:list){
+			userList.add(ra.getUserInfo());
+		}
+		return userList;
+	}
+
+	@Override
+	public int getCount() {
+		Session session=this.getSession();
+		Criteria crit = session.createCriteria(UserInfo.class);
+		return crit.list().size();
+	}
+	
+	@Override
+	public int getCountByGroup(Group group){
+		Session session=this.getSession();
+		Criteria crit = session.createCriteria(Relation.class);
+		crit.add(Restrictions.eq("group", group));
+		return crit.list().size();
+	}
+
+	@Override
+	public boolean addRelation(List<Relation> relations) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	 
+
 
 
 }

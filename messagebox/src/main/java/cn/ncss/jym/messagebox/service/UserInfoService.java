@@ -2,6 +2,7 @@ package cn.ncss.jym.messagebox.service;
 
 import java.util.List;
 
+import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
 
@@ -26,6 +27,13 @@ public interface UserInfoService {
 
 	public UserInfo get(String areacCode, String orgCode, String orgName, String fxmc, UserType type);
 	
-	public List<UserInfo> getList();
+	public List<UserInfo> getList(int page,int pageSize);
+	
+	public List<UserInfo> getUsersByGroup(int page,int pageSize,Group group);
+	
+	public int getCount() ;
+	
+	public int getCountByGroup(Group group);
+
 
 }

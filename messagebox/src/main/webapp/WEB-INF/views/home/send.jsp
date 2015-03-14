@@ -20,7 +20,9 @@
 	padding-left: 150px;
 	width: 90%;
 }
-
+#announ-send{
+	background-color: #eeeeee;
+}
 #content {
 	margin-top: 0px;
 }
@@ -79,7 +81,7 @@
 				<div class="body">
 					<form id="announ_form" name="announ_form">
 						<p>
-							<input type="text" name="title" id="title" >
+							<input type="text" name="title" id="title" placeholder="标题名">
 						</p>
 						<p>
 						
@@ -96,7 +98,7 @@
 							<input type="hidden" name="publisher" id="publisher" value="admin">
 						</p>
 						<p>
-						 	<input type="radio" name="online" id="online" value="true">上线 
+						 	<input type="radio" name="online" id="online" value="true" checked="checked">上线 
 							<input type="radio" name="online" id="online" value="false">暂不上线
 						</p>
 						<p>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.ncss.jym.messagebox.dao.UserInfoDao;
+import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
 import cn.ncss.jym.messagebox.service.UserInfoService;
@@ -61,8 +62,24 @@ public class UserInfoServiceImpl implements UserInfoService {
 	
 	@Transactional(readOnly=true)
 	@Override
-	public List<UserInfo> getList(){
-		return userInfoDao.getList();
+	public List<UserInfo> getList(int page,int pageSize){
+		return userInfoDao.getList(page,pageSize);
+	}
+	@Override
+	@Transactional(readOnly=true)
+	public List<UserInfo> getUsersByGroup(int page,int pageSize,Group group){
+		return userInfoDao.getUsersByGroup(page, pageSize, group);
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public int getCount() {
+		return userInfoDao.getCount();
+	}
+	@Override
+	@Transactional(readOnly=true)
+	public int getCountByGroup(Group group){
+		return userInfoDao.getCountByGroup(group);
 	}
 	
 	private boolean isExists(UserInfo userInfo){

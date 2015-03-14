@@ -1,5 +1,7 @@
 package cn.ncss.jym.messagebox.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.GroupService;
 import cn.ncss.jym.messagebox.service.SystemService;
 import cn.ncss.jym.messagebox.utils.Constant;
@@ -50,11 +53,33 @@ public class HomeController {
 	@RequestMapping(value="users",method=RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView users(ModelAndView model){
+		Map<String,Object> resultMap=new HashMap<String, Object>();
+		List<UserInfo> userList=systemService.getUsers(1,Constant.HTTP_PAGESIZE);
 		model.setViewName("/home/users");
-		model.addObject("users",systemService.getUsers());
-		model.addObject("groups", systemService.getGroups());
+		resultMap.put("users", userList);
+		resultMap.put("groups", systemService.getGroups());
+		resultMap.put(Constant.HTTP_COUNT_NAME,systemService.getCount());
+		resultMap.put(Constant.HTTP_PAGESIZE_NAME,Constant.HTTP_PAGESIZE);
+		model.addObject("resultMap",resultMap);
 		return model;
 	}
+	
+	@RequestMapping(value="users/group",method=RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView usersByGroup(String name,ModelAndView model){
+		Map<String,Object> resultMap=new HashMap<String, Object>();
+		List<UserInfo> userList=systemService.getUsersByGroup(1, Constant.HTTP_PAGESIZE, name);
+		System.out.println(userList.size());
+		model.setViewName("/home/users");
+		resultMap.put("users", userList);
+		resultMap.put("groups", systemService.getGroups());
+		resultMap.put(Constant.HTTP_COUNT_NAME, systemService.getCountByGroup(name));
+		resultMap.put(Constant.HTTP_PAGESIZE_NAME,Constant.HTTP_PAGESIZE);
+		model.addObject("resultMap",resultMap);
+		return model;
+	}
+	
+	
 	@RequestMapping(value="send",method=RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView send(ModelAndView model){
@@ -70,4 +95,5 @@ public class HomeController {
 		model.addObject("announs_offline", systemService.getAnnouns(Constant.ANNOUN_OFFLINE));
 		return model;
 	}
+	
 }

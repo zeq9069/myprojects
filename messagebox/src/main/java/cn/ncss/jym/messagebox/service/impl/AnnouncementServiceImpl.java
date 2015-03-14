@@ -89,7 +89,7 @@ public class AnnouncementServiceImpl implements AnnouncementService{
 	@Override
 	public Map<String, Integer> getAnnounInfo() {
 		Map<String,Integer> announs_info=new HashMap<String, Integer>();
-		int online=announcementDao.getByStatus(Constant.ANNOUN_OFFLINE).size();
+		int online=announcementDao.getByStatus(Constant.ANNOUN_ONLINE).size();
 		int offline=announcementDao.getByStatus(Constant.ANNOUN_OFFLINE).size();
 		announs_info.put(Constant.ANNOUN_NUM, online+offline);
 		announs_info.put(Constant.ONLINE_NUM, online);

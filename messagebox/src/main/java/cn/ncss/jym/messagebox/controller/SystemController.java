@@ -79,7 +79,7 @@ public class SystemController {
 			return resultMap;
 		}
 		
-		//System.out.println("标题："+title+"\n 群组："+group.length+"\n type:"+type+"\n content:"+content+"\n online:"+online);
+		System.out.println("标题："+title+"\n 群组："+group.length+"\n type:"+type+"\n content:"+content+"\n online:"+online);
 		/******************处理级联***********************/
 		Announcement announ=new Announcement();
 		announ.setContent(content);
@@ -97,4 +97,11 @@ public class SystemController {
 		announ.setGroup_announs(set);
 		return systemService.publishAnnoun(announ);
 	}
+	
+	
+	
+	
+	
+	
+	
 }

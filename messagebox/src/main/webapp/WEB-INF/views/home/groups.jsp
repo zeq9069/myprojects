@@ -22,6 +22,9 @@ body{
 	padding-left:150px;
 	width: 90%;
 }
+#groups{
+	background-color: #eeeeee;
+}
 
 #content{
 	margin-top:0px;

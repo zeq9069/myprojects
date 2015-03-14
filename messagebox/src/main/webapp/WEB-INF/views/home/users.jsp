@@ -11,16 +11,20 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>messageBox</title>
-<link
-	href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"
-	rel="stylesheet">
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${webRoot}/${initParam.resourceRoot}/css/jBootsrapPage.css" rel="stylesheet" />
+	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
+	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
+	<script src="${webRoot}/${initParam.resourceRoot}/js/jBootstrapPage.js"></script>
 <style type="text/css">
 .container {
 	margin-left: 0px;
 	padding-left: 150px;
 	width: 90%;
 }
-
+#users{
+	background-color: #eeeeee;
+}
 #content {
 	margin-top: 0px;
 }
@@ -57,7 +61,9 @@ tr:hover{
 	background-color: #eeeeee;
 
 }
+ 
 </style>
+
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -89,6 +95,14 @@ tr:hover{
 	</nav>
 
 
+
+
+
+
+
+
+
+
 	<div id="content" class="container"
 		style="padding-top: 50px; height: 100%; width: 100%; padding-left: 0px">
 		<div class="row" style="width: 100%; padding-left: 0px">
@@ -106,13 +120,15 @@ tr:hover{
 				</div>
 			</div>
 			<div id="content-right" class="col-md-10">
+			
+			
+			
 				<div class="body">
-					筛选：<select name="groups" id="group-select">
-						<option id="all">全部</option>
-						<c:forEach items="${groups}" var="group">
-							<option id="${group.key}">${group.value}</option>
+					筛选：<select name="groups" id="group-select" >
+						<option id="all" >全部</option>
+						<c:forEach items="${resultMap.groups}" var="group">
+							<option id="${group.key}" value="${group.value}">${group.value}</option>
 						</c:forEach>
-						<option id="none">未分组</option>
 					</select>
 					
 					<table class="user_table">
@@ -129,7 +145,7 @@ tr:hover{
 								<td>所属分组</td>
 							</tr>
 						</thead>
-						<c:forEach items="${users}" var="user">
+						<c:forEach items="${resultMap.users}" var="user">
 							<tr>
 								<td>${user.username}</td>
 								<td>${user.realName}</td>
@@ -148,19 +164,57 @@ tr:hover{
 								<c:if test="${empty user.relations}" >
 									<span>未分组</span>
 								</c:if>
-								
+								<span id="${user.id}" class="group_plus glyphicon glyphicon-plus" ></span>
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
+				<div style="padding-left:100px;text-align:center">
+					<ul class="pagination pagination-sm"></ul>
+    			</div>
+
 				</div>
 			</div>
 		</div>
 		<hr>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
-
-	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
-	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
 </body>
+
+<script type="text/javascript">
+
+$(function(){
+/*
+ *pageSize:每页多少条记录
+ *buttons:显示多少个按钮
+ *total:总页数
+ */
+ var psize=${resultMap.pageSize<=0?1:resultMap.pageSize};
+ var item=5;
+ var count=${resultMap.count<=0?1:resultMap.count};
+ createPage(psize, item, count);
+
+function createPage(pageSize, buttons, total) {
+    $(".pagination").jBootstrapPage({
+        pageSize : pageSize,
+        total : total,
+        maxPageButton:buttons,
+        onPageClicked: function(obj, pageIndex) {
+        	
+        },
+    });
+}
+});
+
+$(document).ready(function(){
+	$(".group_plus").click(function(){
+		alert(this.id);
+	});
+	
+});
+</script>
+
 </html>
+
+
+

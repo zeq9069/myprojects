@@ -3,6 +3,8 @@ package cn.ncss.jym.messagebox.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
@@ -48,7 +50,21 @@ public interface SystemService {
 	 * 获取所有用户
 	 * @return
 	 */
-	public List<UserInfo> getUsers();
+	public List<UserInfo> getUsers(int page,int pageSize);
+	
+	
+	/**
+	 * 根据群组获取用户列表
+	 * @param name
+	 * @return
+	 */
+	public List<UserInfo> getUsersByGroup(int page,int pageSize,String groupName);
+	
+	/**
+	 * 获取所用用户数量
+	 * @return
+	 */
+	public int getCount() ;
 	
 	/**
 	 * 发布公告
@@ -63,5 +79,12 @@ public interface SystemService {
 	 * @return
 	 */
 	public List<Announcement> getAnnouns(String online);
+	
+	/**
+	 * 获取所有该分组的用户数量
+	 * @param group
+	 * @return
+	 */
+	public int getCountByGroup(String groupName);
 	
 }

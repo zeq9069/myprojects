@@ -18,6 +18,10 @@
 	width: 90%;
 }
 
+#announs{
+	background-color: #eeeeee;
+}
+
 #content{
 	margin-top:0px;
 }
@@ -99,12 +103,16 @@ tr:hover{
 					<a href="${webRoot}/home/groups" class="list-group-item" id="groups">群组操作</a> 
 					<a href="${webRoot}/home/users" class="list-group-item" id="users">用户操作</a> 
 					<a href="${webRoot}/home/send" class="list-group-item" id="announ-send">发布公告</a> 
-					<a href="${webRoot}/home/announs" class="list-group-item" id="announs">已发布公告</a>
+					<a href="${webRoot}/home/announs" class="list-group-item" id="announs" >已发布公告</a>
  				</div>
 			</div>
 			<div id="content-right" class="col-md-10" >
 					<div class="body">
-					
+					筛选：
+					<select>
+						<option value="true" selected="selected">上线</option>
+						<option value="false">下线</option>
+					</select>
 					<table class="online_table">
 						<thead>
 							<tr>
@@ -114,7 +122,7 @@ tr:hover{
 								<td>类型</td>
 								<td>内容</td>
 								<td>群组</td>
-								<td>是否上线</td>
+								<td>状态</td>
 							</tr>
 						</thead>
 						<c:forEach items="${announs_online}" var="announ">
@@ -133,7 +141,19 @@ tr:hover{
 										</c:if>									
 									</c:forEach>
 								</td>
-								<td>${announ.online}</td>
+								<td>
+								<c:choose>
+									<c:when test="${announ.online==true}">
+										上线
+									</c:when>
+									<c:when test="${announ.online==true}">
+										下线
+									</c:when>
+									<c:otherwise>
+										异常
+									</c:otherwise>									
+								</c:choose>
+								</td>
 							</tr>
 						</c:forEach>
 					</table>
