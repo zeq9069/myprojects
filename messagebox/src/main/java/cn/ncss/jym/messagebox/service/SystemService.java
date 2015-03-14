@@ -3,7 +3,6 @@ package cn.ncss.jym.messagebox.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.transaction.annotation.Transactional;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Group;

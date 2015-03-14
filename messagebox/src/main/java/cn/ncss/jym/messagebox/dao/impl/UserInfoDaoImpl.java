@@ -1,7 +1,6 @@
 package cn.ncss.jym.messagebox.dao.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -116,15 +115,30 @@ public class UserInfoDaoImpl implements UserInfoDao {
 		crit.add(Restrictions.eq("group", group));
 		return crit.list().size();
 	}
+	
+	@Override
+	public UserInfo getById(String id){
+		return (UserInfo) this.getSession().get(UserInfo.class, id);
+	}
+
 
 	@Override
 	public boolean addRelation(List<Relation> relations) {
-		// TODO Auto-generated method stub
-		return false;
+		Session session=this.getSession();
+		for(Relation r:relations){
+			session.save(r);
+		}
+		session.flush();
+		return true;
 	}
 	
-	 
-
-
-
+	@Override
+	public boolean deleteRelation(Relation relation){
+		//TODO 在删除relation时，userInfo被删除bug
+		Session session=this.getSession();
+		UserInfo u=(UserInfo) session.get(UserInfo.class, relation.getUserInfo().getId());
+		u.getRelations().remove(relation);
+		session.flush();
+		return true;
+	}
 }

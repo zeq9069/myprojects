@@ -1,6 +1,8 @@
 package cn.ncss.jym.messagebox.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.pojo.Group_announ;
+import cn.ncss.jym.messagebox.pojo.Relation;
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.GroupService;
 import cn.ncss.jym.messagebox.service.SystemService;
+import cn.ncss.jym.messagebox.service.UserInfoService;
 import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
 import cn.ncss.jym.messagebox.utils.Constant;
 
@@ -39,6 +44,8 @@ public class SystemController {
 	private SystemService systemService;
 	@Autowired
 	private GroupService groupService;
+	@Autowired
+	private UserInfoService userInfoService;
 	
 	@RequestMapping(value="info",method=RequestMethod.GET)
 	public SystemInfo getInfo(){
@@ -98,8 +105,56 @@ public class SystemController {
 		return systemService.publishAnnoun(announ);
 	}
 	
+	@RequestMapping(value="users/group/add",method=RequestMethod.POST)
+	public Map<String,String> addGroupforUser(HttpServletRequest request){
+		String[] names=request.getParameterValues("groupName");
+		String u_id=request.getParameter("u_id");
+		Map<String,String> resultMap=new HashMap<String, String>();
+		if(names==null || u_id==null){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "参数为空");
+			return resultMap;
+		}
+		UserInfo userInfo=userInfoService.getById(u_id);
+		if(userInfo==null){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "该用户不存在");
+			return resultMap;
+		}
+		
+		List<Relation> relationList=new ArrayList<Relation>();
+		
+		for(String name:names){
+			Group group=groupService.get(name);
+			Relation relation=new Relation();
+			
+			relation.setGroup(group);
+			relation.setUserInfo(userInfo);
+			
+			relationList.add(relation);
+		}
+		return userInfoService.addRelations(relationList);
+	}
 	
-	
+	@RequestMapping(value="users/group/delete",method=RequestMethod.POST)
+	public Map<String,String> deleteGroupforUser(String groupName,String u_id){
+		
+		Map<String,String> resultMap=new HashMap<String, String>();
+		if(groupName==null || u_id==null){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "参数为空");
+			return resultMap;
+		}
+		UserInfo userInfo=userInfoService.getById(u_id);
+		if(userInfo==null){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "该用户不存在");
+			return resultMap;
+		}
+		
+		
+		return userInfoService.deleteRelation(u_id,groupName);
+	}
 	
 	
 	

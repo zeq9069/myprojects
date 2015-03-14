@@ -25,6 +25,8 @@ public interface UserInfoDao {
 
 	public UserInfo get(String areacCode, String orgCode, String orgName, String fxmc, UserType type);
 	
+	public UserInfo getById(String id);
+	
 	public List<UserInfo> getList(int page,int pageSize);
 
 	public List<UserInfo> getUsersByGroup(int page,int pageSize,Group group);
@@ -39,6 +41,13 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	public boolean addRelation(List<Relation> relations);
+	
+	/**
+	 * 删除关系
+	 * @param relation
+	 * @return
+	 */
+	public boolean deleteRelation(Relation relation);
 
 	
 }

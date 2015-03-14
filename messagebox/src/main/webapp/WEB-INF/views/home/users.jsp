@@ -56,7 +56,9 @@
 	margin-left:3px;
 	padding:2px 2px 2px 2px;
 }
-
+form>span{
+	margin-left:30px;
+}
 tr:hover{
 	background-color: #eeeeee;
 
@@ -155,16 +157,17 @@ tr:hover{
 								<td>${user.email}</td>
 								<td>${user.mobilePhone}</td>
 								<td>${user.officePhone}</td>
-								<td>
+								<td class="group-td">
 								<c:if test="${!empty user.relations}" >
 										<c:forEach items="${user.relations}" var="relation">
-											<span id="${relation.group.id}">${relation.group.name}</span>
+											<span data-id="group_label" data-user="${user.id}" id="${relation.group.id}">${relation.group.name}</span>
 										</c:forEach>
 								</c:if>
 								<c:if test="${empty user.relations}" >
 									<span>未分组</span>
 								</c:if>
-								<span id="${user.id}" class="group_plus glyphicon glyphicon-plus" ></span>
+								<span id="${user.id}" class="group_plus glyphicon glyphicon-plus" data-toggle="modal"
+						data-target="#groupModel"></span>
 								</td>
 							</tr>
 						</c:forEach>
@@ -176,6 +179,41 @@ tr:hover{
 				</div>
 			</div>
 		</div>
+		
+		<!-- model 登录模态框-->
+				<div class="modal fade" id="groupModel" tabindex="-1" role="dialog"
+					aria-labelledby="groupLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="groupLabel">选择分组</h4>
+							</div>
+							<div class="modal-body">
+								<form class="group-form">
+									<p>
+										<c:forEach items="${resultMap.groups}" var="group">
+											<input type="checkbox" name="groupName" id="${group.key}"  value="${group.value}">${group.value}
+										</c:forEach>
+									</p>
+									<hr>
+									<p>
+										<button type="button" id="group_submit" class="btn btn-primary" data-dismiss="modal">确认</button>
+									</p>
+									<input type="hidden" name="u_id" id="u_id" value="">
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+							</div>
+						</div>
+					</div>
+				</div>
+		
 		<hr>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
@@ -207,9 +245,50 @@ function createPage(pageSize, buttons, total) {
 });
 
 $(document).ready(function(){
+	var u_id;//user id
 	$(".group_plus").click(function(){
-		alert(this.id);
+		//初始化
+		u_id=this.id;
+		$("#u_id").attr("value",u_id);
 	});
+	//model模态框提交
+	$("#group_submit").click(function(){
+		if(u_id==null){
+			return ;
+		}
+		var groupArray= new Array();
+		var i=0;
+		 $('input[name="groupName"]:checked').each(function(){
+			 groupArray[i++]=$(this).val();
+				}); 
+		 
+		 $.post("/messagebox/system/users/group/add",$(".group-form").serialize(),function(data){
+			 alert(data);
+			 if(data.status=="success"){
+				 alert("添加成功");
+				 for(var i=0;i<groupArray.length;i++){
+					 $(".group-td").html("<span>"+groupArray[i]+"</span>"+ $(".group-td").html());
+				 }
+			 }else{
+				 alert(data.message);
+			 }
+		 });
+	});
+	
+	$("span[data-id='group_label']").dblclick(function(){
+		var u_id=$(this).attr("data-user");
+		var groupName=$(this).text().trim();
+		alert(u_id+groupName);
+		$.post("/messagebox/system/users/group/delete",{groupName:groupName,u_id:u_id},function(data){
+			if(data.status=="success"){
+				alert("删除成功");
+				$(this).remove();
+			}else{
+				alert("删除失败");
+			}
+		});
+	});
+	
 	
 });
 </script>

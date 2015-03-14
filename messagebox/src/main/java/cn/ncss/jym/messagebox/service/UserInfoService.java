@@ -1,8 +1,10 @@
 package cn.ncss.jym.messagebox.service;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
 
@@ -27,6 +29,8 @@ public interface UserInfoService {
 
 	public UserInfo get(String areacCode, String orgCode, String orgName, String fxmc, UserType type);
 	
+	public UserInfo getById(String id);
+	
 	public List<UserInfo> getList(int page,int pageSize);
 	
 	public List<UserInfo> getUsersByGroup(int page,int pageSize,Group group);
@@ -34,6 +38,11 @@ public interface UserInfoService {
 	public int getCount() ;
 	
 	public int getCountByGroup(Group group);
+	
+	public Map<String,String> addRelations(List<Relation> relations);
+	
+	public Map<String,String> deleteRelation(String u_id,String groupName);
+
 
 
 }
