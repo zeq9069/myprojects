@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.ncss.jym.messagebox.dao.UserInfoDao;
 import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
@@ -139,6 +140,14 @@ public class UserInfoDaoImpl implements UserInfoDao {
 		relation.setGroup(null);
 		relation.setUserInfo(null);
 		session.delete(relation);
+		return true;
+	}
+	
+	@Override
+	public boolean addRecord(Record record){
+		Session session=this.getSession();
+		session.save(record);
+		session.flush();
 		return true;
 	}
 }

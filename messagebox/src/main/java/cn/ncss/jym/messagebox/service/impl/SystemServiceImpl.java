@@ -76,8 +76,16 @@ public class SystemServiceImpl implements SystemService {
 	public Map<String,String> publishAnnoun(Announcement announ){
 		return announcementService.add(announ);
 	}
+	
+	@Override
 	public List<Announcement> getAnnouns(String online){
 		return announcementService.getListByOnline(online);
+	}
+	
+	
+	@Override
+	public Map<String,String> updateOnline(int announ_id,String online){
+		return announcementService.updateOnline(announ_id, online);
 	}
 
 	@Override
@@ -96,5 +104,15 @@ public class SystemServiceImpl implements SystemService {
 		Group group=groupService.get(groupName);
 		return userInfoService.getCountByGroup(group);
 	}
+	@Override
+	public Map<String, String> addRecord(String u_id ,int announ_id) {
+		return userInfoService.addRecord(u_id, announ_id);
+	}
+
+	@Override
+	public UserInfo getUser(String u_id) {
+		return userInfoService.getById(u_id);
+	}
+
 
 }

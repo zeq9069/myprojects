@@ -1,6 +1,7 @@
 package cn.ncss.jym.messagebox.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
 
@@ -20,8 +21,10 @@ public interface AnnouncementDao {
 	public boolean delete(Announcement announ);
 
 	public boolean update(Announcement announ);
+	
+	public boolean updateOnline(int announ_id,String online);
 
-	public Announcement get(String id);
+	public Announcement get(int id);
 
 	public List<Announcement> getListByType(String type);
 

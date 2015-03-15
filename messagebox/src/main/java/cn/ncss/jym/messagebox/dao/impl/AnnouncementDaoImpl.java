@@ -3,6 +3,7 @@ package cn.ncss.jym.messagebox.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -48,9 +49,22 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		this.getSession().update(announ);
 		return true;
 	}
+	
+	@Override
+	public boolean updateOnline(int announ_id,String online){
+		String hql="update Announcement set online=:online where id=:id";
+		Query query=this.getSession().createQuery(hql);
+		query.setParameter("online", online);
+		query.setParameter("id", announ_id);
+		int res=query.executeUpdate();
+		if(res>0){
+			return true;
+		}
+		return false;
+	}
 
 	@Override
-	public Announcement get(String id) {
+	public Announcement get(int id) {
 		return (Announcement) this.getSession().get(Announcement.class, id);
 	}
 

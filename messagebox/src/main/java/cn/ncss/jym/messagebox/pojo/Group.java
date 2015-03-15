@@ -48,13 +48,13 @@ public class Group implements Serializable {
 	/**
 	 * 自动简历userInfo与group的映射关系表
 	 */
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="group")
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="group")
 	private Set<Relation> relations = new HashSet<Relation>();
 
 	/**
 	 * 自动建立group与announcement的关系表
 	 */
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="group")
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="group")
 	private Set<Group_announ> group_announs = new HashSet<Group_announ>();
 
 	

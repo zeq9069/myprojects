@@ -11,9 +11,6 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>职位分析</title>
-<link
-	href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"
-	rel="stylesheet">
 <link href="${webRoot}/${initParam.resourceRoot}/css/home.css" rel="stylesheet">
 </head>
 <body>
@@ -58,7 +55,6 @@
 		<hr>
 		<jsp:include page="common/footer.jsp" />
 	</div>
-	<script src="${webRoot}/${initParam.resourceRoot}/jquery.min.js"></script>
-	<script  src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
+	
 </body>
 </html>

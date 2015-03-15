@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.pojo.Group_announ;
+import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.GroupService;
@@ -24,6 +25,7 @@ import cn.ncss.jym.messagebox.service.SystemService;
 import cn.ncss.jym.messagebox.service.UserInfoService;
 import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
 import cn.ncss.jym.messagebox.utils.Constant;
+import cn.ncss.jym.messagebox.utils.StringUtil;
 
 /**
  * **********************************
@@ -105,6 +107,19 @@ public class SystemController {
 		return systemService.publishAnnoun(announ);
 	}
 	
+	@RequestMapping(value="announs/online/update")
+	public Map<String,String> updateOnline(String announ_id,String online){
+		Map<String,String> resultMap=new HashMap<String, String>();
+		if(!StringUtil.hasText(online) || !StringUtil.hasText(announ_id)){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE,"参数异常");
+			return resultMap;
+		}
+		return systemService.updateOnline(Integer.parseInt(announ_id), online);
+	}
+	
+	
+	
 	@RequestMapping(value="users/group/add",method=RequestMethod.POST)
 	public Map<String,String> addGroupforUser(HttpServletRequest request){
 		String[] names=request.getParameterValues("groupName");
@@ -151,12 +166,54 @@ public class SystemController {
 			resultMap.put(Constant.HTTP_MESSAGE, "该用户不存在");
 			return resultMap;
 		}
-		
-		
 		return userInfoService.deleteRelation(u_id,groupName);
 	}
 	
+	@RequestMapping(value="users/record/add",method=RequestMethod.GET)
+	public Map<String,String> addRecord(String u_id,int announ_id){
+		Map<String,String> resultMap=new HashMap<String, String>();
+		if(!StringUtil.hasText(u_id) || !StringUtil.hasText(""+announ_id)){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "参数异常");
+			return resultMap;
+		}
+		return systemService.addRecord(u_id, announ_id);
+	}
 	
-	
-	
+	@RequestMapping(value="users/get", method=RequestMethod.GET)
+	public Map<String,Object> getUser(String u_id){
+		UserInfo u=systemService.getUser(u_id);
+		List<String> list1=new ArrayList<String>();
+		List<String> list2=new ArrayList<String>();
+		Set<Relation> rset=u.getRelations();
+		Set<Record> recordset=u.getRecords();
+		Map<String,Object> map=new HashMap<String, Object>();
+		
+		
+		//已经查看的公告
+		for(Record rr:recordset){
+			list2.add(rr.getAnnoun().getTitle());
+		}
+		
+		
+		
+		//全部可以查看的公告
+		for(Relation r:rset){
+			Set<Group_announ> gaset=r.getGroup().getGroup_announs();
+			for(Group_announ gg:gaset){
+				list1.add(gg.getAnnoun().getTitle());
+			}
+		}
+		
+		//还没有读取的公告
+		list1.removeAll(list2);
+		
+		
+		
+		
+		map.put("num1", list1);
+		map.put("num2", list2);
+		
+		return map;
+	}
 }

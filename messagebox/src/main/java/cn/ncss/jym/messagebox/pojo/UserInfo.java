@@ -144,7 +144,7 @@ public class UserInfo implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="userInfo")
 	private Set<Relation> relations = new HashSet<Relation>();
 
-	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Record> records = new HashSet<Record>();
 
 	/*

@@ -61,7 +61,10 @@ form>span{
 }
 tr:hover{
 	background-color: #eeeeee;
+}
 
+td>span:hover{
+	border:2px solid #009966;
 }
  
 </style>
@@ -110,15 +113,13 @@ tr:hover{
 		<div class="row" style="width: 100%; padding-left: 0px">
 			<div class="col-md-2"
 				style="border: 2px solid #eeeeee; height: 800px; border-bottom: 0px;">
-				<div class="list-group"
-					style="text-align: center; padding-top: 30px; height: 50%;">
+				<div class="list-group" style="text-align: center; padding-top: 30px; height: 50%;">
 					<span class="list-group-item active" style="font-size: 25px">控制台操作</span>
-					<a href="${webRoot}/home/groups" class="list-group-item"
-						id="groups">群组操作</a> <a href="${webRoot}/home/users"
-						class="list-group-item" id="users">用户操作</a> <a
-						href="${webRoot}/home/send" class="list-group-item"
-						id="announ-send">发布公告</a> <a href="${webRoot}/home/announs"
-						class="list-group-item" id="announs">已发布公告</a>
+					<a href="${webRoot}/home/groups" class="list-group-item" id="groups">群组操作</a> 
+					<a href="${webRoot}/home/users" class="list-group-item" id="users">用户操作</a>
+					<a href="${webRoot}/home/send" class="list-group-item"id="announ-send">发布公告</a>
+					<a href="${webRoot}/home/announs" class="list-group-item" id="announs">已发布公告</a>
+					<a href="${webRoot}/home/main" class="list-group-item" id="main">统计</a>
 				</div>
 			</div>
 			<div id="content-right" class="col-md-10">
@@ -157,7 +158,7 @@ tr:hover{
 								<td>${user.email}</td>
 								<td>${user.mobilePhone}</td>
 								<td>${user.officePhone}</td>
-								<td class="group-td">
+								<td class="group-td" data-user="${user.id}">
 								<c:if test="${!empty user.relations}" >
 										<c:forEach items="${user.relations}" var="relation">
 											<span data-id="group_label" data-user="${user.id}" id="${relation.group.id}">${relation.group.name}</span>
@@ -263,11 +264,10 @@ $(document).ready(function(){
 				}); 
 		 
 		 $.post("/messagebox/system/users/group/add",$(".group-form").serialize(),function(data){
-			 alert(data);
 			 if(data.status=="success"){
 				 alert("添加成功");
 				 for(var i=0;i<groupArray.length;i++){
-					 $(".group-td").html("<span>"+groupArray[i]+"</span>"+ $(".group-td").html());
+					 $("td[data-user='"+u_id+"']").html("<span>"+groupArray[i]+"</span>"+ $("td[data-user='"+u_id+"']").html());
 				 }
 			 }else{
 				 alert(data.message);
@@ -278,7 +278,6 @@ $(document).ready(function(){
 	$("span[data-id='group_label']").dblclick(function(){
 		var u_id=$(this).attr("data-user");
 		var groupName=$(this).text().trim();
-		alert(u_id+groupName);
 		$.post("/messagebox/system/users/group/delete",{groupName:groupName,u_id:u_id},function(data){
 			if(data.status=="success"){
 				alert("删除成功");

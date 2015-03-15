@@ -75,6 +75,7 @@
 					<a href="${webRoot}/home/users" class="list-group-item" id="users">用户操作</a> 
 					<a href="${webRoot}/home/send" class="list-group-item" id="announ-send">发布公告</a> 
 					<a href="${webRoot}/home/announs" class="list-group-item" id="announs">已发布公告</a>
+					<a href="${webRoot}/home/main" class="list-group-item" id="main">统计</a>
 				</div>
 			</div>
 			<div id="content-right" class="col-md-10">

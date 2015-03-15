@@ -3,6 +3,7 @@ package cn.ncss.jym.messagebox.dao;
 import java.util.List;
 
 import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
@@ -48,6 +49,13 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	public boolean deleteRelation(Relation relation);
+	
+	/**
+	 * 添加公告查看记录
+	 * @param record
+	 * @return
+	 */
+	public boolean addRecord(Record record);
 
 	
 }

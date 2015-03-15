@@ -22,6 +22,10 @@
 	margin-top:0px;
 }
 
+#main{
+	background-color: #eeeeee;
+}
+
 #content-right{
 	padding-top:20px;
 	padding-left:30px
@@ -72,6 +76,7 @@
 					<a href="${webRoot}/home/users" class="list-group-item" id="users">用户操作</a> 
 					<a href="${webRoot}/home/send" class="list-group-item" id="announ-send">发布公告</a> 
 					<a href="${webRoot}/home/announs" class="list-group-item" id="announs">已发布公告</a>
+					<a href="${webRoot}/home/main" class="list-group-item" id="main">统计</a>
  				</div>
 			</div>
 			<div id="content-right" class="col-md-10" >
@@ -85,7 +90,7 @@
 						<p>公告统计：</p>
 						<ul>
 							<li>上线数量:${systemInfo.announs.announ_online_num}</li>
-							<li>上下线数量:${systemInfo.announs.announ_offline_num}</li>
+							<li>下线数量:${systemInfo.announs.announ_offline_num}</li>
 						</ul>
 					</div> 
 			</div>

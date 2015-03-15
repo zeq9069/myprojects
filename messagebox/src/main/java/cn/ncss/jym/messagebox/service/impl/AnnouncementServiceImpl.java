@@ -12,6 +12,7 @@ import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.utils.Constant;
+import cn.ncss.jym.messagebox.utils.StringUtil;
 
 /**
  * ***********************
@@ -28,6 +29,7 @@ public class AnnouncementServiceImpl implements AnnouncementService{
 	
 	@Autowired
 	private AnnouncementDao announcementDao;
+	
 	@Transactional(readOnly=false)
 	@Override
 	public Map<String,String> add(Announcement announ) {
@@ -54,10 +56,28 @@ public class AnnouncementServiceImpl implements AnnouncementService{
 	public boolean update(Announcement announ) {
 		return announcementDao.update(announ);
 	}
+	
+	@Override
+	@Transactional(readOnly=false)
+	public Map<String,String> updateOnline(int announ_id,String online){
+		Map<String,String>  resultMap=new HashMap<String, String>();
+		
+		if(!isExists(announ_id)){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE,"指定的公告不存在");
+			return resultMap;
+		}
+		
+		boolean res=announcementDao.updateOnline(announ_id,online);
+		
+		resultMap.put(Constant.HTTP_STATUS, res==true?Constant.HTTP_SUCCESS:Constant.HTTP_ERROR);
+		resultMap.put(Constant.HTTP_MESSAGE,res==true?"更改成功":"更改成功");
+		return resultMap;
+	}
 
 	@Transactional(readOnly=true)
 	@Override
-	public Announcement get(String id) {
+	public Announcement get(int id) {
 		return announcementDao.get(id);
 	}
 
@@ -98,8 +118,13 @@ public class AnnouncementServiceImpl implements AnnouncementService{
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<Announcement> getListByOnline(String online) {
 		return announcementDao.getByStatus(online);
+	}
+	
+	public boolean isExists(int announ_id){
+		return announcementDao.get(announ_id)==null?false:true;
 	}
 
 }

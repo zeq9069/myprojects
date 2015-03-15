@@ -21,8 +21,10 @@ public interface AnnouncementService {
 	public boolean delete(Announcement announ);
 
 	public boolean update(Announcement announ);
+	
+	public Map<String,String> updateOnline(int announ_id,String online);
 
-	public Announcement get(String id);
+	public Announcement get(int id);
 
 	public List<Announcement> getListByType(String type);
 
@@ -35,5 +37,6 @@ public interface AnnouncementService {
 	public List<Announcement> getListByOnline(String online);
 	
 	public Map<String,Integer> getAnnounInfo();
+	
 	
 }

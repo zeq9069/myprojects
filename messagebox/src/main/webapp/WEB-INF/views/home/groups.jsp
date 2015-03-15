@@ -46,12 +46,13 @@ body{
 }
 .group-list>p>span{
  margin-left:15px;
- border:1px solid #009966;
+ border:1px solid #eeeeee;
  padding:5px 10px 5px 10px;
  border-radius:2px;
 }
 .group-list>p>span:hover{
 	cursor:default;
+	border:2px solid #009966;
 }
 
  
@@ -100,6 +101,7 @@ body{
 					<a href="${webRoot}/home/users" class="list-group-item" id="users">用户操作</a> 
 					<a href="${webRoot}/home/send" class="list-group-item" id="announ-send">发布公告</a> 
 					<a href="${webRoot}/home/announs" class="list-group-item" id="announs">已发布公告</a>
+					<a href="${webRoot}/home/main" class="list-group-item" id="main">统计</a>
  				</div>
 			</div>
 			<div id="content-right" class="col-md-10" >

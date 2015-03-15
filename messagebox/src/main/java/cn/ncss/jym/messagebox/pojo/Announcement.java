@@ -79,13 +79,13 @@ public class Announcement implements Serializable {
 	/**
 	 * 自动生成group与accouncement的关系表
 	 */
-	@OneToMany(mappedBy = "announ", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "announ", fetch = FetchType.LAZY)
 	private Set<Group_announ> group_announs = new HashSet<Group_announ>();
 
 	/**
 	 * 自动加载该公告的浏览记录，与record建立关系
 	 */
-	@OneToMany(mappedBy = "announ", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "announ", fetch = FetchType.LAZY)
 	private Set<Record> records = new HashSet<Record>();
 
 	public int getId() {

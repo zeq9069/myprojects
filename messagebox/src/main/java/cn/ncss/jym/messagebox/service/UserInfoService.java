@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
@@ -42,7 +43,8 @@ public interface UserInfoService {
 	public Map<String,String> addRelations(List<Relation> relations);
 	
 	public Map<String,String> deleteRelation(String u_id,String groupName);
-
+	
+	public Map<String,String> addRecord(String u_id ,int announ_id);
 
 
 }
