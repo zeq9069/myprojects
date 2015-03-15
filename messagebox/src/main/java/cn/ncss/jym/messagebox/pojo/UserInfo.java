@@ -139,12 +139,12 @@ public class UserInfo implements Serializable {
 
 	/**
 	 * 自动建立user与group的关系表
+	 * set这一方不能添加cascade ， 否则删除 relation的时候，程序会把user也删掉
 	 */
-	//不可加(mappedBy = "users")，否则会出现userInfo加载group，group再加载userInfo的循环加载问题
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="userInfo")
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="userInfo")
 	private Set<Relation> relations = new HashSet<Relation>();
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Record> records = new HashSet<Record>();
 
 	/*

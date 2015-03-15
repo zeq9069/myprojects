@@ -2,7 +2,6 @@ package cn.ncss.jym.messagebox.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -134,11 +133,12 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	
 	@Override
 	public boolean deleteRelation(Relation relation){
-		//TODO 在删除relation时，userInfo被删除bug
+		// 在删除relation时，userInfo被删除bug，修改userInfo 的set方的级联
 		Session session=this.getSession();
-		UserInfo u=(UserInfo) session.get(UserInfo.class, relation.getUserInfo().getId());
-		u.getRelations().remove(relation);
-		session.flush();
+		//必须把两个对象设置为null
+		relation.setGroup(null);
+		relation.setUserInfo(null);
+		session.delete(relation);
 		return true;
 	}
 }
