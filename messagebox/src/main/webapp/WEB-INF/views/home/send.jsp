@@ -11,8 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>messageBox</title>
-<link
-	href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css"
+<link href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css"
 	rel="stylesheet">
 <style type="text/css">
 .container {
@@ -20,9 +19,11 @@
 	padding-left: 150px;
 	width: 90%;
 }
-#announ-send{
+
+#announ-send {
 	background-color: #eeeeee;
 }
+
 #content {
 	margin-top: 0px;
 }
@@ -61,8 +62,6 @@
 			</div>
 		</div>
 	</nav>
-
-
 	<div id="content" class="container"
 		style="padding-top: 50px; height: 100%; width: 100%; padding-left: 0px">
 		<div class="row" style="width: 100%; padding-left: 0px">
@@ -71,11 +70,13 @@
 				<div class="list-group"
 					style="text-align: center; padding-top: 30px; height: 50%;">
 					<span class="list-group-item active" style="font-size: 25px">控制台操作</span>
-					<a href="${webRoot}/home/groups" class="list-group-item" id="groups">群组操作</a> 
-					<a href="${webRoot}/home/users" class="list-group-item" id="users">用户操作</a> 
-					<a href="${webRoot}/home/send" class="list-group-item" id="announ-send">发布公告</a> 
-					<a href="${webRoot}/home/announs" class="list-group-item" id="announs">已发布公告</a>
-					<a href="${webRoot}/home/main" class="list-group-item" id="main">统计</a>
+					<a href="${webRoot}/home/groups" class="list-group-item"
+						id="groups">群组操作</a> <a href="${webRoot}/home/users"
+						class="list-group-item" id="users">用户操作</a> <a
+						href="${webRoot}/home/send" class="list-group-item"
+						id="announ-send">发布公告</a> <a href="${webRoot}/home/announs"
+						class="list-group-item" id="announs">已发布公告</a> <a
+						href="${webRoot}/home/main" class="list-group-item" id="main">统计</a>
 				</div>
 			</div>
 			<div id="content-right" class="col-md-10">
@@ -85,10 +86,10 @@
 							<input type="text" name="title" id="title" placeholder="标题名">
 						</p>
 						<p>
-						
 							<c:forEach items="${groups}" var="group">
-								<input type="checkbox" name="group" id="${group.key}" value="${group.value}">${group.value}
-							</c:forEach>
+								<input type="checkbox" name="group" id="${group.key}"
+									value="${group.value}">${group.value}
+</c:forEach>
 						</p>
 						<p>
 							<select id="type" name="type">
@@ -96,14 +97,17 @@
 							</select>
 						</p>
 						<p>
-							<input type="hidden" name="publisher" id="publisher" value="admin">
+							<input type="hidden" name="publisher" id="publisher"
+								value="admin">
 						</p>
 						<p>
-						 	<input type="radio" name="online" id="online" value="true" checked="checked">上线 
-							<input type="radio" name="online" id="online" value="false">暂不上线
+							<input type="radio" name="online" id="online" value="true"
+								checked="checked">上线 <input type="radio" name="online"
+								id="online" value="false">暂不上线
 						</p>
 						<p>
-							<textarea name="content" id="content" rows="20" cols="80"></textarea>
+							<input type="hidden" name="content" id="content" />
+							  <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
 						</p>
 						<p>
 							<button type="button" id="announ_submit" name="announ_submit">发布</button>
@@ -115,10 +119,91 @@
 		<hr>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
+	
+	
+	<div id="btns">
+    <div>
+         <button onclick="getContent()">获得内容</button>
+         <button onclick="getContentTxt()">获得纯文本</button>
+        <button onclick="getPlainTxt()">获得带格式的纯文本</button>
+        <button onclick="hasContent()">判断是否有内容</button>
+ 
+    </div>
+    <div>
+        <button onclick="getText()">获得当前选中的文本</button>
+     </div>
 
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/send.js"></script>
+
+	<script type="text/javascript" charset="utf-8"
+		src="${webRoot}/${initParam.resourceRoot}/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8"
+		src="${webRoot}/${initParam.resourceRoot}/js/ueditor/ueditor.all.min.js">
+		
+	</script>
 	
+	
+	
+	
+<script type="text/javascript">
+
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor');
+  
+    function getContent() {
+        var arr = [];
+        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getContent());
+        alert(arr.join("\n"));
+    }
+    function getPlainTxt() {
+        var arr = [];
+        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getPlainTxt());
+        alert(arr.join('\n'))
+    }
+    
+   
+ 
+
+    function getContentTxt() {
+        var arr = [];
+        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+        arr.push("编辑器的纯文本内容为：");
+        arr.push(UE.getEditor('editor').getContentTxt());
+        alert(arr.join("\n"));
+    }
+    function hasContent() {
+        var arr = [];
+        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+        arr.push("判断结果为：");
+        arr.push(UE.getEditor('editor').hasContents());
+        alert(arr.join("\n"));
+    }
+    
+  
+    
+</script>
 </body>
 </html>
