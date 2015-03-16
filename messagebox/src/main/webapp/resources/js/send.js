@@ -10,17 +10,19 @@ $(document).ready(function(){
 		
 		
 		var value=UE.getEditor('editor').getContent();
-		 
-		alert($("input[name='title']").val());
 		
-		$.post("/messagebox/system/announs/add",{
-			title:$("input[name='title']").val(),
-			type:$("#type").val(),
-			group:$("input[name='group']:checked").val(),
-			publisher:$("input[name='publisher']").val(),
-			online:$("input[name='online']:checked").val(),
-			content:value
-		},function(data){
+
+		var s=new Array();
+		var i=0;
+		  $("input[name='group']:checked").each(function(){ 
+		    s.push("group="+$(this).val());
+		  }); 
+	    
+		  var data=s.join("&")+"&title="+$("input[name='title']").val()+"&type="+$("#type").val()
+		  +"&publisher="+$("input[name='publisher']").val()+"&online="+$("input[name='online']:checked").val()
+		  +"&content="+value;
+		 
+		$.post("/messagebox/system/announs/add",data,function(data){
 			if(data.status=="success"){
 				alert("添加成功!");
 			}else{
