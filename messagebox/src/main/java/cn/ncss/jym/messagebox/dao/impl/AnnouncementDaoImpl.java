@@ -1,6 +1,7 @@
 package cn.ncss.jym.messagebox.dao.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;
+import cn.ncss.jym.messagebox.pojo.Group_announ;
 import cn.ncss.jym.messagebox.utils.StringUtil;
 
 /**
@@ -34,7 +36,12 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 
 	@Override
 	public boolean add(Announcement announ) {
-		this.getSession().save(announ);
+		int anoun_id=(int) this.getSession().save(announ);
+		Set<Group_announ> set=announ.getGroup_announs();
+		for(Group_announ g:set){
+			g.getAnnoun().setId(anoun_id);
+			this.getSession().save(g);
+		}
 		return true;
 	}
 
