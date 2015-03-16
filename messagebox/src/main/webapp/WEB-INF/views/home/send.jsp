@@ -87,7 +87,7 @@
 						</p>
 						<p>
 							<c:forEach items="${groups}" var="group">
-								<input type="checkbox" name="group" id="${group.key}"
+								<input type="checkbox" name="group"  id="${group.key}"
 									value="${group.value}">${group.value}
 </c:forEach>
 						</p>
@@ -120,35 +120,6 @@
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 	
-	
-	<div id="btns">
-    <div>
-         <button onclick="getContent()">获得内容</button>
-         <button onclick="getContentTxt()">获得纯文本</button>
-        <button onclick="getPlainTxt()">获得带格式的纯文本</button>
-        <button onclick="hasContent()">判断是否有内容</button>
- 
-    </div>
-    <div>
-        <button onclick="getText()">获得当前选中的文本</button>
-     </div>
-
-</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/send.js"></script>
@@ -160,50 +131,5 @@
 		
 	</script>
 	
-	
-	
-	
-<script type="text/javascript">
-
-    //实例化编辑器
-    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-    var ue = UE.getEditor('editor');
-  
-    function getContent() {
-        var arr = [];
-        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
-        arr.push("内容为：");
-        arr.push(UE.getEditor('editor').getContent());
-        alert(arr.join("\n"));
-    }
-    function getPlainTxt() {
-        var arr = [];
-        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
-        arr.push("内容为：");
-        arr.push(UE.getEditor('editor').getPlainTxt());
-        alert(arr.join('\n'))
-    }
-    
-   
- 
-
-    function getContentTxt() {
-        var arr = [];
-        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
-        arr.push("编辑器的纯文本内容为：");
-        arr.push(UE.getEditor('editor').getContentTxt());
-        alert(arr.join("\n"));
-    }
-    function hasContent() {
-        var arr = [];
-        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
-        arr.push("判断结果为：");
-        arr.push(UE.getEditor('editor').hasContents());
-        alert(arr.join("\n"));
-    }
-    
-  
-    
-</script>
 </body>
 </html>
