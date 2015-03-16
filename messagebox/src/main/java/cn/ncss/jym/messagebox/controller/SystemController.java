@@ -78,11 +78,11 @@ public class SystemController {
 		String title=request.getParameter("title");
 		String[] group=request.getParameterValues("group");
 		String type=request.getParameter("type");
-		String content=request.getParameter("content");
+		String content=request.getParameter("editorValue");
 		String online=request.getParameter("online");
 		String publisher=request.getParameter("publisher");
 		
-		if(title==null || group==null ||   type==null || content==null || online==null || publisher==null){
+		if(StringUtil.hasText(title) || group==null || group.length==0 ||   StringUtil.hasText(type) || StringUtil.hasText(content) || StringUtil.hasText(online) || StringUtil.hasText(publisher)){
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
 			resultMap.put(Constant.HTTP_MESSAGE, "请求参数缺失");
 			return resultMap;
