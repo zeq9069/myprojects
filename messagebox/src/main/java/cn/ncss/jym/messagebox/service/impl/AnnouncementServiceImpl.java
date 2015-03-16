@@ -12,8 +12,6 @@ import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.utils.Constant;
-import cn.ncss.jym.messagebox.utils.StringUtil;
-
 /**
  * ***********************
  * 

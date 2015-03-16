@@ -113,6 +113,11 @@ public class SystemServiceImpl implements SystemService {
 	public UserInfo getUser(String u_id) {
 		return userInfoService.getById(u_id);
 	}
+	
+	@Override
+	public Announcement getAnnoun(int announ_id){
+		return announcementService.get(announ_id);
+	}
 
 
 }

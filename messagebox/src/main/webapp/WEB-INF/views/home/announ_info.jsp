@@ -10,51 +10,31 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>messageBox</title>
-<!-- 新 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css">
-
+<link href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
-body{
-	text-align:center;
-}
 .container{ 
 	margin-left:0px;
 	padding-left:150px;
 	width: 90%;
-}
-#groups{
-	background-color: #eeeeee;
 }
 
 #content{
 	margin-top:0px;
 }
 
+#main{
+	background-color: #eeeeee;
+}
+
 #content-right{
-	margin-top:20px;
+	padding-top:20px;
 	padding-left:30px
 }
-.group-list{
-	
-	border:1px solid #eeeeee;
-	border-radius:5px;
-	word-wrap:break-word; 
-	word-break:break-all; 
-	width:100%;
-	padding-left:5px;
 
+.groups{
+border:1px solid #eeeeee;
+border-radius:3px;
 }
-.group-list>p>span{
- margin-left:15px;
- border:1px solid #eeeeee;
- padding:5px 10px 5px 10px;
- border-radius:2px;
-}
-.group-list>p>span:hover{
-	cursor:default;
-	border:2px solid #009966;
-}
-
  
 </style>
 </head>
@@ -105,17 +85,34 @@ body{
  				</div>
 			</div>
 			<div id="content-right" class="col-md-10" >
-					<div class="add-group">
-						添加群组：<input type="text" name="groupName" id="groupName" placeholder="群组名"></input> <button type="button" id="btn-add" class="btn btn-default">添加</button>
-					</div> 
-					<hr>
-					<div class="group-list">
+					<div class="body">
+						<c:if test="${announ!=null}">
+							<p>
+								标题：${announ.title}
+							</p>
+							<p>
+							发布时间：<span>${announ.date}</span>
+							发布者：<span>${announ.publisher}</span>
+							类型：<span>${announ.type}</span>
+							</p>
+							<p>
+								群组：
+								<c:forEach items="${groups}" var="entry">
+									<span class="groups" id="${entry.key}">${entry.value}</span>
+								</c:forEach>
+							</p>
+							<p>
+							
+							${announ.content}
+							</p>
+						
+						</c:if>
 						<p>
-							<c:forEach items="${groups}" var="group">
-								<span id="${group.key}">${group.value}</span>
-							</c:forEach>
+						
 						</p>
-					</div>
+						
+						
+					</div> 
 			</div>
 		</div>
 		<hr>
@@ -124,7 +121,5 @@ body{
 
 	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
-	<script src="${webRoot}/${initParam.resourceRoot}/js/groups.js"></script>
 </body>
-
 </html>

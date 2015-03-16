@@ -1,7 +1,6 @@
 package cn.ncss.jym.messagebox.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
 

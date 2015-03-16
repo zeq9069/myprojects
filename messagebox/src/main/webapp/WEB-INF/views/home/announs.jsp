@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>messageBox</title>
-<link href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
 .container{ 
 	margin-left:0px;
@@ -125,7 +125,7 @@ td>span:hover{
 								<td>发布者</td>
 								<td>发布时间</td>
 								<td>类型</td>
-								<td>内容</td>
+								<!-- <td>内容</td> -->
 								<td>群组</td>
 								<td>查看量(人)</td>
 								<td>状态</td>
@@ -133,11 +133,11 @@ td>span:hover{
 						</thead>
 						<c:forEach items="${announs_online}" var="announ">
 							<tr>
-								<td>${announ.title}</td>
+								<td><a href="${webRoot}/home/announs/look?announ_id=${announ.id}">${announ.title}</a></td>
 								<td>${announ.publisher}</td>
 								<td>${announ.date}</td>
 								<td>${announ.type}</td>
-								<td>${announ.content}</td>
+								<%-- <td>${announ.content}</td> --%>
 								<td>
 									<c:forEach items="${announ.group_announs}" var="group_announ">
 										<c:if test="${!empty group_announ}">
@@ -177,7 +177,7 @@ td>span:hover{
 								<td>发布者</td>
 								<td>发布时间</td>
 								<td>类型</td>
-								<td>内容</td>
+								<!-- <td>内容</td> -->
 								<td>群组</td>
 								<td>查看量</td>
 								<td>状态</td>
@@ -185,11 +185,11 @@ td>span:hover{
 						</thead>
 						<c:forEach items="${announs_offline}" var="an">
 							<tr>
-								<td>${an.title}</td>
+								<td><a href="${webRoot}/home/announs/look?announ_id=${an.id}">${an.title}</a></td>
 								<td>${an.publisher}</td>
 								<td>${an.date}</td>
 								<td>${an.type}</td>
-								<td>${an.content}</td>
+								<%-- <td>${an.content}</td> --%>
 								<td>
 									<c:forEach items="${an.group_announs}" var="group_announ">
 										<c:if test="${!empty group_announ}">

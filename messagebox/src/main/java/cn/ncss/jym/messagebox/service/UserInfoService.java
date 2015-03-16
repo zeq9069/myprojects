@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.Group;
-import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;

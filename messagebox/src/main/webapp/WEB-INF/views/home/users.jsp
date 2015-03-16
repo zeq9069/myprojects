@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>messageBox</title>
-	<link href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css" rel="stylesheet">
 	<link href="${webRoot}/${initParam.resourceRoot}/css/jBootsrapPage.css" rel="stylesheet" />
 	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
@@ -143,7 +143,7 @@ td>span:hover{
 								<td>部门</td>
 								<td>职务</td>
 								<td>邮箱</td>
-								<td>手机</td>
+								<!-- <td>手机</td> -->
 								<td>电话</td>
 								<td>所属分组</td>
 							</tr>
@@ -156,7 +156,7 @@ td>span:hover{
 								<td>${user.department}</td>
 								<td>${user.jobTitle}</td>
 								<td>${user.email}</td>
-								<td>${user.mobilePhone}</td>
+								<%-- <td>${user.mobilePhone}</td> --%>
 								<td>${user.officePhone}</td>
 								<td class="group-td" data-user="${user.id}">
 								<c:if test="${!empty user.relations}" >

@@ -3,6 +3,7 @@ package cn.ncss.jym.messagebox.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.ncss.jym.messagebox.pojo.Announcement;
+import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.pojo.Group_announ;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.GroupService;
 import cn.ncss.jym.messagebox.service.SystemService;
@@ -95,5 +99,27 @@ public class HomeController {
 		model.addObject("announs_offline", systemService.getAnnouns(Constant.ANNOUN_OFFLINE));
 		return model;
 	}
+	
+
+	@RequestMapping(value="announs/look",method=RequestMethod.GET)
+	public ModelAndView lookAnnoun(int announ_id,ModelAndView model){
+ 		Announcement announ=systemService.getAnnoun(announ_id);
+ 		model.setViewName("/home/announ_info");
+ 		Map<String,String> groupMap=new HashMap<String, String>();
+		if(announ!=null){
+			announ.setRecords(null);
+			Set<Group_announ> set=announ.getGroup_announs();
+			for(Group_announ ga:set){
+				Group gg=ga.getGroup();
+				groupMap.put(gg.getId()+"", gg.getName());
+			}
+		}
+		
+		model.addObject("groups", groupMap);
+		model.addObject("announ", announ);
+		
+		return model;
+	}
+	
 	
 }

@@ -12,7 +12,7 @@
 <meta name="author" content="">
 <title>messageBox</title>
 <link
-	href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css"
+	href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css"
 	rel="stylesheet">
 <style type="text/css">
 .container {

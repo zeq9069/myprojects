@@ -109,4 +109,10 @@ public interface SystemService {
 	 */
 	public UserInfo getUser(String u_id);
 	
+	/**
+	 * 获取一个公告
+	 * @return
+	 */
+	public Announcement getAnnoun(int announ_id);
+	
 }
