@@ -111,7 +111,9 @@ public class HomeController {
 			Set<Group_announ> set=announ.getGroup_announs();
 			for(Group_announ ga:set){
 				Group gg=ga.getGroup();
+				if(gg!=null){
 				groupMap.put(gg.getId()+"", gg.getName());
+				}
 			}
 		}
 		
