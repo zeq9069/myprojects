@@ -8,20 +8,8 @@ $(document).ready(function(){
 	
 	$("#announ_submit").click(function(){
 		
-		
 		var value=UE.getEditor('editor').getContent();
 		
-
-		var s=new Array();
-		var i=0;
-		  $("input[name='group']:checked").each(function(){ 
-		    s.push("group="+$(this).val());
-		  }); 
-	    
-		  var data=s.join("&")+"&title="+$("input[name='title']").val()+"&type="+$("#type").val()
-		  +"&publisher="+$("input[name='publisher']").val()+"&online="+$("input[name='online']:checked").val()
-		  +"&content="+$("textarea[name='editorValue'").val();
-		 alert(data);
 		$.post("/messagebox/system/announs/add",$("form").serialize(),function(data){
 			if(data.status=="success"){
 				alert("添加成功!");
