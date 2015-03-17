@@ -82,7 +82,7 @@ public class SystemController {
 		String online=request.getParameter("online");
 		String publisher=request.getParameter("publisher");
 		
-		if(StringUtil.hasText(title) || group==null || group.length==0 ||   StringUtil.hasText(type) || StringUtil.hasText(content) || StringUtil.hasText(online) || StringUtil.hasText(publisher)){
+		if(!StringUtil.hasText(title) || group==null || group.length==0 ||  !StringUtil.hasText(type) || !StringUtil.hasText(content) || !StringUtil.hasText(online) || !StringUtil.hasText(publisher)){
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
 			resultMap.put(Constant.HTTP_MESSAGE, "请求参数缺失");
 			return resultMap;
