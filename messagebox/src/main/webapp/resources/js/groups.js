@@ -16,7 +16,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	$(".group-list>p>span").dblclick(function(){
+	$("#content-right").on("dblclick",".group-list>p>span",function(){
 		alert($(this).html());
 		var groupName=$(this).html();
 		var id=this.id;
@@ -33,8 +33,8 @@ $(document).ready(function(){
 				alert(textStatus);
 			}
 		});
-		
 	});
+	
 	
 });
 
