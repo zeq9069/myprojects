@@ -131,32 +131,28 @@ td>span:hover{
 								<td>状态</td>
 							</tr>
 						</thead>
-						<c:forEach items="${announs_online}" var="announ">
+						<c:forEach items="${announs_online}" var="announInfo">
 							<tr>
-								<td><a href="${webRoot}/home/announs/look?announ_id=${announ.id}">${announ.title}</a></td>
-								<td>${announ.publisher}</td>
-								<td>${announ.date}</td>
-								<td>${announ.type}</td>
+								<td><a href="${webRoot}/home/announs/look?announ_id=${announInfo.announ.id}">${announInfo.announ.title}</a></td>
+								<td>${announInfo.announ.publisher}</td>
+								<td>${announInfo.announ.date}</td>
+								<td>${announInfo.announ.type}</td>
 								<%-- <td>${announ.content}</td> --%>
 								<td>
-									<c:forEach items="${announ.group_announs}" var="group_announ">
-										<c:if test="${!empty group_announ}">
-											<c:if test="${!empty group_announ.group}">
-												<span id="${group_announ.group.id}">${group_announ.group.name}</span>
-											</c:if>	
-										</c:if>									
+									<c:forEach items="${announInfo.groups}" var="group">
+										<span>${group.name}</span>
 									</c:forEach>
 								</td>
 								<td>
-									${announ.records.size()}
+									${announInfo.views}
 								</td>
 								<td>
 								<span id="announ_status" data-user="${announ.id}" data-value="${announ.online}">
 								<c:choose>
-									<c:when test="${announ.online==true}">
+									<c:when test="${announInfo.announ.online==true}">
 										上线
 									</c:when>
-									<c:when test="${announ.online==false}">
+									<c:when test="${announInfo.announ.online==false}">
 										下线
 									</c:when>
 									<c:otherwise>
@@ -169,57 +165,7 @@ td>span:hover{
 						</c:forEach>
 					</table>
 					
-					
-					<table class="offline_table">
-						<thead>
-							<tr>
-								<td>标题</td>
-								<td>发布者</td>
-								<td>发布时间</td>
-								<td>类型</td>
-								<!-- <td>内容</td> -->
-								<td>群组</td>
-								<td>查看量</td>
-								<td>状态</td>
-							</tr>
-						</thead>
-						<c:forEach items="${announs_offline}" var="an">
-							<tr>
-								<td><a href="${webRoot}/home/announs/look?announ_id=${an.id}">${an.title}</a></td>
-								<td>${an.publisher}</td>
-								<td>${an.date}</td>
-								<td>${an.type}</td>
-								<%-- <td>${an.content}</td> --%>
-								<td>
-									<c:forEach items="${an.group_announs}" var="group_announ">
-										<c:if test="${!empty group_announ}">
-											<c:if test="${!empty group_announ.group}">
-												<span id="${group_announ.group.id}">${group_announ.group.name}</span>
-											</c:if>	
-										</c:if>									
-									</c:forEach>
-								</td>
-								<td>
-									${an.records.size()}
-								</td>
-								<td >
-								<span id="announ_status" data-user="${an.id}" data-value="${an.online}">
-								<c:choose>
-									<c:when test="${an.online==true}">
-										上线
-									</c:when>
-									<c:when test="${an.online==false}">
-										下线
-									</c:when>
-									<c:otherwise>
-										异常
-									</c:otherwise>									
-								</c:choose>
-								</span>
-								</td>
-							</tr>
-						</c:forEach>
-					</table>
+					 
 				</div>
 			</div>
 		</div>

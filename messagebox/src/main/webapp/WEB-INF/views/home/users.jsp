@@ -12,10 +12,33 @@
 <meta name="author" content="">
 <title>messageBox</title>
 	<link href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css" rel="stylesheet">
-	<link href="${webRoot}/${initParam.resourceRoot}/css/jBootsrapPage.css" rel="stylesheet" />
-	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
+ 	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
-	<script src="${webRoot}/${initParam.resourceRoot}/js/jBootstrapPage.js"></script>
+ 	<link rel="stylesheet" href="${webRoot}/${initParam.resourceRoot}/css/graduate.css">
+	
+	
+	
+	<script type="text/x-jsrender" id="listWrapTemp">
+							<tr>
+								<td>{{:user.username}}</td>
+								<td>{{:user.realName}}</td>
+								<td>{{:user.orgName}}</td>
+								<td>{{:user.department}}</td>
+								<td>{{:user.jobTitle}}</td>
+								<td>{{:user.email}}</td>
+ 								<td>{{:user.officePhone}}</td>
+								<td class="group-td" data-user="{{:user.id}}">
+								<span id="{{:user.id}}" class="group_plus glyphicon glyphicon-plus" data-toggle="modal"
+						data-target="#groupModel"></span>
+								</td>
+							</tr>
+	</script>
+	
+	
+	
+	
+	
+	
 <style type="text/css">
 .container {
 	margin-left: 0px;
@@ -66,8 +89,16 @@ tr:hover{
 td>span:hover{
 	border:2px solid #009966;
 }
+
+
+	.pagination>li.goPage{padding-left:15px;}
+	.pagination>li.goPage>span{border:0px;float:inherit;background-color: inherit;padding:0px;line-height:28px;}
+	.pagination>li.goPage>span.text{color:#666;}
+	.pagination>li.goPage>input.num,.pagination>li.goPage>span.btn{width:40px;height:24px;padding:4px 8px;border:1px solid #CCC;line-height:16px;}
  
 </style>
+
+
 
 </head>
 <body>
@@ -148,30 +179,15 @@ td>span:hover{
 								<td>所属分组</td>
 							</tr>
 						</thead>
-						<c:forEach items="${resultMap.users}" var="user">
-							<tr>
-								<td>${user.username}</td>
-								<td>${user.realName}</td>
-								<td>${user.orgName}</td>
-								<td>${user.department}</td>
-								<td>${user.jobTitle}</td>
-								<td>${user.email}</td>
-								<%-- <td>${user.mobilePhone}</td> --%>
-								<td>${user.officePhone}</td>
-								<td class="group-td" data-user="${user.id}">
-								<c:if test="${!empty user.relations}" >
-										<c:forEach items="${user.relations}" var="relation">
-											<span data-id="group_label" data-user="${user.id}" id="${relation.group.id}">${relation.group.name}</span>
-										</c:forEach>
-								</c:if>
-								<c:if test="${empty user.relations}" >
-									<span>未分组</span>
-								</c:if>
-								<span id="${user.id}" class="group_plus glyphicon glyphicon-plus" data-toggle="modal"
-						data-target="#groupModel"></span>
-								</td>
-							</tr>
-						</c:forEach>
+						
+						<div class="itemWrap">
+							<tbody class="itemListWrap">
+			
+							</tbody>
+							<ul class="itemPageWrap pagination pagination-sm">
+			
+							</ul>
+						</div>
 					</table>
 				<div style="padding-left:100px;text-align:center">
 					<ul class="pagination pagination-sm"></ul>
@@ -214,79 +230,50 @@ td>span:hover{
 						</div>
 					</div>
 				</div>
-		
 		<hr>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 </body>
+	<script type="text/javascript" src="${webRoot}/${initParam.resourceRoot}/js/page/requirejs.min.js"></script>
 
 <script type="text/javascript">
-
-$(function(){
-/*
- *pageSize:每页多少条记录
- *buttons:显示多少个按钮
- *total:总页数
- */
- var psize=${resultMap.pageSize<=0?1:resultMap.pageSize};
- var item=5;
- var count=${resultMap.count<=0?1:resultMap.count};
- createPage(psize, item, count);
-
-function createPage(pageSize, buttons, total) {
-    $(".pagination").jBootstrapPage({
-        pageSize : pageSize,
-        total : total,
-        maxPageButton:buttons,
-        onPageClicked: function(obj, pageIndex) {
-        	
-        },
-    });
-}
-});
-
 $(document).ready(function(){
-	var u_id;//user id
-	$(".group_plus").click(function(){
-		//初始化
-		u_id=this.id;
-		$("#u_id").attr("value",u_id);
-	});
-	//model模态框提交
-	$("#group_submit").click(function(){
-		if(u_id==null){
-			return ;
-		}
-		var groupArray= new Array();
-		var i=0;
-		 $('input[name="groupName"]:checked').each(function(){
-			 groupArray[i++]=$(this).val();
-				}); 
-		 
-		 $.post("/messagebox/system/users/group/add",$(".group-form").serialize(),function(data){
-			 if(data.status=="success"){
-				 alert("添加成功");
-				 for(var i=0;i<groupArray.length;i++){
-					 $("td[data-user='"+u_id+"']").html("<span>"+groupArray[i]+"</span>"+ $("td[data-user='"+u_id+"']").html());
-				 }
-			 }else{
-				 alert(data.message);
-			 }
-		 });
-	});
-	
-	$("span[data-id='group_label']").dblclick(function(){
-		var u_id=$(this).attr("data-user");
-		var groupName=$(this).text().trim();
-		$.post("/messagebox/system/users/group/delete",{groupName:groupName,u_id:u_id},function(data){
-			if(data.status=="success"){
-				alert("删除成功");
-				$(this).remove();
-			}else{
-				alert("删除失败");
+	require.config({
+		shim:{
+			bootstrap :{
+				deps : ['jquery']
+			},
+			jsrender : {
+				deps : ['jquery']
 			}
+		},
+		paths:{
+			jquery : "/messagebox/resources/js/jquery.min",
+			bootstrap : "/messagebox/resources/js/bootstrap.min",
+			jsrender : "/messagebox/resources/js/page/jsrender.min",
+			page: "/messagebox/resources/js/page/page"
+		}
+	});
+
+	
+	require(["jquery",'page','bootstrap','jsrender'],function($,Page){
+		$(function(){
+			var listPage = Page.setting({
+				'itemListUrl': '/messagebox/system/users/list',
+				'itemCountUrl': '/messagebox/system/users/count',
+				'par': {},
+				'type': 'post',
+				'listWrap': '.itemListWrap',
+				'listWrapTemp': '#listWrapTemp',
+				'pageWrap': '.itemPageWrap',
+				'datas':{
+					'group':'all'
+				}
+			});
+			 
 		});
 	});
+	
 	
 	
 });
