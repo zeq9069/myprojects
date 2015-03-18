@@ -21,29 +21,28 @@ public interface UserInfoService {
 
 	public boolean addOne(UserInfo userInfo);
 
-//	public boolean addList(List<UserInfo> userList);
-	
-	public boolean deleteOne(UserInfo userInfo) ;
-	
-	public boolean update(UserInfo userInfo) ;
+	//	public boolean addList(List<UserInfo> userList);
+
+	public boolean deleteOne(UserInfo userInfo);
+
+	public boolean update(UserInfo userInfo);
 
 	public UserInfo get(String areacCode, String orgCode, String orgName, String fxmc, UserType type);
-	
-	public UserInfo getById(String id);
-	
-	public List<UserInfo> getList(int page,int pageSize);
-	
-	public List<UserInfo> getUsersByGroup(int page,int pageSize,Group group);
-	
-	public int getCount() ;
-	
-	public int getCountByGroup(Group group);
-	
-	public Map<String,String> addRelations(List<Relation> relations);
-	
-	public Map<String,String> deleteRelation(String u_id,String groupName);
-	
-	public Map<String,String> addRecord(String u_id ,int announ_id);
 
+	public UserInfo getById(String id);
+
+	public List<UserInfo> getList(int page, int pageSize);
+
+	public List<UserInfo> getUsersByGroup(int page, int pageSize, Group group);
+
+	public int getCount();
+
+	public int getCountByGroup(Group group);
+
+	public Map<String, String> addRelations(List<Relation> relations);
+
+	public Map<String, String> deleteRelation(String u_id, String groupName);
+
+	public boolean addRecord(String u_id, int announ_id);
 
 }

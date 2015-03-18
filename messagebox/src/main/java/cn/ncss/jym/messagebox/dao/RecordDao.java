@@ -2,7 +2,9 @@ package cn.ncss.jym.messagebox.dao;
 
 import java.util.List;
 
+import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Record;
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 
 /**
  * *************************
@@ -21,7 +23,7 @@ public interface RecordDao {
 	public List<Record> getListByUId(String u_id);
 
 	public List<Record> getListByAnnounId(String announ_id);
-	
-	public  boolean isExists(Record record);
+
+	public boolean isExists(UserInfo user, Announcement announ);
 
 }

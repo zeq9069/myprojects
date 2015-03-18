@@ -6,12 +6,15 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.ncss.jym.messagebox.dao.GroupDao;
 import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.pojo.Relation;
 
 /**
  * *************************
@@ -40,8 +43,8 @@ public class GroupDaoImpl implements GroupDao {
 
 	@Override
 	public boolean delete(String name) {
-		String hql="delete from Group where name=:name";
-		Query query=this.getSessioin().createQuery(hql);
+		String hql = "delete from Group where name=:name";
+		Query query = this.getSessioin().createQuery(hql);
 		query.setParameter("name", name);
 		query.executeUpdate();
 		return true;
@@ -69,7 +72,16 @@ public class GroupDaoImpl implements GroupDao {
 
 	@Override
 	public boolean isExists(String name) {
-		return this.get(name)==null?false:true;
+		return this.get(name) == null ? false : true;
 	}
 
+	@Override
+	public List<Object[]> getGroupInfo() {
+		Criteria crit = this.getSessioin().createCriteria(Relation.class);
+		ProjectionList pro = Projections.projectionList();
+		pro.add(Projections.groupProperty("group"));
+		pro.add(Projections.rowCount());
+		crit.setProjection(pro);
+		return crit.list();
+	}
 }

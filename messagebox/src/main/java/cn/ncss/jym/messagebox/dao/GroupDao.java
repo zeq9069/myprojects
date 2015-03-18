@@ -19,7 +19,7 @@ public interface GroupDao {
 	 * @param group
 	 * @return 返回ID
 	 */
-	public String  add(Group group);
+	public String add(Group group);
 
 	public boolean delete(String name);
 
@@ -28,7 +28,9 @@ public interface GroupDao {
 	public Group get(String name);
 
 	public List<Group> getList();
-	
+
+	public List<Object[]> getGroupInfo();
+
 	public boolean isExists(String name);
 
 }

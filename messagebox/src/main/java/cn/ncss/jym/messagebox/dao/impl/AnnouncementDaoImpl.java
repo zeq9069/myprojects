@@ -1,7 +1,6 @@
 package cn.ncss.jym.messagebox.dao.impl;
 
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Group_announ;
+import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.utils.StringUtil;
 
 /**
@@ -35,12 +35,15 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	}
 
 	@Override
-	public boolean add(Announcement announ) {
-		int anoun_id=(int) this.getSession().save(announ);
-		Set<Group_announ> set=announ.getGroup_announs();
-		for(Group_announ g:set){
-			g.getAnnoun().setId(anoun_id);
-			this.getSession().save(g);
+	public int add(Announcement announ) {
+		return (int) this.getSession().save(announ);
+	}
+
+	@Override
+	public boolean addGroup_announ(List<Group_announ> lists) {
+		Session session = this.getSession();
+		for (Group_announ ga : lists) {
+			session.save(ga);
 		}
 		return true;
 	}
@@ -56,15 +59,15 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		this.getSession().update(announ);
 		return true;
 	}
-	
+
 	@Override
-	public boolean updateOnline(int announ_id,String online){
-		String hql="update Announcement set online=:online where id=:id";
-		Query query=this.getSession().createQuery(hql);
+	public boolean updateOnline(int announ_id, String online) {
+		String hql = "update Announcement set online=:online where id=:id";
+		Query query = this.getSession().createQuery(hql);
 		query.setParameter("online", online);
 		query.setParameter("id", announ_id);
-		int res=query.executeUpdate();
-		if(res>0){
+		int res = query.executeUpdate();
+		if (res > 0) {
 			return true;
 		}
 		return false;
@@ -112,10 +115,35 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Announcement> getByStatus(String status) {
-			Criteria crit=this.getSession().createCriteria(Announcement.class);
-			if(StringUtil.hasText(status)){
-				crit.add(Restrictions.eq("online", status));
-			}
+		Criteria crit = this.getSession().createCriteria(Announcement.class);
+		if (StringUtil.hasText(status)) {
+			crit.add(Restrictions.eq("online", status));
+		}
 		return crit.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Group_announ> getGroups(Announcement announ) {
+		Criteria crit = this.getSession().createCriteria(Group_announ.class);
+		crit.add(Restrictions.eq("announ", announ));
+		return crit.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Group_announ> getGroupsOfAnnoun(Announcement announ) {
+		Criteria crit = this.getSession().createCriteria(Group_announ.class);
+		crit.add(Restrictions.eq("announ", announ));
+		return crit.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Record> getAnnounByViews(Announcement announ) {
+		Criteria crit = this.getSession().createCriteria(Record.class);
+		crit.add(Restrictions.eq("announ", announ));
+		return crit.list();
+	}
+
 }

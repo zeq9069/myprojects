@@ -1,16 +1,12 @@
 package cn.ncss.jym.messagebox.pojo;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -42,30 +38,6 @@ public class Group implements Serializable {
 	@Column(name = "GROUP_NAME", length = 32)
 	private String name;
 
-	
-
-	/**
-	 * 自动简历userInfo与group的映射关系表
-	 */
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="group")
-	private Set<Relation> relations = new HashSet<Relation>();
-
-	/**
-	 * 自动建立group与announcement的关系表
-	 */
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="group")
-	private Set<Group_announ> group_announs = new HashSet<Group_announ>();
-
-	
-
-	public Set<Group_announ> getGroup_announs() {
-		return group_announs;
-	}
-
-	public void setGroup_announs(Set<Group_announ> group_announs) {
-		this.group_announs = group_announs;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -74,23 +46,12 @@ public class Group implements Serializable {
 		this.id = id;
 	}
 
-	
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-
-	public Set<Relation> getRelations() {
-		return relations;
-	}
-
-	public void setRelations(Set<Relation> relations) {
-		this.relations = relations;
 	}
 
 }

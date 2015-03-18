@@ -24,83 +24,87 @@ import cn.ncss.jym.messagebox.utils.StringUtil;
  *
  */
 @Service
-public class GroupServiceImpl implements GroupService{
+public class GroupServiceImpl implements GroupService {
 
 	@Autowired
 	private GroupDao groupDao;
-	
-	@Transactional(readOnly=false)
+
+	@Transactional(readOnly = false)
 	@Override
-	public Map<String,String> add(Group group) {
-		Map<String,String> resultMap=new HashMap<String, String>();
-		if(!StringUtil.hasText(group.getName())){
+	public Map<String, String> add(Group group) {
+		Map<String, String> resultMap = new HashMap<String, String>();
+		if (!StringUtil.hasText(group.getName())) {
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
 			resultMap.put(Constant.HTTP_MESSAGE, "群组名不能为空");
 			return resultMap;
-		}else if(isExists(group.getName())){
+		} else if (isExists(group.getName())) {
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
 			resultMap.put(Constant.HTTP_MESSAGE, "群组名已经存在");
-		}else{
-			String id= groupDao.add(group);
+		} else {
+			String id = groupDao.add(group);
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_SUCCESS);
 			resultMap.put(Constant.HTTP_MESSAGE, id);
 		}
 		return resultMap;
 	}
 
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	@Override
-	public Map<String,String> delete(String name) {
-		Map<String,String> resultMap=new HashMap<String, String>();
-		if(!StringUtil.hasText(name)){
+	public Map<String, String> delete(String name) {
+		Map<String, String> resultMap = new HashMap<String, String>();
+		if (!StringUtil.hasText(name)) {
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
 			resultMap.put(Constant.HTTP_MESSAGE, "群组名不能为空");
 			return resultMap;
-		}else if(!isExists(name)){
+		} else if (!isExists(name)) {
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
 			resultMap.put(Constant.HTTP_MESSAGE, "群组名不存在");
 			return resultMap;
-		}else{
-			boolean res=groupDao.delete(name);
-			resultMap.put(Constant.HTTP_STATUS, res==true?Constant.HTTP_SUCCESS:Constant.HTTP_ERROR);
-			resultMap.put(Constant.HTTP_MESSAGE, res==true?"删除成功":"删除失败");
+		} else {
+			boolean res = groupDao.delete(name);
+			resultMap.put(Constant.HTTP_STATUS, res == true ? Constant.HTTP_SUCCESS : Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, res == true ? "删除成功" : "删除失败");
 			return resultMap;
 		}
 	}
-	@Transactional(readOnly=false)
+
+	@Transactional(readOnly = false)
 	@Override
 	public boolean update(Group group) {
-		if(!isExists(group.getName())){
+		if (!isExists(group.getName())) {
 			return false;
 		}
 		return groupDao.update(group);
 	}
-	@Transactional(readOnly=true)
+
+	@Transactional(readOnly = true)
 	@Override
 	public Group get(String name) {
 		return groupDao.get(name);
 	}
-	@Transactional(readOnly=true)
+
+	@Transactional(readOnly = true)
 	@Override
 	public List<Group> getList() {
 		return groupDao.getList();
 	}
-	@Transactional(readOnly=true)
+
+	@Transactional(readOnly = true)
 	@Override
-	public Map<String,Integer> getGroupInfo(){
-		Map<String,Integer> groups=new HashMap<String, Integer>();
-		List<Group> groupList=groupDao.getList();
-		if(groupList!=null && groupList.size()>0){
-			for(Group group:groupList){
-				groups.put(group.getName(),group.getRelations().size());
+	public Map<String, Integer> getGroupInfo() {
+		Map<String, Integer> groups = new HashMap<String, Integer>();
+		List<Object[]> list = groupDao.getGroupInfo();
+		if (list != null) {
+			for (Object[] obj : list) {
+				groups.put(obj[0].toString(), Integer.parseInt(obj[1].toString()));
 			}
 		}
 		return groups;
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	@Override
-	public boolean isExists(String name){
+	public boolean isExists(String name) {
 		return groupDao.isExists(name);
 	}
 

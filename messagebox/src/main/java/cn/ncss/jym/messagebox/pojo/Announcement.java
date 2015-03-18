@@ -2,20 +2,15 @@ package cn.ncss.jym.messagebox.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
-
 
 /**
  * *************************
@@ -48,7 +43,7 @@ public class Announcement implements Serializable {
 	/*
 	 * 发布时间
 	 */
-	@Column(name = "DATE", nullable = false,length=255)
+	@Column(name = "DATE", nullable = false, length = 255)
 	private Date date = new DateTime().toDate();
 
 	/*
@@ -75,28 +70,8 @@ public class Announcement implements Serializable {
 	@Column(name = "ONLINE", nullable = false, length = 32)
 	private String online;
 
-	/**
-	 * 自动生成group与accouncement的关系表
-	 */
-	@OneToMany(mappedBy = "announ", fetch = FetchType.LAZY)
-	private Set<Group_announ> group_announs = new HashSet<Group_announ>();
-
-	/**
-	 * 自动加载该公告的浏览记录，与record建立关系
-	 */
-	@OneToMany(mappedBy = "announ", fetch = FetchType.LAZY)
-	private Set<Record> records = new HashSet<Record>();
-
 	public int getId() {
 		return id;
-	}
-	 
-	public Set<Record> getRecords() {
-		return records;
-	}
-
-	public void setRecords(Set<Record> records) {
-		this.records = records;
 	}
 
 	public void setId(int id) {
@@ -111,22 +86,12 @@ public class Announcement implements Serializable {
 		this.title = title;
 	}
 
-	 
-
 	public Date getDate() {
 		return date;
 	}
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public Set<Group_announ> getGroup_announs() {
-		return group_announs;
-	}
-
-	public void setGroup_announs(Set<Group_announ> group_announs) {
-		this.group_announs = group_announs;
 	}
 
 	public String getPublisher() {

@@ -5,16 +5,12 @@ package cn.ncss.jym.messagebox.pojo;
  */
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
@@ -128,24 +124,6 @@ public class UserInfo implements Serializable {
 	@Column(name = "LOGIN_DATE", updatable = false)
 	private Date lastLoginDate;
 
-	public Set<Record> getRecords() {
-		return records;
-	}
-
-	public void setRecords(Set<Record> records) {
-		this.records = records;
-	}
-
-	/**
-	 * 自动建立user与group的关系表
-	 * set这一方不能添加cascade ， 否则删除 relation的时候，程序会把user也删掉
-	 */
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="userInfo")
-	private Set<Relation> relations = new HashSet<Relation>();
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	private Set<Record> records = new HashSet<Record>();
-
 	/*
 	 * 判断是否为院校用户
 	 * @return
@@ -153,7 +131,6 @@ public class UserInfo implements Serializable {
 	public boolean isSchoolUser() {
 		return UserType.school.equals(userType);
 	}
-
 
 	/*
 	 * 判断是否为院系用户
@@ -314,16 +291,6 @@ public class UserInfo implements Serializable {
 	public void setAreaCode(String areaCode) {
 		this.areaCode = StringUtils.trimWhitespace(areaCode);
 	}
-	
-	
-
-	public Set<Relation> getRelations() {
-		return relations;
-	}
-
-	public void setRelations(Set<Relation> relations) {
-		this.relations = relations;
-	}
 
 	@Override
 	public String toString() {
@@ -335,7 +302,6 @@ public class UserInfo implements Serializable {
 			return String.format("%s [%s%s]", realName, orgName, fxmc);
 		}
 	}
-	
 
 	public enum UserType {
 		/**

@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.ncss.jym.messagebox.dao.RecordDao;
+import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Record;
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 
 /**
  * *************************
@@ -58,12 +60,12 @@ public class RecordDaoImpl implements RecordDao {
 		crit.add(Restrictions.eq("announ", announ_id));
 		return crit.list();
 	}
-	
+
 	@Override
-	public  boolean isExists(Record record){
-		Criteria crit=this.getSession().createCriteria(Record.class);
-		crit.add(Restrictions.eq("user", record.getUser()));
-		crit.add(Restrictions.eq("announ",record.getAnnoun()));
-		return crit.uniqueResult()==null?false:true;
+	public boolean isExists(UserInfo user, Announcement announ) {
+		Criteria crit = this.getSession().createCriteria(Record.class);
+		crit.add(Restrictions.eq("user", user));
+		crit.add(Restrictions.eq("announ", announ));
+		return crit.uniqueResult() == null ? false : true;
 	}
 }

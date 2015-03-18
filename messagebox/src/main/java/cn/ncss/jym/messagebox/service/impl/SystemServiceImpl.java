@@ -31,13 +31,14 @@ public class SystemServiceImpl implements SystemService {
 
 	@Autowired
 	private GroupService groupService;
-	
+
 	@Autowired
 	private UserInfoService userInfoService;
-	
+
 	@Autowired
 	private AnnouncementService announcementService;
 
+	@Override
 	public SystemInfo getAllInfo() {
 		Map<String, Integer> announs = announcementService.getAnnounInfo();
 		Map<String, Integer> groups = groupService.getGroupInfo();
@@ -56,44 +57,49 @@ public class SystemServiceImpl implements SystemService {
 		}
 		return resultMap;
 	}
-	
+
 	@Override
-	public Map<String,String> addGroup(Group group){
+	public Map<String, String> addGroup(Group group) {
 		return groupService.add(group);
 	}
-	
+
 	@Override
-	public Map<String,String> deletGroup(String name){
+	public Map<String, String> deletGroup(String name) {
 		return groupService.delete(name);
 	}
 
 	@Override
-	public List<UserInfo> getUsers(int page,int pageSize) {
-		return userInfoService.getList(page,pageSize);
+	public List<UserInfo> getUsers(int page, int pageSize) {
+		return userInfoService.getList(page, pageSize);
 	}
-	
+
 	@Override
-	public Map<String,String> publishAnnoun(Announcement announ){
-		return announcementService.add(announ);
+	public int getCount(String group) {
+		Group g = groupService.get(group);
+		return userInfoService.getCountByGroup(g);
 	}
-	
+
 	@Override
-	public List<Announcement> getAnnouns(String online){
+	public Map<String, String> publishAnnoun(Announcement announ, List<Group> groupList) {
+		return announcementService.add(announ, groupList);
+	}
+
+	@Override
+	public List<Announcement> getAnnouns(String online) {
 		return announcementService.getListByOnline(online);
 	}
-	
-	
+
 	@Override
-	public Map<String,String> updateOnline(int announ_id,String online){
+	public Map<String, String> updateOnline(int announ_id, String online) {
 		return announcementService.updateOnline(announ_id, online);
 	}
 
 	@Override
-	public List<UserInfo> getUsersByGroup(int page,int pageSize,String groupName){
-		Group group=groupService.get(groupName);
+	public List<UserInfo> getUsersByGroup(int page, int pageSize, String groupName) {
+		Group group = groupService.get(groupName);
 		return userInfoService.getUsersByGroup(page, pageSize, group);
 	}
-	
+
 	@Override
 	public int getCount() {
 		return userInfoService.getCount();
@@ -101,23 +107,32 @@ public class SystemServiceImpl implements SystemService {
 
 	@Override
 	public int getCountByGroup(String groupName) {
-		Group group=groupService.get(groupName);
+		Group group = groupService.get(groupName);
 		return userInfoService.getCountByGroup(group);
 	}
+
 	@Override
-	public Map<String, String> addRecord(String u_id ,int announ_id) {
+	public boolean addRecord(String u_id, int announ_id) {
 		return userInfoService.addRecord(u_id, announ_id);
+	}
+
+	@Override
+	public List<UserInfo> getAnnounByViews(Announcement announ) {
+		return announcementService.getAnnounByViews(announ);
 	}
 
 	@Override
 	public UserInfo getUser(String u_id) {
 		return userInfoService.getById(u_id);
 	}
-	
+
 	@Override
-	public Announcement getAnnoun(int announ_id){
+	public Announcement getAnnoun(int announ_id) {
 		return announcementService.get(announ_id);
 	}
 
-
+	@Override
+	public List<Group> getGroupsOfAnnoun(Announcement announ) {
+		return announcementService.getGroupsOfAnnoun(announ);
+	}
 }

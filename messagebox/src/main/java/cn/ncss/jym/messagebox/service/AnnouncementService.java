@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
+import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 
 /**
  * ***********************
@@ -16,13 +18,13 @@ import cn.ncss.jym.messagebox.pojo.Announcement;
  */
 public interface AnnouncementService {
 
-	public Map<String,String> add(Announcement announ);
+	public Map<String, String> add(Announcement announ, List<Group> groups);
 
 	public boolean delete(Announcement announ);
 
 	public boolean update(Announcement announ);
-	
-	public Map<String,String> updateOnline(int announ_id,String online);
+
+	public Map<String, String> updateOnline(int announ_id, String online);
 
 	public Announcement get(int id);
 
@@ -33,10 +35,13 @@ public interface AnnouncementService {
 	public List<Announcement> getListByUser(String publisher);
 
 	public List<Announcement> getListByUser(String publisher, boolean online);
-	
+
 	public List<Announcement> getListByOnline(String online);
-	
-	public Map<String,Integer> getAnnounInfo();
-	
-	
+
+	public Map<String, Integer> getAnnounInfo();
+
+	public List<Group> getGroupsOfAnnoun(Announcement announ);
+
+	public List<UserInfo> getAnnounByViews(Announcement announ);
+
 }
