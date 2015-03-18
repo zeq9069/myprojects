@@ -174,7 +174,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	@Override
 	public List<Relation> getGroups(UserInfo user) {
 		Criteria crit = this.getSession().createCriteria(Relation.class);
-		crit.add(Restrictions.eq("user", user));
+		crit.add(Restrictions.eq("userInfo", user));
 		return crit.list();
 	}
 

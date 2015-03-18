@@ -20,15 +20,20 @@
 	<!-- jsrender 模板-->
 	<script type="text/x-jsrender" id="listWrapTemp">
 							<tr>
-								<td>{{:username}}</td>
-								<td>{{:realName}}</td>
-								<td>{{:orgName}}</td>
-								<td>{{:department}}</td>
-								<td>{{:jobTitle}}</td>
-								<td>{{:email}}</td>
- 								<td>{{:officePhone}}</td>
-								<td class="group-td" data-user="{{:id}}">
-								<span id="{{:id}}" class="group_plus glyphicon glyphicon-plus" data-toggle="modal"
+								<td>{{:user.username}}</td>
+								<td>{{:user.realName}}</td>
+								<td>{{:user.orgName}}</td>
+								<td>{{:user.department}}</td>
+								<td>{{:user.jobTitle}}</td>
+								<td>{{:user.email}}</td>
+ 								<td>{{:user.officePhone}}</td>
+								<td class="group-td" data-user="{{:user.id}}">
+								{{for groups}}
+									<span>
+										{{:name}}
+									</span>
+								{{/for}}
+								<span id="{{:user.id}}" class="group_plus glyphicon glyphicon-plus" data-toggle="modal"
 						data-target="#groupModel"></span>
 								</td>
 							</tr>

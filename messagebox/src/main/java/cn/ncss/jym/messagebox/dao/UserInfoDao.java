@@ -78,5 +78,6 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	public List<Relation> getGroups(UserInfo user);
+	
 
 }

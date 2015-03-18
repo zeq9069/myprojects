@@ -237,6 +237,19 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 		return userInfoDao.addRecord(rec);
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<Group> getGroupsByUser(UserInfo user){
+		List<Relation> relations=userInfoDao.getGroups(user);
+		List<Group> groups=new ArrayList<Group>();
+		
+		for(Relation r:relations){
+			groups.add(r.getGroup());
+		}
+		return groups;
+	}
+	
 
 	private boolean isExists(UserInfo userInfo) {
 		UserInfo user = userInfoDao.get(userInfo.getAreaCode(), userInfo.getOrgCode(), userInfo.getOrgName(),

@@ -132,5 +132,6 @@ public interface SystemService {
 	 * @return
 	 */
 	public List<Group> getGroupsOfAnnoun(Announcement announ);
+	
 
 }

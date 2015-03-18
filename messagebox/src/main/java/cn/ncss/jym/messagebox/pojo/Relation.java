@@ -33,11 +33,11 @@ public class Relation implements Serializable{
     @Column(name = "RELATION_ID")  
 	private int id;
 	
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="GROUP_ID")
 	private Group group;
 	
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="USER_ID")
 	private UserInfo userInfo;
 	

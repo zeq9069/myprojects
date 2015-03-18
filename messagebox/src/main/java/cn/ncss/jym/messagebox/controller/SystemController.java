@@ -21,6 +21,7 @@ import cn.ncss.jym.messagebox.service.GroupService;
 import cn.ncss.jym.messagebox.service.SystemService;
 import cn.ncss.jym.messagebox.service.UserInfoService;
 import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
+import cn.ncss.jym.messagebox.system.pojo.UserSys;
 import cn.ncss.jym.messagebox.utils.Constant;
 import cn.ncss.jym.messagebox.utils.StringUtil;
 
@@ -155,14 +156,23 @@ public class SystemController {
 	}
 
 	@RequestMapping(value = "users/list")
-	public List<UserInfo> getUsers(int currentIndex, int pageSize, String group) {
+	public List<UserSys> getUsers(int currentIndex, int pageSize, String group) {
 		List<UserInfo> userList=null;
+		List<UserSys> usersys=new ArrayList<UserSys>();
 		if(group==null || "all".equals(group)){
 			userList=systemService.getUsers(currentIndex, pageSize);
 		}else{
 			userList = systemService.getUsersByGroup(currentIndex, Constant.HTTP_PAGESIZE,group==null?"":group);
 		}
-		return userList;
+		if(userList!=null){
+			for(UserInfo user:userList){
+				UserSys u=new UserSys();
+				u.setUser(user);
+				u.setGroups(userInfoService.getGroupsByUser(user));
+				usersys.add(u);
+			}
+		}
+		return usersys;
 	}
 
 	@RequestMapping(value = "users/count")
