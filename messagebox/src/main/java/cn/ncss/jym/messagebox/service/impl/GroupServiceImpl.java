@@ -96,7 +96,7 @@ public class GroupServiceImpl implements GroupService {
 		List<Object[]> list = groupDao.getGroupInfo();
 		if (list != null) {
 			for (Object[] obj : list) {
-				groups.put(obj[0].toString(), Integer.parseInt(obj[1].toString()));
+				groups.put(((Group)obj[0]).getName(), Integer.parseInt(obj[1].toString()));
 			}
 		}
 		return groups;
