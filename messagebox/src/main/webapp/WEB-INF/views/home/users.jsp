@@ -17,18 +17,18 @@
  	<link rel="stylesheet" href="${webRoot}/${initParam.resourceRoot}/css/graduate.css">
 	
 	
-	
+	<!-- jsrender 模板-->
 	<script type="text/x-jsrender" id="listWrapTemp">
 							<tr>
-								<td>{{:user.username}}</td>
-								<td>{{:user.realName}}</td>
-								<td>{{:user.orgName}}</td>
-								<td>{{:user.department}}</td>
-								<td>{{:user.jobTitle}}</td>
-								<td>{{:user.email}}</td>
- 								<td>{{:user.officePhone}}</td>
-								<td class="group-td" data-user="{{:user.id}}">
-								<span id="{{:user.id}}" class="group_plus glyphicon glyphicon-plus" data-toggle="modal"
+								<td>{{:username}}</td>
+								<td>{{:realName}}</td>
+								<td>{{:orgName}}</td>
+								<td>{{:department}}</td>
+								<td>{{:jobTitle}}</td>
+								<td>{{:email}}</td>
+ 								<td>{{:officePhone}}</td>
+								<td class="group-td" data-user="{{:id}}">
+								<span id="{{:id}}" class="group_plus glyphicon glyphicon-plus" data-toggle="modal"
 						data-target="#groupModel"></span>
 								</td>
 							</tr>
@@ -88,6 +88,10 @@ tr:hover{
 
 td>span:hover{
 	border:2px solid #009966;
+}
+.itemWrap{
+
+text-align:center;
 }
 
 
@@ -180,18 +184,15 @@ td>span:hover{
 							</tr>
 						</thead>
 						
-						<div class="itemWrap">
-							<tbody class="itemListWrap">
+						<tbody class="itemListWrap">
 			
-							</tbody>
-							<ul class="itemPageWrap pagination pagination-sm">
-			
-							</ul>
-						</div>
+						</tbody>
 					</table>
-				<div style="padding-left:100px;text-align:center">
-					<ul class="pagination pagination-sm"></ul>
-    			</div>
+					<div class="itemWrap">
+						<ul class="itemPageWrap pagination pagination-sm">
+			
+						</ul>
+					</div>
 
 				</div>
 			</div>

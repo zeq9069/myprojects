@@ -113,9 +113,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	public int getCountByGroup(Group group) {
 		Session session = this.getSession();
 		Criteria crit = session.createCriteria(Relation.class);
-		if (group != null) {
-			crit.add(Restrictions.eq("group", group));
-		}
+		crit.add(Restrictions.eq("group", group));
 		return crit.list().size();
 	}
 

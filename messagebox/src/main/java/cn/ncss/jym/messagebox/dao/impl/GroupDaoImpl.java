@@ -75,6 +75,7 @@ public class GroupDaoImpl implements GroupDao {
 		return this.get(name) == null ? false : true;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getGroupInfo() {
 		Criteria crit = this.getSessioin().createCriteria(Relation.class);

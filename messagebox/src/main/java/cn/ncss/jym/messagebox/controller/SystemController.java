@@ -156,18 +156,23 @@ public class SystemController {
 
 	@RequestMapping(value = "users/list")
 	public List<UserInfo> getUsers(int currentIndex, int pageSize, String group) {
-
-		List<UserInfo> userList = systemService.getUsers(currentIndex, Constant.HTTP_PAGESIZE);
-		List<UserInfo> users = new ArrayList<UserInfo>();
-		for (UserInfo u : userList) {
-			users.add(u);
+		List<UserInfo> userList=null;
+		if(group==null || "all".equals(group)){
+			userList=systemService.getUsers(currentIndex, pageSize);
+		}else{
+			userList = systemService.getUsersByGroup(currentIndex, Constant.HTTP_PAGESIZE,group==null?"":group);
 		}
-		return users;
+		return userList;
 	}
 
 	@RequestMapping(value = "users/count")
 	public int getCount(String group) {
-		int count = systemService.getCount(group);
+		int count=0;
+		if(group==null || "all".equals(group)){
+			count=systemService.getCount();
+		}else{
+			count = systemService.getCount(group);
+		}
 		return count;
 	}
 
