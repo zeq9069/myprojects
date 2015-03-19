@@ -135,7 +135,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	@Override
 	public boolean isRelation(UserInfo user, Group group) {
 		Criteria crit = this.getSession().createCriteria(Relation.class);
-		crit.add(Restrictions.eq("user", user));
+		crit.add(Restrictions.eq("userInfo", user));
 		crit.add(Restrictions.eq("group", group));
 		if (crit.list().size() > 0) {
 			return true;
@@ -145,7 +145,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
 
 	@Override
 	public boolean deleteRelationByUser(UserInfo userInfo) {
-		String hql = "delete Relation where user=:user";
+		String hql = "delete Relation where userInfo=:user";
 		Query query = this.getSession().createQuery(hql);
 		query.setParameter("user", userInfo);
 		query.executeUpdate();
@@ -154,7 +154,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
 
 	@Override
 	public boolean deleteRelation(UserInfo user, Group group) {
-		String hql = "delete Relation where user=:user and group=:group";
+		String hql = "delete Relation where userInfo=:user and group=:group";
 		Query query = this.getSession().createQuery(hql);
 		query.setParameter("user", user);
 		query.setParameter("group", group);

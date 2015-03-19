@@ -28,13 +28,13 @@
 								<td>{{:user.email}}</td>
  								<td>{{:user.officePhone}}</td>
 								<td class="group-td" data-user="{{:user.id}}">
-								{{for groups}}
-									<span>
-										{{:name}}
+									{{for groups}}
+										<span   data-key="{{:id}}">
+											{{:name}}
+										</span>
+									{{/for}}
+									<span  class="group_plus glyphicon glyphicon-plus" data-toggle="modal" data-target="#groupModel">
 									</span>
-								{{/for}}
-								<span id="{{:user.id}}" class="group_plus glyphicon glyphicon-plus" data-toggle="modal"
-						data-target="#groupModel"></span>
 								</td>
 							</tr>
 	</script>
@@ -168,7 +168,7 @@ text-align:center;
 			
 				<div class="body">
 					筛选：<select name="groups" id="group-select" >
-						<option id="all" >全部</option>
+						<option id="all" value="all" selected="selected" >全部</option>
 						<c:forEach items="${resultMap.groups}" var="group">
 							<option id="${group.key}" value="${group.value}">${group.value}</option>
 						</c:forEach>
@@ -261,25 +261,99 @@ $(document).ready(function(){
 		}
 	});
 
-	
+	/*******************用户分页***********************************/
 	require(["jquery",'page','bootstrap','jsrender'],function($,Page){
 		$(function(){
 			var listPage = Page.setting({
 				'itemListUrl': '/messagebox/system/users/list',
 				'itemCountUrl': '/messagebox/system/users/count',
-				'par': {},
+				'par': {
+					'group':'all'
+				},
 				'type': 'post',
 				'listWrap': '.itemListWrap',
 				'listWrapTemp': '#listWrapTemp',
 				'pageWrap': '.itemPageWrap',
-				'datas':{
-					'group':'all'
-				}
+				'pageSize':20
 			});
-			 
+			
+			
+			/*******************群组删除***********************************/
+			$(".itemListWrap").on("dblclick","tr>td>span",function(){
+				var u_id=$(this).parent().attr("data-user").trim();
+				var groupName=$(this).text().trim();
+				var groupId=$(this).attr("data-key").trim();
+				alert(u_id+"-"+groupName);
+				$.post("../system/users/group/delete",{
+					u_id:u_id,
+					groupName:groupName
+				},function(data){
+					if(data.status=="success"){
+						alert("删除成功");
+						$("td[data-user='"+u_id+"']>span[data-key='"+groupId+"']").remove();
+					}else{
+						alert(data.message);
+					}
+				});
+				
+			});
+			
+			
+			/*******************群组添加***********************************/
+			var u_id;
+			
+			$(".itemListWrap").on("click",".group_plus",function(){
+				 u_id=$(this).parent().attr("data-user").trim();
+			});
+			
+			$("#group_submit").on("click",function(){
+				
+				//获取选中的group拼接成要展示的样式的数组和groupID数组
+				var groupSpan=new Array();
+				var groupID=new Array();
+				$('input[name="groupName"]:checked').each(function(){
+					groupID.push($(this).attr("id"));
+					groupSpan.push("<span data-key='"+$(this).attr("id")+"'>"+$(this).val()+"</span>");
+				});
+				
+				
+				$("#u_id").attr("value",u_id);
+				$.post("../system/users/group/add",$(".group-form").serialize(),function(data){
+					if(data.status=="success"){
+						alert("添加成功");
+						//删除重复group，追加新group
+						for(var i=0;i<groupID.length;i++){
+							$("td[data-user='"+u_id+"']>span[data-key='"+groupID[i]+"']").remove();
+							$("td[data-user='"+u_id+"']").append(groupSpan[i]);
+						}
+					}else{
+						alert(data.message);
+					}
+				});
+			});
+			
+			
+			/************************下拉框选择********************************/
+			$("#group-select").on("change",function(){
+				alert($("#group-select").val());
+				listPage=null;
+				listPage = Page.setting({
+					'itemListUrl': '/messagebox/system/users/list',
+					'itemCountUrl': '/messagebox/system/users/count',
+					'par': {
+						'group':$("#group-select").val().trim()
+					},
+					'type': 'post',
+					'listWrap': '.itemListWrap',
+					'listWrapTemp': '#listWrapTemp',
+					'pageWrap': '.itemPageWrap',
+					'pageSize':20
+				});
+			});
+			
+			
 		});
 	});
-	
 	
 	
 });
