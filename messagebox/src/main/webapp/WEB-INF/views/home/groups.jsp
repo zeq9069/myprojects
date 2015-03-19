@@ -49,6 +49,7 @@ body{
  border:1px solid #eeeeee;
  padding:5px 10px 5px 10px;
  border-radius:2px;
+ display:inline-block;
 }
 .group-list>p>span:hover{
 	cursor:default;

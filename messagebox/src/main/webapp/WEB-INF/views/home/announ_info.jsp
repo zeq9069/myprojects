@@ -86,24 +86,25 @@ border-radius:3px;
 			</div>
 			<div id="content-right" class="col-md-10" >
 					<div class="body">
-						<c:if test="${announ!=null}">
+						<c:if test="${announsInfo.announ!=null}">
 							<p>
-								标题：${announ.title}
+								标题：${announsInfo.announ.title}
 							</p>
 							<p>
-							发布时间：<span>${announ.date}</span>
-							发布者：<span>${announ.publisher}</span>
-							类型：<span>${announ.type}</span>
+							发布时间：<span>${announsInfo.announ.date}</span>
+							发布者：<span>${announsInfo.announ.publisher}</span>
+							类型：<span>${announsInfo.announ.type}</span>
+							浏览人数：<span>${announsInfo.views}</span>
 							</p>
 							<p>
 								群组：
-								<c:forEach items="${groups}" var="entry">
-									<span class="groups" id="${entry.key}">${entry.value}</span>
+								<c:forEach items="${announsInfo.groups}" var="group">
+									<span class="groups" id="${group.id}">${group.name}</span>
 								</c:forEach>
 							</p>
 							<p>
 							
-							${announ.content}
+							${announsInfo.announ.content}
 							</p>
 						
 						</c:if>

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
+import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.GroupService;
 import cn.ncss.jym.messagebox.service.SystemService;
 import cn.ncss.jym.messagebox.system.pojo.AnnounsInfo;
@@ -37,6 +38,9 @@ public class HomeController {
 
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private AnnouncementService announcementService;
 
 	@RequestMapping(value = { "main", "" }, method = RequestMethod.GET)
 	public ModelAndView main(ModelAndView model) {
@@ -57,12 +61,8 @@ public class HomeController {
 	@ResponseBody
 	public ModelAndView users(ModelAndView model) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		//List<UserInfo> userList = systemService.getUsers(1, Constant.HTTP_PAGESIZE);
 		model.setViewName("/home/users");
-		//resultMap.put("users", userList);
 		resultMap.put("groups", systemService.getGroups());
-		//resultMap.put(Constant.HTTP_COUNT_NAME, systemService.getCount());
-		//resultMap.put(Constant.HTTP_PAGESIZE_NAME, Constant.HTTP_PAGESIZE);
 		model.addObject("resultMap", resultMap);
 		return model;
 	}
@@ -96,4 +96,21 @@ public class HomeController {
 		model.setViewName("/home/announs");
 		return model;
 	}
+	
+	@RequestMapping(value = "announs/look", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView announsLook(int announ_id,ModelAndView model) {
+		model.setViewName("/home/announ_info");
+		Announcement announ=announcementService.get(announ_id);
+		AnnounsInfo announsInfo=new AnnounsInfo();
+		if(announ!=null){
+			announsInfo.setAnnoun(announ);
+			announsInfo.setGroups(announcementService.getGroupsOfAnnoun(announ));
+			announsInfo.setViews(announcementService.getAnnounByViews(announ).size());
+		}
+		model.addObject("announsInfo", announsInfo);
+		return model;
+	}
+	
+	
 }

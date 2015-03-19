@@ -17,7 +17,7 @@
 	<!-- jsrender 模板-->
 	<script type="text/x-jsrender" id="listWrapTemp">
 							<tr>
-								<td><a href="{{:webRoot}}/home/announs/look?announ_id={{:announ.id}}">{{:announ.title}}</a></td>
+								<td><a href="${webRoot}/home/announs/look?announ_id={{:announ.id}}">{{:announ.title}}</a></td>
 								<td>{{:announ.publisher}}</td>
 								<td>{{:announ.date}}</td>
 								<td>{{:announ.type}}</td>
