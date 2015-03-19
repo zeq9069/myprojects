@@ -11,6 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import cn.ncss.jym.messagebox.utils.JsonDate;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * *************************
@@ -86,6 +91,7 @@ public class Announcement implements Serializable {
 		this.title = title;
 	}
 
+	@JsonSerialize(using=JsonDate.class)
 	public Date getDate() {
 		return date;
 	}

@@ -51,6 +51,7 @@ public class SystemController {
 	@Autowired
 	private AnnouncementService announcementService;
 	
+	
 
 	@RequestMapping(value = "info", method = RequestMethod.GET)
 	public SystemInfo getInfo() {

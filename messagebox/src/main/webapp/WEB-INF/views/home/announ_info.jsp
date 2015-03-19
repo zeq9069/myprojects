@@ -93,6 +93,7 @@ border-radius:3px;
 							<p>
 							发布时间：<span>${announsInfo.announ.date}</span>
 							发布者：<span>${announsInfo.announ.publisher}</span>
+							状态：<span>${announsInfo.announ.online==false?"下线":"上线"}</span>
 							类型：<span>${announsInfo.announ.type}</span>
 							浏览人数：<span>${announsInfo.views}</span>
 							</p>
@@ -103,16 +104,11 @@ border-radius:3px;
 								</c:forEach>
 							</p>
 							<p>
-							
 							${announsInfo.announ.content}
 							</p>
-						
 						</c:if>
 						<p>
-						
 						</p>
-						
-						
 					</div> 
 			</div>
 		</div>

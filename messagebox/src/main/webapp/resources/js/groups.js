@@ -10,7 +10,6 @@ $(document).ready(function(){
 			if(data.status=="success"){
 				groupId=data.message;
 				$(".group-list>p").append("<span id='"+groupId+"'>"+groupName+"</span>");
-				alert("添加成功!");
 			}else{
 				alert(data.message);
 			}
@@ -18,7 +17,6 @@ $(document).ready(function(){
 	});
 	
 	$("#content-right").on("dblclick",".group-list>p>span",function(){
-		alert($(this).html());
 		var groupName=$(this).html();
 		var id=this.id;
 		$.ajax({
@@ -27,7 +25,6 @@ $(document).ready(function(){
 			data:{name:groupName},
 			dataType:"json",
 			success:function(data){
-				alert(data.message);
 				$("#"+id).remove();
 			},
 			error:function(request, textStatus){

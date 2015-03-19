@@ -14,9 +14,7 @@
 <link rel="stylesheet" href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css">
 
 <style type="text/css">
-body{
-	text-align:center;
-}
+
 .container{ 
 	margin-left:0px;
 	padding-left:150px;
@@ -46,6 +44,7 @@ body{
 }
 .group-list>p>span{
  margin-left:15px;
+ margin-top:10px;
  border:1px solid #eeeeee;
  padding:5px 10px 5px 10px;
  border-radius:2px;

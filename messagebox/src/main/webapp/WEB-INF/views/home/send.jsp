@@ -93,7 +93,7 @@
 						</p>
 						<p>
 							<select id="type" name="type">
-								<option value="1">未知类型</option>
+								<option value="通知">通知</option>
 							</select>
 						</p>
 						<p>
