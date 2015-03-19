@@ -94,33 +94,6 @@ public class HomeController {
 	@ResponseBody
 	public ModelAndView announs(ModelAndView model) {
 		model.setViewName("/home/announs");
-		List<AnnounsInfo> onlineannounList = new ArrayList<AnnounsInfo>();
-		List<AnnounsInfo> offlineannounList = new ArrayList<AnnounsInfo>();
-
-		List<Announcement> onlineannouns = systemService.getAnnouns(Constant.ANNOUN_ONLINE);
-		List<Announcement> offlineannouns = systemService.getAnnouns(Constant.ANNOUN_OFFLINE);
-
-		//在线
-		for (Announcement announ : onlineannouns) {
-			AnnounsInfo aInfo = new AnnounsInfo();
-			aInfo.setAnnoun(announ);
-			aInfo.setGroups(systemService.getGroupsOfAnnoun(announ));
-			List<UserInfo> list = systemService.getAnnounByViews(announ);
-			aInfo.setViews(list.size());
-			onlineannounList.add(aInfo);
-		}
-
-		//下线
-		for (Announcement announ : offlineannouns) {
-			AnnounsInfo aInfo = new AnnounsInfo();
-			aInfo.setAnnoun(announ);
-			aInfo.setGroups(systemService.getGroupsOfAnnoun(announ));
-			List<UserInfo> list = systemService.getAnnounByViews(announ);
-			aInfo.setViews(list.size());
-			offlineannounList.add(aInfo);
-		}
-		model.addObject("announs_online", onlineannounList);
-		model.addObject("announs_offline", offlineannounList);
 		return model;
 	}
 }

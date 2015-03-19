@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	
+	
 	$(".add-group>#btn-add").click(function(){
 		var groupName=$("#groupName").val();
 		var groupId;

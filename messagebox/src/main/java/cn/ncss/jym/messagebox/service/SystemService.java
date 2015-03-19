@@ -90,7 +90,7 @@ public interface SystemService {
 	 * @param online 是否上线
 	 * @return
 	 */
-	public List<Announcement> getAnnouns(String online);
+	public List<Announcement> getAnnouns(int currentIndex,int pageSize,String online);
 
 	/**
 	 * 获取所有该分组的用户数量

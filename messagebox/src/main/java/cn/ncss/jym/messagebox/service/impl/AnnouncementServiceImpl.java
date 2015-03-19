@@ -101,8 +101,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Announcement> getListByType(String type) {
-		return announcementDao.getListByType(type);
+	public List<Announcement> getListByOnline(String online) {
+		return announcementDao.getListByOnline(online);
 	}
 
 	@Transactional(readOnly = true)
@@ -127,8 +127,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	@Override
 	public Map<String, Integer> getAnnounInfo() {
 		Map<String, Integer> announs_info = new HashMap<String, Integer>();
-		int online = announcementDao.getByStatus(Constant.ANNOUN_ONLINE).size();
-		int offline = announcementDao.getByStatus(Constant.ANNOUN_OFFLINE).size();
+		int online = announcementDao.getByStatus(Constant.ANNOUN_ONLINE);
+		int offline = announcementDao.getByStatus(Constant.ANNOUN_OFFLINE);
 		announs_info.put(Constant.ANNOUN_NUM, online + offline);
 		announs_info.put(Constant.ONLINE_NUM, online);
 		announs_info.put(Constant.OFFLINE_NUM, offline);
@@ -136,6 +136,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<Group> getGroupsOfAnnoun(Announcement announ) {
 		List<Group_announ> list = announcementDao.getGroupsOfAnnoun(announ);
 		List<Group> groups = new ArrayList<Group>();
@@ -148,6 +149,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<UserInfo> getAnnounByViews(Announcement announ) {
 		List<Record> recordList = announcementDao.getAnnounByViews(announ);
 		List<UserInfo> list = new ArrayList<UserInfo>();
@@ -161,8 +163,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Announcement> getListByOnline(String online) {
-		return announcementDao.getByStatus(online);
+	public List<Announcement> getListByOnline(int currentIndex,int pageSize,String online) {
+		return announcementDao.getByStatus(currentIndex, pageSize,online);
 	}
 
 	public boolean isExists(int announ_id) {

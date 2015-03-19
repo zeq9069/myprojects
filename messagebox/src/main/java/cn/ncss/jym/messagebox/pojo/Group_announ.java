@@ -33,11 +33,11 @@ public class Group_announ implements Serializable{
 	@Column(name="GA_ID",length=32)
 	private int id;
 	
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="ANNOUN_ID")
 	private Announcement announ;
 	
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="GROUP_ID")
 	private Group group;
 

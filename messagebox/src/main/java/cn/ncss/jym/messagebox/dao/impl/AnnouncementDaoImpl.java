@@ -14,7 +14,6 @@ import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Group_announ;
 import cn.ncss.jym.messagebox.pojo.Record;
-import cn.ncss.jym.messagebox.utils.StringUtil;
 
 /**
  * *************************
@@ -80,9 +79,9 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Announcement> getListByType(String type) {
+	public List<Announcement> getListByOnline(String online) {
 		Criteria crit = this.getSession().createCriteria(Announcement.class);
-		crit.add(Restrictions.eq("type", type));
+		crit.add(Restrictions.eq("online", online));
 		return crit.list();
 	}
 
@@ -114,12 +113,19 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Announcement> getByStatus(String status) {
+	public List<Announcement> getByStatus(int currentIndex,int pageSize,String status) {
 		Criteria crit = this.getSession().createCriteria(Announcement.class);
-		if (StringUtil.hasText(status)) {
-			crit.add(Restrictions.eq("online", status));
-		}
+		crit.add(Restrictions.eq("online", status));
+		crit.setFirstResult((currentIndex-1)*pageSize);
+		crit.setMaxResults(pageSize);
 		return crit.list();
+	}
+	
+	@Override
+	public int getByStatus(String status){
+		Criteria crit = this.getSession().createCriteria(Announcement.class);
+		crit.add(Restrictions.eq("online", status));
+		return crit.list().size();
 	}
 
 	@SuppressWarnings("unchecked")

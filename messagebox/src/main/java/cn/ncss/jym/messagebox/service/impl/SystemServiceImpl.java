@@ -85,8 +85,8 @@ public class SystemServiceImpl implements SystemService {
 	}
 
 	@Override
-	public List<Announcement> getAnnouns(String online) {
-		return announcementService.getListByOnline(online);
+	public List<Announcement> getAnnouns(int currentIndex,int pageSize,String online) {
+		return announcementService.getListByOnline(currentIndex,pageSize,online);
 	}
 
 	@Override

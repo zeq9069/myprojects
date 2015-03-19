@@ -11,6 +11,44 @@
 <meta name="author" content="">
 <title>messageBox</title>
 <link href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css" rel="stylesheet">
+ 	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
+	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
+
+	<!-- jsrender 模板-->
+	<script type="text/x-jsrender" id="listWrapTemp">
+							<tr>
+								<td><a href="{{:webRoot}}/home/announs/look?announ_id={{:announ.id}}">{{:announ.title}}</a></td>
+								<td>{{:announ.publisher}}</td>
+								<td>{{:announ.date}}</td>
+								<td>{{:announ.type}}</td>
+								<td>
+									{{for groups}}
+										
+										<span>{{:name}}</span>
+									{{/for}}
+								</td>
+								<td>
+									{{:views}}
+								</td>
+								<td>
+								<span id="announ_status" data-user="{{:announ.id}}" data-value="{{:announ.online}}">
+								
+									{{if announ.online=='true'}}
+										上线
+									{{else announ.online=='false'}}
+										下线
+									{{else}}
+										异常
+									{{/if}}
+								</span>
+								</td>
+							</tr>
+	</script>
+	
+	
+
+
+
 <style type="text/css">
 .container{ 
 	margin-left:0px;
@@ -62,6 +100,13 @@ tr:hover{
 td>span:hover{
 	border:2px solid #009966;
 }
+.itemWrap{
+text-align:center;
+}
+ .pagination>li.goPage{padding-left:15px;}
+	.pagination>li.goPage>span{border:0px;float:inherit;background-color: inherit;padding:0px;line-height:28px;}
+	.pagination>li.goPage>span.text{color:#666;}
+	.pagination>li.goPage>input.num,.pagination>li.goPage>span.btn{width:40px;height:24px;padding:4px 8px;border:1px solid #CCC;line-height:16px;}
  
 </style>
 </head>
@@ -114,7 +159,7 @@ td>span:hover{
 			<div id="content-right" class="col-md-10" >
 					<div class="body">
 					筛选：
-					<select>
+					<select name="online">
 						<option value="true" selected="selected">上线</option>
 						<option value="false">下线</option>
 					</select>
@@ -131,51 +176,22 @@ td>span:hover{
 								<td>状态</td>
 							</tr>
 						</thead>
-						<c:forEach items="${announs_online}" var="announInfo">
-							<tr>
-								<td><a href="${webRoot}/home/announs/look?announ_id=${announInfo.announ.id}">${announInfo.announ.title}</a></td>
-								<td>${announInfo.announ.publisher}</td>
-								<td>${announInfo.announ.date}</td>
-								<td>${announInfo.announ.type}</td>
-								<%-- <td>${announ.content}</td> --%>
-								<td>
-									<c:forEach items="${announInfo.groups}" var="group">
-										<span>${group.name}</span>
-									</c:forEach>
-								</td>
-								<td>
-									${announInfo.views}
-								</td>
-								<td>
-								<span id="announ_status" data-user="${announ.id}" data-value="${announ.online}">
-								<c:choose>
-									<c:when test="${announInfo.announ.online==true}">
-										上线
-									</c:when>
-									<c:when test="${announInfo.announ.online==false}">
-										下线
-									</c:when>
-									<c:otherwise>
-										异常
-									</c:otherwise>									
-								</c:choose>
-								</span>
-								</td>
-							</tr>
-						</c:forEach>
+						<tbody class="itemListWrap">
+			
+						</tbody>
 					</table>
-					
-					 
+					<div class="itemWrap">
+						<ul class="itemPageWrap pagination pagination-sm">
+			
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
 		<hr>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
-
-	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
-	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${webRoot}/${initParam.resourceRoot}/js/page/requirejs.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/announs.js"></script>
-	
 </body>
 </html>

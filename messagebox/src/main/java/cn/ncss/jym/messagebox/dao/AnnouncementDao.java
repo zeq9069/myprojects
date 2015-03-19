@@ -29,7 +29,7 @@ public interface AnnouncementDao {
 
 	public Announcement get(int id);
 
-	public List<Announcement> getListByType(String type);
+	public List<Announcement> getListByOnline(String type);
 
 	public List<Announcement> getListByType(String type, boolean online);
 
@@ -38,11 +38,18 @@ public interface AnnouncementDao {
 	public List<Announcement> getListByUser(String publisher, boolean online);
 
 	/**
-	 * 根据online的状态获取相应的数量，null时时总的数量
+	 * 根据online的状态分页查询
 	 * @param status online的状态
 	 * @return
 	 */
-	public List<Announcement> getByStatus(String status);
+	public List<Announcement> getByStatus(int currentIndex,int pageSize,String status);
+	
+	/**
+	 * 根据online查询数量
+	 * @param status
+	 * @return
+	 */
+	public int getByStatus(String status);
 
 	/**
 	 * 获取公告发布的用户组

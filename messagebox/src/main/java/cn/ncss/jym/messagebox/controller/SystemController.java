@@ -17,9 +17,11 @@ import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
+import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.GroupService;
 import cn.ncss.jym.messagebox.service.SystemService;
 import cn.ncss.jym.messagebox.service.UserInfoService;
+import cn.ncss.jym.messagebox.system.pojo.AnnounsInfo;
 import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
 import cn.ncss.jym.messagebox.system.pojo.UserSys;
 import cn.ncss.jym.messagebox.utils.Constant;
@@ -46,6 +48,9 @@ public class SystemController {
 	private GroupService groupService;
 	@Autowired
 	private UserInfoService userInfoService;
+	@Autowired
+	private AnnouncementService announcementService;
+	
 
 	@RequestMapping(value = "info", method = RequestMethod.GET)
 	public SystemInfo getInfo() {
@@ -61,6 +66,40 @@ public class SystemController {
 	public Map<String, String> deleteGroup(String name) {
 		return systemService.deletGroup(name);
 	}
+	
+	
+	@RequestMapping(value="announs/list")
+	public List<AnnounsInfo> announsInfoList(int currentIndex,int pageSize,String online){
+		if(online==null || (!online.equals(Constant.ANNOUN_OFFLINE) && !online.equals(Constant.ANNOUN_ONLINE))){
+			return null;
+		}
+		List<AnnounsInfo> resultlist = new ArrayList<AnnounsInfo>();
+		List<Announcement> announs = systemService.getAnnouns(currentIndex,pageSize,online);
+
+		for (Announcement announ : announs) {
+			AnnounsInfo aInfo = new AnnounsInfo();
+			aInfo.setAnnoun(announ);
+			aInfo.setGroups(systemService.getGroupsOfAnnoun(announ));
+			List<UserInfo> list = systemService.getAnnounByViews(announ);
+			aInfo.setViews(list.size());
+			resultlist.add(aInfo);
+		}
+ 		return resultlist;
+	} 
+	
+	@RequestMapping(value="announs/count")
+	public int announsCount(String online){
+		if(online==null || (!online.equals(Constant.ANNOUN_OFFLINE) && !online.equals(Constant.ANNOUN_ONLINE))){
+			return 0;
+		}
+		List<Announcement> announs = announcementService.getListByOnline(online);
+ 		return announs==null?0:announs.size();
+	} 
+	
+	
+	
+	
+	
 
 	//发布公告
 	@RequestMapping(value = "announs/add", method = RequestMethod.POST)
@@ -88,8 +127,6 @@ public class SystemController {
 			return resultMap;
 		}
 
-		System.out.println("标题：" + title + "\n 群组：" + group.length + "\n type:" + type + "\n content:" + content
-				+ "\n online:" + online);
 		/******************处理级联***********************/
 		Announcement announ = new Announcement();
 		announ.setContent(content);
@@ -112,7 +149,7 @@ public class SystemController {
 		}
 		return systemService.publishAnnoun(announ, groupList);
 	}
-
+	
 	@RequestMapping(value = "announs/online/update")
 	public Map<String, String> updateOnline(String announ_id, String online) {
 		Map<String, String> resultMap = new HashMap<String, String>();

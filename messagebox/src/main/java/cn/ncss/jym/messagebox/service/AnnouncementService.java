@@ -28,7 +28,7 @@ public interface AnnouncementService {
 
 	public Announcement get(int id);
 
-	public List<Announcement> getListByType(String type);
+	public List<Announcement> getListByOnline(String online);
 
 	public List<Announcement> getListByType(String type, boolean online);
 
@@ -36,7 +36,7 @@ public interface AnnouncementService {
 
 	public List<Announcement> getListByUser(String publisher, boolean online);
 
-	public List<Announcement> getListByOnline(String online);
+	public List<Announcement> getListByOnline(int currentIndex,int pageSize,String online);
 
 	public Map<String, Integer> getAnnounInfo();
 
