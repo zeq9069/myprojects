@@ -10,6 +10,7 @@ $(document).ready(function(){
 			if(data.status=="success"){
 				groupId=data.message;
 				$(".group-list>p").append("<span id='"+groupId+"'>"+groupName+"</span>");
+				$("#groupName").val("");
 			}else{
 				alert(data.message);
 			}
