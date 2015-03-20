@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import cn.ncss.jym.messagebox.utils.JsonDate;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
