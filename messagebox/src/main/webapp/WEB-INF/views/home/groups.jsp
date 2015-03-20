@@ -106,7 +106,7 @@
 			</div>
 			<div id="content-right" class="col-md-10" >
 					<div class="add-group">
-						添加群组：<input type="text" name="groupName" id="groupName" placeholder="群组名"></input> <button type="button" id="btn-add" class="btn btn-default">添加</button>
+						<input type="text" name="groupName" id="groupName" placeholder="群组名"></input> <button type="button" id="btn-add" class="btn btn-default">添加</button>
 					</div> 
 					<hr>
 					<div class="group-list">

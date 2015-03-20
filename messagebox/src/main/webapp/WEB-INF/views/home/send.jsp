@@ -12,6 +12,7 @@
 <meta name="author" content="">
 <title>messageBox</title>
 <link href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css"
+
 	rel="stylesheet">
 <style type="text/css">
 .container {
@@ -31,6 +32,9 @@
 #content-right {
 	padding-top: 20px;
 	padding-left: 30px
+}
+#title-error{
+color: red;
 }
 </style>
 </head>
@@ -83,7 +87,7 @@
 				<div class="body">
 					<form id="announ_form" name="announ_form">
 						<p>
-							<input type="text" name="title" id="title" placeholder="标题名">
+							<input type="text" name="title" id="title" placeholder="标题名" class="required" >
 						</p>
 						<p>
 							<c:forEach items="${groups}" var="group">
@@ -106,11 +110,10 @@
 								id="online" value="false">暂不上线
 						</p>
 						<p>
-							<input type="hidden" name="content" id="content" />
-							  <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
+							  <script id="editor" type="text/plain" style="width:1024px;height:500px;" ></script>
 						</p>
 						<p>
-							<button type="button" id="announ_submit" name="announ_submit">发布</button>
+							<button type="submit" id="announ_submit" name="announ_submit">发布</button>
 						</p>
 					</form>
 				</div>
@@ -119,15 +122,14 @@
 		<hr>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
-	
 	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
+	<script src="${webRoot}/${initParam.resourceRoot}/js/validate/jquery.validate.js"></script>
+		<script src="${webRoot}/${initParam.resourceRoot}/js/validate/message.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/send.js"></script>
-
-	<script type="text/javascript" charset="utf-8"
-		src="${webRoot}/${initParam.resourceRoot}/js/ueditor/ueditor.config.js"></script>
-	<script type="text/javascript" charset="utf-8"
-		src="${webRoot}/${initParam.resourceRoot}/js/ueditor/ueditor.all.min.js">
+	
+	<script type="text/javascript" charset="utf-8" src="${webRoot}/${initParam.resourceRoot}/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${webRoot}/${initParam.resourceRoot}/js/ueditor/ueditor.all.min.js">
 		
 	</script>
 	
