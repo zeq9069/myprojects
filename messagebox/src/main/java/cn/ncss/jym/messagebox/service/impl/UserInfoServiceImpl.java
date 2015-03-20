@@ -191,7 +191,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 		resultMap.put(Constant.HTTP_MESSAGE, res == true ? "" : "删除失败");
 		return resultMap;
 	}
-
+	
 	@SuppressWarnings("unused")
 	@Override
 	@Transactional(readOnly = false)

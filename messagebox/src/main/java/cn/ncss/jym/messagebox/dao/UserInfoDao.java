@@ -64,6 +64,9 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	public boolean deleteRelation(UserInfo user, Group group);
+	
+	public boolean deleteRelation(Group group);
+
 
 	/**
 	 * 添加公告查看记录

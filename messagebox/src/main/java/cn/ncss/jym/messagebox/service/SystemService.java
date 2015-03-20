@@ -39,10 +39,10 @@ public interface SystemService {
 
 	/**
 	 * 删除group
-	 * @param group 群组实体
+	 * @param group_id
 	 * @return
 	 */
-	public Map<String, String> deletGroup(String name);
+	public Map<String, String> deletGroup(int group_id);
 
 	/**
 	 * 获取所有用户

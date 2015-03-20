@@ -20,12 +20,12 @@ $(document).ready(function(){
 		require(["jquery",'page','bootstrap','jsrender'],function($,Page){
 			$(function(){
 				var listPage = Page.setting({
-					'itemListUrl': '/messagebox/system/announs/list',
+					'itemListUrl': '/messagebox/system/announs',
 					'itemCountUrl': '/messagebox/system/announs/count',
 					'par': {
 						'online':'true'
 					},
-					'type': 'post',
+					'type': 'get',
 					'listWrap': '.itemListWrap',
 					'listWrapTemp': '#listWrapTemp',
 					'pageWrap': '.itemPageWrap',
@@ -36,12 +36,12 @@ $(document).ready(function(){
 				$("select[name='online']").on("change",function(){
 						listPage=null;
 						listPage = Page.setting({
-							'itemListUrl': '/messagebox/system/announs/list',
+							'itemListUrl': '/messagebox/system/announs',
 							'itemCountUrl': '/messagebox/system/announs/count',
 							'par': {
 								'online':$(this).val()
 							},
-							'type': 'post',
+							'type': 'get',
 							'listWrap': '.itemListWrap',
 							'listWrapTemp': '#listWrapTemp',
 							'pageWrap': '.itemPageWrap',
@@ -54,16 +54,15 @@ $(document).ready(function(){
 		$("tbody").on("dblclick","span#announ_status",function(){
 			var announ_id=$(this).attr("data-user");
 			var online=$(this).attr("data-value");
-			
-			$.post("/messagebox/system/announs/online/update",{announ_id:announ_id,online:online=="true"?"false":"true"},function(data){
-				if(data.status=="success"){
-					if(online=="true"){
-						$("span[data-user='"+announ_id+"']").parent().parent().remove();
-					}else if(online=="false"){
-						$("span[data-user='"+announ_id+"']").parent().parent().remove();
-					}
-				}else{
-					alert(data.message);
+			$.ajax({
+				type:"POST",
+				url:"/messagebox/system/announs/"+announ_id+"?_method=put",
+				data:{"online":online=="true"?"false":"true"},
+				success:function(data){
+					$("span[data-user='"+announ_id+"']").parent().parent().remove();
+				},
+				error:function(request, textStatus){
+					$("span[data-user='"+announ_id+"']").parent().parent().remove();
 				}
 			});
 			

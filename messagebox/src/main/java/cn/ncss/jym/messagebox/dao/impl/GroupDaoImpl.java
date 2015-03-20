@@ -42,10 +42,10 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public boolean delete(String name) {
-		String hql = "delete from Group where name=:name";
+	public boolean delete(int group_id) {
+		String hql = "delete from Group where id=:id";
 		Query query = this.getSessioin().createQuery(hql);
-		query.setParameter("name", name);
+		query.setParameter("id", group_id);
 		query.executeUpdate();
 		return true;
 	}
@@ -58,9 +58,15 @@ public class GroupDaoImpl implements GroupDao {
 
 	@Override
 	public Group get(String name) {
-		Criteria crit = this.getSessioin().createCriteria(Group.class);
+		Criteria crit=this.getSessioin().createCriteria(Group.class);
 		crit.add(Restrictions.eq("name", name));
 		return (Group) crit.uniqueResult();
+		
+	}
+	
+	@Override
+	public Group get(int group_id) {
+		return (Group) this.getSessioin().get(Group.class, group_id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -71,8 +77,8 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public boolean isExists(String name) {
-		return this.get(name) == null ? false : true;
+	public boolean isExists(int group_id) {
+		return this.getSessioin().get(Group.class, group_id) == null ? false : true;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -84,5 +90,12 @@ public class GroupDaoImpl implements GroupDao {
 		pro.add(Projections.rowCount());
 		crit.setProjection(pro);
 		return crit.list();
+	}
+
+	@Override
+	public boolean isExists(String groupName) {
+		Criteria crit=this.getSessioin().createCriteria(Group.class);
+		crit.add(Restrictions.eq("name", groupName));
+		return crit.list().size()>0?true:false;
 	}
 }

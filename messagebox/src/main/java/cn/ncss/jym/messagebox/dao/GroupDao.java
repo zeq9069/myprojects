@@ -21,16 +21,20 @@ public interface GroupDao {
 	 */
 	public String add(Group group);
 
-	public boolean delete(String name);
+	public boolean delete(int group_id );
 
 	public boolean update(Group group);
 
-	public Group get(String name);
+	public Group get(String groupName);
+	
+	public Group get(int group_id);
 
 	public List<Group> getList();
 
 	public List<Object[]> getGroupInfo();
 
-	public boolean isExists(String name);
+	public boolean isExists(int group_id);
+	
+	public boolean isExists(String groupName);
 
 }

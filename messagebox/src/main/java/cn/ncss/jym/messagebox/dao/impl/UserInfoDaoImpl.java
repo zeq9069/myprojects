@@ -161,6 +161,15 @@ public class UserInfoDaoImpl implements UserInfoDao {
 		query.executeUpdate();
 		return true;
 	}
+	
+	@Override
+	public boolean deleteRelation(Group group){
+		String hql = "delete Relation where group=:group";
+		Query query = this.getSession().createQuery(hql);
+		query.setParameter("group", group);
+		query.executeUpdate();
+		return true;
+	}
 
 	@Override
 	public boolean addRecord(Record record) {

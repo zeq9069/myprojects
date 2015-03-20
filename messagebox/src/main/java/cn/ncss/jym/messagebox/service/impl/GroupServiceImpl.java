@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.dao.GroupDao;
+import cn.ncss.jym.messagebox.dao.UserInfoDao;
 import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.service.GroupService;
 import cn.ncss.jym.messagebox.utils.Constant;
@@ -28,6 +30,11 @@ public class GroupServiceImpl implements GroupService {
 
 	@Autowired
 	private GroupDao groupDao;
+	@Autowired 
+	private UserInfoDao userInfoDao;
+	
+	@Autowired
+	private AnnouncementDao announcementDao;
 
 	@Transactional(readOnly = false)
 	@Override
@@ -50,22 +57,17 @@ public class GroupServiceImpl implements GroupService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public Map<String, String> delete(String name) {
+	public Map<String, String> delete(int group_id) {
 		Map<String, String> resultMap = new HashMap<String, String>();
-		if (!StringUtil.hasText(name)) {
+		 if (!isExists(group_id)) {
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
-			resultMap.put(Constant.HTTP_MESSAGE, "群组名不能为空");
+			resultMap.put(Constant.HTTP_MESSAGE, "群组不存在");
 			return resultMap;
-		} else if (!isExists(name)) {
-			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
-			resultMap.put(Constant.HTTP_MESSAGE, "群组名不存在");
-			return resultMap;
-		} else {
-			boolean res = groupDao.delete(name);
-			resultMap.put(Constant.HTTP_STATUS, res == true ? Constant.HTTP_SUCCESS : Constant.HTTP_ERROR);
-			resultMap.put(Constant.HTTP_MESSAGE, res == true ? "删除成功" : "删除失败");
-			return resultMap;
-		}
+		} 
+		boolean res = groupDao.delete(group_id);
+		resultMap.put(Constant.HTTP_STATUS, res == true ? Constant.HTTP_SUCCESS : Constant.HTTP_ERROR);
+		resultMap.put(Constant.HTTP_MESSAGE, res == true ? "删除成功" : "删除失败");
+		return resultMap;
 	}
 
 	@Transactional(readOnly = false)
@@ -104,8 +106,13 @@ public class GroupServiceImpl implements GroupService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public boolean isExists(String name) {
-		return groupDao.isExists(name);
+	public boolean isExists(int group_id) {
+		return groupDao.isExists(group_id);
+	}
+	@Transactional(readOnly = true)
+	@Override
+	public boolean isExists(String groupName){
+		return groupDao.isExists(groupName);
 	}
 
 }

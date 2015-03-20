@@ -226,7 +226,6 @@ text-align:center;
 									<p>
 										<button type="button" id="group_submit" class="btn btn-primary" data-dismiss="modal">确认</button>
 									</p>
-									<input type="hidden" name="u_id" id="u_id" value="">
 								</form>
 							</div>
 							<div class="modal-footer">

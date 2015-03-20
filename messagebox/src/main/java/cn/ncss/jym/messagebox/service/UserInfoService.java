@@ -42,7 +42,7 @@ public interface UserInfoService {
 	public Map<String, String> addRelations(List<Relation> relations);
 
 	public Map<String, String> deleteRelation(String u_id, String groupName);
-
+	
 	public boolean addRecord(String u_id, int announ_id);
 	
 	public List<Group> getGroupsByUser(UserInfo user);

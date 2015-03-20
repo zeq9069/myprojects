@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -118,6 +119,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		crit.add(Restrictions.eq("online", status));
 		crit.setFirstResult((currentIndex-1)*pageSize);
 		crit.setMaxResults(pageSize);
+		crit.addOrder(Order.desc("date"));
 		return crit.list();
 	}
 	

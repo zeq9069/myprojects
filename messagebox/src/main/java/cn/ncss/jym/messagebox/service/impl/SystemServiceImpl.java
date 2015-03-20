@@ -64,8 +64,8 @@ public class SystemServiceImpl implements SystemService {
 	}
 
 	@Override
-	public Map<String, String> deletGroup(String name) {
-		return groupService.delete(name);
+	public Map<String, String> deletGroup(int group_id) {
+		return groupService.delete(group_id);
 	}
 
 	@Override

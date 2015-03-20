@@ -20,12 +20,12 @@ $(document).ready(function(){
 	require(["jquery",'page','bootstrap','jsrender'],function($,Page){
 		$(function(){
 			var listPage = Page.setting({
-				'itemListUrl': '/messagebox/system/users/list',
+				'itemListUrl': '/messagebox/system/users',
 				'itemCountUrl': '/messagebox/system/users/count',
 				'par': {
 					'group':'all'
 				},
-				'type': 'post',
+				'type': 'get',
 				'listWrap': '.itemListWrap',
 				'listWrapTemp': '#listWrapTemp',
 				'pageWrap': '.itemPageWrap',
@@ -38,8 +38,8 @@ $(document).ready(function(){
 				var u_id=$(this).parent().attr("data-user").trim();
 				var groupName=$(this).text().trim();
 				var groupId=$(this).attr("data-key").trim();
-				$.post("../system/users/group/delete",{
-					u_id:u_id,
+				$.post("../system/relations/"+u_id,{
+					_method:"DELETE",
 					groupName:groupName
 				},function(data){
 					if(data.status=="success"){
@@ -70,8 +70,8 @@ $(document).ready(function(){
 				});
 				
 				
-				$("#u_id").attr("value",u_id);
-				$.post("../system/users/group/add",$(".group-form").serialize(),function(data){
+				//$("#u_id").attr("value",u_id);
+				$.post("../system/relations/"+u_id,$(".group-form").serialize(),function(data){
 					if(data.status=="success"){
 						//删除重复group，追加新group
 						for(var i=0;i<groupID.length;i++){
@@ -89,12 +89,12 @@ $(document).ready(function(){
 			$("#group-select").on("change",function(){
 				listPage=null;
 				listPage = Page.setting({
-					'itemListUrl': '/messagebox/system/users/list',
+					'itemListUrl': '/messagebox/system/users',
 					'itemCountUrl': '/messagebox/system/users/count',
 					'par': {
 						'group':$("#group-select").val().trim()
 					},
-					'type': 'post',
+					'type': 'get',
 					'listWrap': '.itemListWrap',
 					'listWrapTemp': '#listWrapTemp',
 					'pageWrap': '.itemPageWrap',

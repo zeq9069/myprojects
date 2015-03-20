@@ -4,7 +4,7 @@ $(document).ready(function(){
 	$(".add-group>#btn-add").click(function(){
 		var groupName=$("#groupName").val();
 		var groupId;
-		$.post("/messagebox/system/groups/add",{
+		$.post("/messagebox/system/groups",{
 			name:groupName
 		},function(data){
 			if(data.status=="success"){
@@ -18,13 +18,12 @@ $(document).ready(function(){
 	});
 	
 	$("#content-right").on("dblclick",".group-list>p>span",function(){
-		var groupName=$(this).html();
+		var group_id=$(this).attr("id");
 		var id=this.id;
 		$.ajax({
 			type:"POST",
-			url:"/messagebox/system/groups/delete",
-			data:{name:groupName},
-			dataType:"json",
+			url:"/messagebox/system/groups/"+group_id,
+			data:{_method:"delete"},
 			success:function(data){
 				$("#"+id).remove();
 			},
