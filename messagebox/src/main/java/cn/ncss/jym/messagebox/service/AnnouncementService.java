@@ -38,7 +38,6 @@ public interface AnnouncementService {
 
 	public List<Announcement> getListByOnline(int currentIndex,int pageSize,String online);
 
-	public Map<String, Integer> getAnnounInfo();
 
 	public List<Group> getGroupsOfAnnoun(Announcement announ);
 

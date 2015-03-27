@@ -123,18 +123,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		return announcementDao.getListByUser(publisher, online);
 	}
 
-	@Transactional(readOnly = true)
-	@Override
-	public Map<String, Integer> getAnnounInfo() {
-//		Map<String, Integer> announs_info = new HashMap<String, Integer>();
-//		int online = announcementDao.getByStatus(Constant.ANNOUN_ONLINE);
-//		int offline = announcementDao.getByStatus(Constant.ANNOUN_OFFLINE);
-//		announs_info.put(Constant.ANNOUN_NUM, online + offline);
-//		announs_info.put(Constant.ONLINE_NUM, online);
-//		announs_info.put(Constant.OFFLINE_NUM, offline);
-		return null;
-	}
-
 	@Override
 	@Transactional(readOnly=true)
 	public List<Group> getGroupsOfAnnoun(Announcement announ) {
