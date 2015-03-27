@@ -250,6 +250,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return groups;
 	}
 	
+	
 
 	private boolean isExists(UserInfo userInfo) {
 		UserInfo user = userInfoDao.get(userInfo.getAreaCode(), userInfo.getOrgCode(), userInfo.getOrgName(),
@@ -259,10 +260,13 @@ public class UserInfoServiceImpl implements UserInfoService {
 		}
 		return true;
 	}
+	
+	
 
 	//判断关系是否存在
 	public boolean isExist(Relation relation) {
 		return userInfoDao.isRelation(relation.getUserInfo(), relation.getGroup());
 	}
+	
 
 }

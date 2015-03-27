@@ -1,7 +1,6 @@
 package cn.ncss.jym.messagebox.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
-import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.GroupService;
-import cn.ncss.jym.messagebox.service.SystemService;
+import cn.ncss.jym.messagebox.service.StatisticService;
 import cn.ncss.jym.messagebox.system.pojo.AnnounsInfo;
-import cn.ncss.jym.messagebox.utils.Constant;
 
 /**
  * ***********************
@@ -33,7 +30,7 @@ import cn.ncss.jym.messagebox.utils.Constant;
 public class HomeController {
 
 	@Autowired
-	private SystemService systemService;
+	private StatisticService statisticService;
 
 	@Autowired
 	private GroupService groupService;
@@ -44,13 +41,13 @@ public class HomeController {
 	@RequestMapping(value = { "main", "" }, method = RequestMethod.GET)
 	public ModelAndView main(ModelAndView model) {
 		model.setViewName("/home/main");
-		model.addObject("systemInfo", systemService.getAllInfo());
+		model.addObject("systemInfo", statisticService.getAllInfo());
 		return model;
 	}
 
 	@RequestMapping(value = "groups", method = RequestMethod.GET)
 	public ModelAndView groups(ModelAndView model) {
-		Map<String, String> map = systemService.getGroups();
+		Map<String, String> map = groupService.getGroups();
 		model.setViewName("/home/groups");
 		model.addObject("groups", map);
 		return model;
@@ -61,31 +58,17 @@ public class HomeController {
 	public ModelAndView users(ModelAndView model) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		model.setViewName("/home/users");
-		resultMap.put("groups", systemService.getGroups());
+		resultMap.put("groups", groupService.getGroups());
 		model.addObject("resultMap", resultMap);
 		return model;
 	}
 
-	@RequestMapping(value = "users/group", method = RequestMethod.GET)
-	@ResponseBody
-	public ModelAndView usersByGroup(String name, ModelAndView model) {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		List<UserInfo> userList = systemService.getUsersByGroup(1, Constant.HTTP_PAGESIZE, name);
-		System.out.println(userList.size());
-		model.setViewName("/home/users");
-		resultMap.put("users", userList);
-		resultMap.put("groups", systemService.getGroups());
-		resultMap.put(Constant.HTTP_COUNT_NAME, systemService.getCountByGroup(name));
-		resultMap.put(Constant.HTTP_PAGESIZE_NAME, Constant.HTTP_PAGESIZE);
-		model.addObject("resultMap", resultMap);
-		return model;
-	}
 
 	@RequestMapping(value = "send", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView send(ModelAndView model) {
 		model.setViewName("/home/send");
-		model.addObject("groups", systemService.getGroups());
+		model.addObject("groups", groupService.getGroups());
 		return model;
 	}
 

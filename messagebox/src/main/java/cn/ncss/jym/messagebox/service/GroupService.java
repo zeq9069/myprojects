@@ -26,11 +26,7 @@ public interface GroupService {
 
 	public List<Group> getList();
 	
-	/**
-	 * 获取所用的group信息
-	 * @return
-	 */
-	public Map<String,Integer> getGroupInfo();
+	public Map<String, String> getGroups();
 	
 	/**
 	 *根据ID判断

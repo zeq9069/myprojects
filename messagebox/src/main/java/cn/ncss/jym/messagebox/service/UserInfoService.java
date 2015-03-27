@@ -46,5 +46,5 @@ public interface UserInfoService {
 	public boolean addRecord(String u_id, int announ_id);
 	
 	public List<Group> getGroupsByUser(UserInfo user);
-
+	
 }

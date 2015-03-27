@@ -91,19 +91,19 @@ public class GroupServiceImpl implements GroupService {
 		return groupDao.getList();
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional(readOnly=true)
 	@Override
-	public Map<String, Integer> getGroupInfo() {
-		Map<String, Integer> groups = new HashMap<String, Integer>();
-		List<Object[]> list = groupDao.getGroupInfo();
-		if (list != null) {
-			for (Object[] obj : list) {
-				groups.put(((Group)obj[0]).getName(), Integer.parseInt(obj[1].toString()));
+	public Map<String, String> getGroups() {
+		Map<String, String> resultMap = new HashMap<String, String>();
+		List<Group> groupList = getList();
+		if (groupList != null && groupList.size() > 0) {
+			for (Group group : groupList) {
+				resultMap.put("" + group.getId(), group.getName());
 			}
 		}
-		return groups;
+		return resultMap;
 	}
-
+	
 	@Transactional(readOnly = true)
 	@Override
 	public boolean isExists(int group_id) {
@@ -114,5 +114,7 @@ public class GroupServiceImpl implements GroupService {
 	public boolean isExists(String groupName){
 		return groupDao.isExists(groupName);
 	}
+	
+	
 
 }

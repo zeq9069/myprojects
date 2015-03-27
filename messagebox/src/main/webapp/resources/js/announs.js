@@ -48,8 +48,6 @@ $(document).ready(function(){
 							'pageSize':20
 						});
 				});
-				
-				
 		
 		$("tbody").on("dblclick","span#announ_status",function(){
 			var announ_id=$(this).attr("data-user");

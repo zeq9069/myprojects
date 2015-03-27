@@ -20,7 +20,7 @@ import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.GroupService;
-import cn.ncss.jym.messagebox.service.SystemService;
+import cn.ncss.jym.messagebox.service.StatisticService;
 import cn.ncss.jym.messagebox.service.UserInfoService;
 import cn.ncss.jym.messagebox.system.pojo.AnnounsInfo;
 import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
@@ -49,7 +49,7 @@ import cn.ncss.jym.messagebox.utils.StringUtil;
 public class SystemController {
 
 	@Autowired
-	private SystemService systemService;
+	private StatisticService statisticService;
 	@Autowired
 	private GroupService groupService;
 	@Autowired
@@ -61,17 +61,17 @@ public class SystemController {
 
 	@RequestMapping(value = "info", method = RequestMethod.GET)
 	public SystemInfo getInfo() {
-		return systemService.getAllInfo();
+		return statisticService.getAllInfo();
 	}
 
 	@RequestMapping(value = "groups", method = RequestMethod.POST)
 	public Map<String, String> addGroup(Group group) {
-		return systemService.addGroup(group);
+		return groupService.add(group);
 	}
 
 	@RequestMapping(value = "groups/{group_id}", method = RequestMethod.DELETE)
 	public Map<String, String> deleteGroup(@PathVariable("group_id") int group_id) {
-		return systemService.deletGroup(group_id);
+		return groupService.delete(group_id);
 	}
 	
 	
@@ -81,13 +81,13 @@ public class SystemController {
 			return null;
 		}
 		List<AnnounsInfo> resultlist = new ArrayList<AnnounsInfo>();
-		List<Announcement> announs = systemService.getAnnouns(currentIndex,pageSize,online);
+		List<Announcement> announs = announcementService.getListByOnline(currentIndex,pageSize,online);
 
 		for (Announcement announ : announs) {
 			AnnounsInfo aInfo = new AnnounsInfo();
 			aInfo.setAnnoun(announ);
-			aInfo.setGroups(systemService.getGroupsOfAnnoun(announ));
-			List<UserInfo> list = systemService.getAnnounByViews(announ);
+			aInfo.setGroups(announcementService.getGroupsOfAnnoun(announ));
+			List<UserInfo> list = announcementService.getAnnounByViews(announ);
 			aInfo.setViews(list.size());
 			resultlist.add(aInfo);
 		}
@@ -102,10 +102,6 @@ public class SystemController {
 		List<Announcement> announs = announcementService.getListByOnline(online);
  		return announs==null?0:announs.size();
 	} 
-	
-	
-	
-	
 	
 
 	//发布公告
@@ -154,7 +150,7 @@ public class SystemController {
 				groupList.add(g);
 			}
 		}
-		return systemService.publishAnnoun(announ, groupList);
+		return announcementService.add(announ, groupList);
 	}
 	
 	@RequestMapping(value = "announs/{announ_id}",method=RequestMethod.PUT)
@@ -165,11 +161,10 @@ public class SystemController {
 			resultMap.put(Constant.HTTP_MESSAGE, "参数异常");
 			return resultMap;
 		}
-		return systemService.updateOnline(Integer.parseInt(announ_id), online);
+		return announcementService.updateOnline(Integer.parseInt(announ_id), online);
 	}
 
 	
-	/**************************************************************************/
 	@RequestMapping(value = "relations/{u_id}", method = RequestMethod.POST)
 	public Map<String, String> addGroupforUser(@PathVariable("u_id")String u_id,HttpServletRequest request) {
 		String[] names = request.getParameterValues("groupName");
@@ -205,9 +200,10 @@ public class SystemController {
 		List<UserInfo> userList=null;
 		List<UserSys> usersys=new ArrayList<UserSys>();
 		if(group==null || "all".equals(group)){
-			userList=systemService.getUsers(currentIndex, pageSize);
+			userList=userInfoService.getList(currentIndex, pageSize);
 		}else{
-			userList = systemService.getUsersByGroup(currentIndex, Constant.HTTP_PAGESIZE,group==null?"":group);
+			Group gr = groupService.get(group);
+			userList = userInfoService.getUsersByGroup(currentIndex, Constant.HTTP_PAGESIZE,gr);
 		}
 		if(userList!=null){
 			for(UserInfo user:userList){
@@ -224,9 +220,10 @@ public class SystemController {
 	public int getCount(String group) {
 		int count=0;
 		if(group==null || "all".equals(group)){
-			count=systemService.getCount();
+			count=userInfoService.getCount();
 		}else{
-			count = systemService.getCount(group);
+			Group g = groupService.get(group);
+			count = userInfoService.getCountByGroup(g);
 		}
 		return count;
 	}
