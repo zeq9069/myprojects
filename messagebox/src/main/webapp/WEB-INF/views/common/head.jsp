@@ -36,10 +36,17 @@
 					<%-- <li class="active"><a href="${webRoot}/page/index2">关于 <span class="sr-only">(current)</span></a></li> --%>
 					<!-- <li><a href="#">加入我们</a></li> -->
 					<li><span>&nbsp;&nbsp;</span></li>
-					<li><a type="button" class="btn  btn-lg" data-toggle="modal"
+					<c:if test="${empty username}">
+						<li><a type="button" class="btn  btn-lg" data-toggle="modal"
 						data-target="#regModel"> 注册 </a></li>
-					<li><a type="button" class="btn  btn-lg" data-toggle="modal"
+						<li><a type="button" class="btn  btn-lg" data-toggle="modal"
 						data-target="#loginModel"> 登录 </a></li>
+					</c:if>
+					<c:if test="${!empty username}">
+						<h5 style="color:white">${username}</h5>
+					</c:if>
+					
+					
 					<!-- 
 					下拉导航
 					<li class="dropdown">
