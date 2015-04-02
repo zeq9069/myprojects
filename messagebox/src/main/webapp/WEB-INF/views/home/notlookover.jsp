@@ -16,34 +16,6 @@
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
  	<link rel="stylesheet" href="${webRoot}/${initParam.resourceRoot}/css/graduate.css">
 	
-	
-	<!-- jsrender 模板-->
-	<script type="text/x-jsrender" id="listWrapTemp">
-							<tr>
-								<td>{{:user.username}}</td>
-								<td>{{:user.realName}}</td>
-								<td>{{:user.orgName}}</td>
-								<td>{{:user.department}}</td>
-								<td>{{:user.jobTitle}}</td>
-								<td>{{:user.email}}</td>
- 								<td>{{:user.officePhone}}</td>
-								<td class="group-td" data-user="{{:user.id}}">
-									{{for groups}}
-										<span   data-key="{{:id}}">
-											{{:name}}
-										</span>
-									{{/for}}
-									<span  class="group_plus glyphicon glyphicon-plus" data-toggle="modal" data-target="#groupModel">
-									</span>
-								</td>
-							</tr>
-	</script>
-	
-	
-	
-	
-	
-	
 <style type="text/css">
 .container {
 	margin-left: 0px;
@@ -100,11 +72,7 @@ text-align:center;
 }
 
 
-	.pagination>li.goPage{padding-left:15px;}
-	.pagination>li.goPage>span{border:0px;float:inherit;background-color: inherit;padding:0px;line-height:28px;}
-	.pagination>li.goPage>span.text{color:#666;}
-	.pagination>li.goPage>input.num,.pagination>li.goPage>span.btn{width:40px;height:24px;padding:4px 8px;border:1px solid #CCC;line-height:16px;}
- 
+	
 </style>
 
 
@@ -155,49 +123,40 @@ text-align:center;
 				style="border: 2px solid #eeeeee; height: 800px; border-bottom: 0px;">
 				<div class="list-group" style="text-align: center; padding-top: 30px; height: 50%;">
 					<span  class="list-group-item active" style="font-size: 25px">控制台操作</span>
-					<a href="${webRoot}/home/receives" class="list-group-item" id="receives">接收公告</a> 
-					<a href="${webRoot}/home/send" class="list-group-item" id="announ-send">发布公告</a> 
+					<a href="${webRoot}/home/receives/notlookover" class="list-group-item" id="notlookover">待查看</a> 
+					<a href="${webRoot}/home/receives/lookover" class="list-group-item" id="lookover">已查看</a> 
 					<a href="${webRoot}/home/announs" class="list-group-item" id="announs">已发布公告</a>
+					<a href="${webRoot}/home/send" class="list-group-item" id="announ-send">发布公告</a> 
 					<a href="${webRoot}/home/main" class="list-group-item" id="main">统计</a>
 				</div>
 			</div>
 			<div id="content-right" class="col-md-10">
 			
-			
-			
 				<div class="body">
-					筛选：<select name="groups" id="group-select" >
-						<option id="all" value="all" selected="selected" >全部</option>
-						<c:forEach items="${resultMap.groups}" var="group">
-							<option id="${group.key}" value="${group.value}">${group.value}</option>
-						</c:forEach>
-					</select>
-					
+				共${count}篇
 					<table class="user_table">
 						<thead>
 							<tr>
-								<td>用户名</td>
-								<td>姓名</td>
-								<td>工作单位</td>
-								<td>部门</td>
-								<td>职务</td>
-								<td>邮箱</td>
-								<!-- <td>手机</td> -->
-								<td>电话</td>
-								<td>所属分组</td>
+								<td>ID</td>
+								<td>标题</td>
+								<td>发布者</td>
+								<td>发布时间</td>
+								<td>公告类型</td>
 							</tr>
 						</thead>
 						
 						<tbody class="itemListWrap">
-			
+							<c:forEach items="${resultMap.notlookover}" var="announ">
+								<tr>
+								<td><a href="">${announ.id}</a></td>
+								<td>${announ.title}</td>
+								<td>${announ.publisher}</td>
+								<td>${announ.date}</td>
+								<td>${announ.type}</td>
+							</tr>
+							</c:forEach>
 						</tbody>
 					</table>
-					<div class="itemWrap">
-						<ul class="itemPageWrap pagination pagination-sm">
-			
-						</ul>
-					</div>
-
 				</div>
 			</div>
 		</div>
@@ -238,12 +197,7 @@ text-align:center;
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 </body>
-	<script type="text/javascript" src="${webRoot}/${initParam.resourceRoot}/js/page/requirejs.min.js"></script>
 	<script type="text/javascript" src="${webRoot}/${initParam.resourceRoot}/js/users.js"></script>
-<script type="text/javascript">
-
-</script>
-
 </html>
 
 

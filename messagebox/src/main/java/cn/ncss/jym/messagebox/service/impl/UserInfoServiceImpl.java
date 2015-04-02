@@ -3,8 +3,12 @@ package cn.ncss.jym.messagebox.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import cn.ncss.jym.messagebox.dao.UserInfoDao;
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.UserInfoService;
 
 
@@ -19,10 +23,19 @@ import cn.ncss.jym.messagebox.service.UserInfoService;
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
+	@Autowired
+	private UserInfoDao userInfoDao;
+	
 	@Override
 	public List<String> getSchoolType() {
 		List<String> typelist=new ArrayList<String>();
 		return typelist;
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public UserInfo getById(String id) {
+		return userInfoDao.getById(id);
 	}
 
 	/*
@@ -86,12 +99,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return userInfoDao.getCount();
 	}
 
-
-	@Override
-	@Transactional(readOnly = true)
-	public UserInfo getById(String id) {
-		return userInfoDao.getById(id);
-	}
 
 	private boolean isExists(UserInfo userInfo) {
 		UserInfo user = userInfoDao.get(userInfo.getAreaCode(), userInfo.getOrgCode(), userInfo.getOrgName(),

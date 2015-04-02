@@ -25,12 +25,13 @@ public interface UserInfoService {
 
 	public UserInfo get(String areacCode, String orgCode, String orgName, String fxmc, UserType type);
 
-	public UserInfo getById(String id);
 
 	public List<UserInfo> getList(int page, int pageSize);
 
 	public int getCount();
 	*/
+	
+	public UserInfo getById(String id);
 	
 	/**
 	 * 获取用户所在院校所属的学校类型列表

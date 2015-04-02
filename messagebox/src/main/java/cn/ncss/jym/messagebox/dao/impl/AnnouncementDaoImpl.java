@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -88,6 +89,39 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		return crit.list();
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Announcement> getReceiveByYxdm(List<String> typeList,
+			String yxdm,int currentIndex,int pageSize) {
+		String hql="from Announcement where targetYxdm like '%"+yxdm+"%'";
+		
+		String str=" or targetYxlx like '%"+SchoolType.SCHOOL_ALL.value()+"%'";
+		for(String type:typeList){
+			str+=" or targetYxlx like '%"+type+"%'";
+		}
+		hql=hql+str;
+		Query query=this.getSession().createQuery(hql);
+		query.setFirstResult((currentIndex-1)*pageSize);
+		query.setMaxResults(pageSize);
+		return query.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Announcement> getReceiveByYxdm(List<String> typeList,String yxdm) {
+		String hql="select id,title,date,publisher,type from Announcement where targetYxdm like '%"+yxdm+"%'";
+		
+		String str=" or targetYxlx like '%"+SchoolType.SCHOOL_ALL.value()+"%'";
+		for(String type:typeList){
+			str+=" or targetYxlx like '%"+type+"%'";
+		}
+		hql=hql+str;
+		Query query=this.getSession().createQuery(hql);
+		return query.list();
+	}
+
+
 	@Override
 	public int getCount(List<String> typeList, String yxdm) {
 		String hql="from Announcement where targetYxdm like '%"+yxdm+"%'";
@@ -100,6 +134,31 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		Query query=this.getSession().createQuery(hql);
 		return query.list().size();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Announcement> getReceiveByProvince(String provinceCode,int currentIndex,int pageSize) {
+		Criteria crit=this.getSession().createCriteria(Announcement.class);
+		crit.add(Restrictions.like("targerProvinceCode", provinceCode));
+		crit.setFirstResult((currentIndex-1)*pageSize);
+		crit.setMaxResults(pageSize);
+		return crit.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Announcement> getReceiveByProvince(String provinceCode) {
+		Criteria crit=this.getSession().createCriteria(Announcement.class);
+		crit.add(Restrictions.like("targerProvinceCode", provinceCode));
+		ProjectionList pro=Projections.projectionList();
+		pro.add(Projections.property("id"));
+		pro.add(Projections.property("title"));
+		pro.add(Projections.property("date"));
+		pro.add(Projections.property("publisher"));
+		pro.add(Projections.property("type"));
+		crit.setProjection(pro);
+		return crit.list();
+	}
 
 	@Override
 	public int getCount(String provinceCode) {
@@ -111,6 +170,34 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		return (int) crit.uniqueResult();
 	}
 
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Announcement> getReceiveBySzyx(String yxdm, String szyx,int currentIndex,int pageSize) {
+		Criteria crit=this.getSession().createCriteria(Announcement.class);
+		crit.add(Restrictions.eq("targerYxdm", yxdm));
+		crit.add(Restrictions.like("targerSzyx", szyx));
+		crit.setFirstResult((currentIndex-1)*pageSize);
+		crit.setMaxResults(pageSize);
+		return crit.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Announcement> getReceiveBySzyx(String yxdm, String szyx) {
+		Criteria crit=this.getSession().createCriteria(Announcement.class);
+		crit.add(Restrictions.eq("targerYxdm", yxdm));
+		crit.add(Restrictions.like("targerSzyx", szyx));
+		ProjectionList pro=Projections.projectionList();
+		pro.add(Projections.property("id"));
+		pro.add(Projections.property("title"));
+		pro.add(Projections.property("date"));
+		pro.add(Projections.property("publisher"));
+		pro.add(Projections.property("type"));
+		crit.setProjection(pro);
+		return crit.list();
+	}
+	
 	@Override
 	public int getCount(String yxdm, String szyx) {
 		Criteria crit=this.getSession().createCriteria(Announcement.class);
@@ -121,4 +208,6 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		crit.setProjection(pro);
 		return (int) crit.uniqueResult();
 	}
+
+
 }

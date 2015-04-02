@@ -2,6 +2,7 @@ package cn.ncss.jym.messagebox.service;
 
 import java.util.List;
 
+import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Record;
 
 /**
@@ -19,7 +20,7 @@ public interface RecordService {
 
 	public boolean delete(Record record);
 
-	public List<Record> getListByUId(String u_id,int currentIndex,int pageSize);
+	public List<Announcement> getListByUId(int currentIndex,int pageSize);
 	
 	public long getCount(String u_id);
 

@@ -1,5 +1,6 @@
 package cn.ncss.jym.messagebox.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,23 @@ public class RecordServiceImpl implements RecordService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Record> getListByUId(String u_id,int currentIndex,int pageSize) {
-		return recordDao.getListByUId(u_id,currentIndex,pageSize);
+	public List<Announcement> getListByUId(int currentIndex,int pageSize) {
+		//TODO
+		//服务层获取用户信息
+		UserInfo userInfo=new UserInfo();
+		
+		List<Announcement> list=new ArrayList<Announcement>();
+		List<Record> recordList=recordDao.getListByUId(userInfo.getId(),currentIndex,pageSize);
+		if(recordList==null || recordList.size()==0){
+			return list;
+		}
+		
+		for(Record record:recordList){
+			Announcement announ=record.getAnnoun();
+			announ.setContent("");
+			list.add(announ);
+		}
+		return list;
 	}
 	
 	@Transactional(readOnly = true)

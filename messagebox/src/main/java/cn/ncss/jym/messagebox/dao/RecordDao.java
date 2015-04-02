@@ -22,6 +22,8 @@ public interface RecordDao {
 
 	public List<Record> getListByUId(String u_id,int currentIndex,int pageSize);
 	
+	public List<Record> getListByUId(String u_id);
+	
 	public long getCount(String u_id);
 
 	public List<Record> getListByAnnounId(int announ_id,int currentIndex,int pageSize);

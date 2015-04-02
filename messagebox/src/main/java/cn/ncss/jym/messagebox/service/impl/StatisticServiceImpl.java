@@ -48,20 +48,10 @@ public class StatisticServiceImpl implements StatisticService{
 	@Transactional(readOnly=true)
 	public Map<String,Long> getAllInfo() {
 		//在服务层获取用户
-		UserInfo userInfo=new UserInfo();
-		
+				UserInfo userInfo=new UserInfo();
+				
 		long publish_num=announcementService.getCountByUser(userInfo.getId());
-		/*
-		if(省){
-			announcementDao.getCount(provinceCode);
-		}else if(院校){
-			announcementDao.getCount(typeList, yxdm)
-		}else if(院系){
-			announcementDao.getCount(yxdm, szyx)
-		}
-		*/
-		List<String> typeList=userInfoService.getSchoolType();
-		long receive_num=announcementService.getCount(typeList, "yxdm");
+		long receive_num=announcementService.getReceiveCount();
 		long record_num=recordService.getCount(userInfo.getId());
 		Map<String,Long> map=new HashMap<String, Long>();
 		map.put("publish_num",publish_num);

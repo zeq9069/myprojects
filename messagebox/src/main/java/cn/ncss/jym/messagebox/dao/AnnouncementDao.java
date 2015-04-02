@@ -42,12 +42,20 @@ public interface AnnouncementDao {
 	 */
 	public int getCount(List<String> typeList,String yxdm);
 	
+	public List<Announcement> getReceiveByYxdm(List<String> typeList,String yxdm,int currentIndex,int pageSize);
+	
+	public List<Announcement> getReceiveByYxdm(List<String> typeList,String yxdm);
+	
 	/**
 	 * 省用户查询所有发送给自己的公告
 	 * @param provinceCode 省代码
 	 * @return
 	 */
 	public int getCount(String provinceCode);
+	
+	public List<Announcement> getReceiveByProvince(String provinceCode,int currentIndex,int pageSize);
+	
+	public List<Announcement> getReceiveByProvince(String provinceCode);
 	
 	/**
 	 * 院系用户查询所有发送给自己的公告
@@ -56,5 +64,8 @@ public interface AnnouncementDao {
 	 */
 	public int getCount(String yxdm,String szyx);
 	
+	public List<Announcement> getReceiveBySzyx(String yxdm,String szyx,int currentIndex,int pageSize);
+	
+	public List<Announcement> getReceiveBySzyx(String yxdm,String szyx);
 	
 }

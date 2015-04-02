@@ -57,6 +57,13 @@ public class RecordDaoImpl implements RecordDao {
 		return crit.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Record> getListByUId(String u_id){
+		Criteria crit = this.getSession().createCriteria(Record.class);
+		crit.add(Restrictions.eq("user", u_id));
+		return crit.list();
+	}
+	
 	@Override
 	public long getCount(String u_id) {
 		Criteria crit = this.getSession().createCriteria(Record.class);

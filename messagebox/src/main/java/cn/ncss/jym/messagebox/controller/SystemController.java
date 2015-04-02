@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
+import cn.ncss.jym.messagebox.service.RecordService;
 import cn.ncss.jym.messagebox.service.StatisticService;
 import cn.ncss.jym.messagebox.service.UserInfoService;
 import cn.ncss.jym.messagebox.utils.Constant;
@@ -49,6 +50,8 @@ public class SystemController {
 	@Autowired
 	private AnnouncementService announcementService;
 	
+	@Autowired
+	private RecordService recordService;
 	
 
 	@RequestMapping(value = "info", method = RequestMethod.GET)
@@ -187,38 +190,29 @@ public class SystemController {
 //		return userInfoService.addRelations(relationList);
 //	}
 //
-//	@RequestMapping(value = "users",method=RequestMethod.GET)
-//	public List<UserSys> getUsers(int currentIndex, int pageSize, String group) {
-//		List<UserInfo> userList=null;
-//		List<UserSys> usersys=new ArrayList<UserSys>();
-//		if(group==null || "all".equals(group)){
-//			userList=userInfoService.getList(currentIndex, pageSize);
-//		}else{
-//			Group gr = groupService.get(group);
-//			userList = userInfoService.getUsersByGroup(currentIndex, Constant.HTTP_PAGESIZE,gr);
-//		}
-//		if(userList!=null){
-//			for(UserInfo user:userList){
-//				UserSys u=new UserSys();
-//				u.setUser(user);
-//				u.setGroups(userInfoService.getGroupsByUser(user));
-//				usersys.add(u);
-//			}
-//		}
-//		return usersys;
+//	//查询所有没有查看过的公告
+//	@RequestMapping(value = "receives/notlookover",method=RequestMethod.GET)
+//	public Map<String,List<Announcement>> getAnnounsByNot() {
+//		//TODO
+//		//isLook all(所有的)、true(已经查看过的)、false(还未查看的公告)
+////		if("all".equals(isLook)){//全部接收到的公告
+////			announcementService.getReceiveList(currentIndex, pageSize);
+////		}else if("true".equals(isLook)){//已经查看过的公告
+////			recordService.getListByUId(currentIndex, pageSize);
+////		}else if("false".equals(isLook)){//未查看的公告
+////			
+////		}
+//		List<Announcement> list=announcementService.getAnnounsByNot();
+//		Map<String,List<Announcement>> map=new HashMap<String, List<Announcement>>();
+//		map.put("notlookover", list);
+//		return map;
 //	}
-//
-//	@RequestMapping(value = "users/count",method=RequestMethod.GET)
-//	public int getCount(String group) {
-//		int count=0;
-//		if(group==null || "all".equals(group)){
-//			count=userInfoService.getCount();
-//		}else{
-//			Group g = groupService.get(group);
-//			count = userInfoService.getCountByGroup(g);
-//		}
-//		return count;
-//	}
+
+	@RequestMapping(value = "receives/notlookover/count",method=RequestMethod.GET)
+	public int getCount(String group) {
+		List<Announcement> list=announcementService.getAnnounsByNot();
+		return list==null?0:list.size();
+	}
 //
 //	@RequestMapping(value = "relations/{u_id}", method = RequestMethod.DELETE)
 //	public Map<String, String> deleteGroupforUser(String groupName, @PathVariable("u_id") String u_id) {

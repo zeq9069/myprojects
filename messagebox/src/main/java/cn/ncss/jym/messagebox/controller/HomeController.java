@@ -1,6 +1,7 @@
 package cn.ncss.jym.messagebox.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,15 +48,21 @@ public class HomeController {
 //		return model;
 //	}
 //
-//	@RequestMapping(value = "users", method = RequestMethod.GET)
-//	@ResponseBody
-//	public ModelAndView users(ModelAndView model) {
-//		Map<String, Object> resultMap = new HashMap<String, Object>();
-//		model.setViewName("/home/users");
-//		resultMap.put("groups", groupService.getGroups());
-//		model.addObject("resultMap", resultMap);
-//		return model;
-//	}
+	@RequestMapping(value = "receives/notlookover", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView users(ModelAndView model) {
+		List<Announcement> list=announcementService.getAnnounsByNot();
+		Map<String,List<Announcement>> resultMap=new HashMap<String, List<Announcement>>();
+		resultMap.put("notlookover", list);
+		
+		model.setViewName("/home/notlookover");
+		model.addObject("resultMap", resultMap);
+		model.addObject("count",list.size());
+		return model;
+	}
+	
+	
+	
 //
 //
 //	@RequestMapping(value = "send", method = RequestMethod.GET)
