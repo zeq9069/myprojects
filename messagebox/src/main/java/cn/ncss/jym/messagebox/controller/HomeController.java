@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
+import cn.ncss.jym.messagebox.service.RecordService;
 import cn.ncss.jym.messagebox.service.StatisticService;
 
 /**
@@ -32,6 +33,9 @@ public class HomeController {
 	private StatisticService statisticService;
 	@Autowired
 	private AnnouncementService announcementService;
+	
+	@Autowired
+	private RecordService recordService;
 
 	@RequestMapping(value = { "main", "" }, method = RequestMethod.GET)
 	public ModelAndView main(ModelAndView model) {
@@ -50,7 +54,7 @@ public class HomeController {
 //
 	@RequestMapping(value = "receives/notlookover", method = RequestMethod.GET)
 	@ResponseBody
-	public ModelAndView users(ModelAndView model) {
+	public ModelAndView notLookover(ModelAndView model) {
 		List<Announcement> list=announcementService.getAnnounsByNot();
 		Map<String,List<Announcement>> resultMap=new HashMap<String, List<Announcement>>();
 		resultMap.put("notlookover", list);
@@ -61,6 +65,12 @@ public class HomeController {
 		return model;
 	}
 	
+	@RequestMapping(value = "receives/lookover", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView lookover(ModelAndView model) {
+		model.setViewName("/home/lookover");
+		return model;
+	}
 	
 	
 //

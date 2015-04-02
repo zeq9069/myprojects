@@ -58,7 +58,30 @@ public class SystemController {
 	public Map<String,Long> getInfo() {
 		return statisticService.getAllInfo();
 	}
+	
 
+	@RequestMapping(value = "receives/notlookover/count",method=RequestMethod.GET)
+	public int getCount(String group) {
+		List<Announcement> list=announcementService.getAnnounsByNot();
+		return list==null?0:list.size();
+	}
+	
+
+	//查询所有已经看过的公告
+	@RequestMapping(value = "receives/lookover/list",method=RequestMethod.GET)
+	public List<Announcement> lookover(int currentIndex,int pageSize) {
+		//TODO
+		List<Announcement> list=recordService.getListByUId(currentIndex, pageSize);
+		return list;
+	}
+	
+		//查询所有已经看过的公告
+		@RequestMapping(value = "receives/lookover/count",method=RequestMethod.GET)
+		public long lookoverCount() {
+			return recordService.getCountByUser();
+		}
+
+	
 //	@RequestMapping(value = "groups", method = RequestMethod.POST)
 //	public Map<String, String> addGroup(Group group) {
 //		return groupService.add(group);
@@ -189,30 +212,7 @@ public class SystemController {
 //		}
 //		return userInfoService.addRelations(relationList);
 //	}
-//
-//	//查询所有没有查看过的公告
-//	@RequestMapping(value = "receives/notlookover",method=RequestMethod.GET)
-//	public Map<String,List<Announcement>> getAnnounsByNot() {
-//		//TODO
-//		//isLook all(所有的)、true(已经查看过的)、false(还未查看的公告)
-////		if("all".equals(isLook)){//全部接收到的公告
-////			announcementService.getReceiveList(currentIndex, pageSize);
-////		}else if("true".equals(isLook)){//已经查看过的公告
-////			recordService.getListByUId(currentIndex, pageSize);
-////		}else if("false".equals(isLook)){//未查看的公告
-////			
-////		}
-//		List<Announcement> list=announcementService.getAnnounsByNot();
-//		Map<String,List<Announcement>> map=new HashMap<String, List<Announcement>>();
-//		map.put("notlookover", list);
-//		return map;
-//	}
 
-	@RequestMapping(value = "receives/notlookover/count",method=RequestMethod.GET)
-	public int getCount(String group) {
-		List<Announcement> list=announcementService.getAnnounsByNot();
-		return list==null?0:list.size();
-	}
 //
 //	@RequestMapping(value = "relations/{u_id}", method = RequestMethod.DELETE)
 //	public Map<String, String> deleteGroupforUser(String groupName, @PathVariable("u_id") String u_id) {

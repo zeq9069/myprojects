@@ -22,9 +22,9 @@ public interface RecordService {
 
 	public List<Announcement> getListByUId(int currentIndex,int pageSize);
 	
-	public long getCount(String u_id);
+	public long getCountByUser();
 
 	public List<Record> getListByAnnounId(int announ_id,int currentIndex,int pageSize);
 	
-	public int getCount(int anoun_id);
+	public int getCountByAnnoun(int anoun_id);
 }

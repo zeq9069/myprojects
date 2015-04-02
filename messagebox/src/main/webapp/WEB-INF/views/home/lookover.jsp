@@ -16,6 +16,23 @@
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
  	<link rel="stylesheet" href="${webRoot}/${initParam.resourceRoot}/css/graduate.css">
 	
+	
+	<!-- jsrender 模板-->
+	<script type="text/x-jsrender" id="listWrapTemp">
+							<tr>
+								<td>{{:id}}</td>
+								<td>{{:title}}</td>
+								<td>{{:publisher}}</td>
+								<td>{{:date}}</td>
+								<td>{{:type}}</td>
+							</tr>
+	</script>
+	
+	
+	
+	
+	
+	
 <style type="text/css">
 .container {
 	margin-left: 0px;
@@ -28,29 +45,24 @@
 #content {
 	margin-top: 0px;
 }
-
 #content-right {
 	padding-top: 20px;
 	padding-left: 30px
 }
-
-.user_table {
+.announ_table {
 	margin-top: 40px; line-height : 30px;
 	text-align: center;
 	width: 100%;
 	line-height: 30px;
 }
-
-.user_table>thead {
+.announ_table>thead {
 	background-color: #eeeeee;
 }
-
-.user_table>tr>td {
+.announ_table>tr>td {
 	padding-top: 5px;
 	width: 20px;
 }
-
-.user_table span {
+.announ_table span {
 	border:1px solid #eeeeee;
 	border-radius:5px;
 	margin-left:3px;
@@ -62,17 +74,17 @@ form>span{
 tr:hover{
 	background-color: #eeeeee;
 }
-
 td>span:hover{
 	border:2px solid #009966;
 }
 .itemWrap{
-
 text-align:center;
 }
-
-
-	
+	.pagination>li.goPage{padding-left:15px;}
+	.pagination>li.goPage>span{border:0px;float:inherit;background-color: inherit;padding:0px;line-height:28px;}
+	.pagination>li.goPage>span.text{color:#666;}
+	.pagination>li.goPage>input.num,.pagination>li.goPage>span.btn{width:40px;height:24px;padding:4px 8px;border:1px solid #CCC;line-height:16px;}
+ 
 </style>
 
 
@@ -132,9 +144,10 @@ text-align:center;
 			</div>
 			<div id="content-right" class="col-md-10">
 			
+			
+			
 				<div class="body">
-				共${count}篇
-					<table class="user_table">
+					<table class="announ_table">
 						<thead>
 							<tr>
 								<td>ID</td>
@@ -146,26 +159,58 @@ text-align:center;
 						</thead>
 						
 						<tbody class="itemListWrap">
-							<c:forEach items="${resultMap.notlookover}" var="announ">
-								<tr>
-								<td><a href="">${announ.id}</a></td>
-								<td>${announ.title}</td>
-								<td>${announ.publisher}</td>
-								<td>${announ.date}</td>
-								<td>${announ.type}</td>
-							</tr>
-							</c:forEach>
+			
 						</tbody>
 					</table>
+					<div class="itemWrap">
+						<ul class="itemPageWrap pagination pagination-sm">
+			
+						</ul>
+					</div>
+
 				</div>
 			</div>
 		</div>
 		
+		<!-- model 登录模态框-->
+				<div class="modal fade" id="groupModel" tabindex="-1" role="dialog"
+					aria-labelledby="groupLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="groupLabel">选择分组</h4>
+							</div>
+							<div class="modal-body">
+								<form class="group-form">
+									<p>
+										<c:forEach items="${resultMap.groups}" var="group">
+											<input type="checkbox" name="groupName" id="${group.key}"  value="${group.value}">${group.value}
+										</c:forEach>
+									</p>
+									<hr>
+									<p>
+										<button type="button" id="group_submit" class="btn btn-primary" data-dismiss="modal">确认</button>
+									</p>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+							</div>
+						</div>
+					</div>
+				</div>
 		<hr>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 </body>
+	<script type="text/javascript" src="${webRoot}/${initParam.resourceRoot}/js/page/requirejs.min.js"></script>
+	<script type="text/javascript" src="${webRoot}/${initParam.resourceRoot}/js/lookover.js"></script>
+<script type="text/javascript">
+</script>
+
 </html>
-
-
-

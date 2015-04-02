@@ -52,7 +52,7 @@ public class StatisticServiceImpl implements StatisticService{
 				
 		long publish_num=announcementService.getCountByUser(userInfo.getId());
 		long receive_num=announcementService.getReceiveCount();
-		long record_num=recordService.getCount(userInfo.getId());
+		long record_num=recordService.getCountByUser();
 		Map<String,Long> map=new HashMap<String, Long>();
 		map.put("publish_num",publish_num);
 		map.put("receive_num",receive_num);

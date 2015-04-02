@@ -66,8 +66,12 @@ public class RecordServiceImpl implements RecordService {
 	
 	@Transactional(readOnly = true)
 	@Override
-	public long getCount(String u_id) {
-		return recordDao.getCount(u_id);
+	public long getCountByUser() {
+		//TODO 
+		//服务层获取用户信息
+		UserInfo userInfo=new UserInfo();
+		
+		return recordDao.getCount(userInfo.getId());
 	}
 
 
@@ -78,7 +82,7 @@ public class RecordServiceImpl implements RecordService {
 	}
 	@Transactional(readOnly = true)
 	@Override
-	public int getCount(int announ_id) {
+	public int getCountByAnnoun(int announ_id) {
 		return recordDao.getCount(announ_id);
 	}
 
