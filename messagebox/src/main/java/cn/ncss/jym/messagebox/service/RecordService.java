@@ -15,13 +15,15 @@ import cn.ncss.jym.messagebox.pojo.Record;
  */
 public interface RecordService {
 	
-	public boolean add(Record record);
+	public boolean create(Record record);
 
 	public boolean delete(Record record);
 
-	public List<Record> getListByUId(String u_id);
-
-	public List<Record> getListByAnnounId(String announ_id);
+	public List<Record> getListByUId(String u_id,int currentIndex,int pageSize);
 	
+	public long getCount(String u_id);
 
+	public List<Record> getListByAnnounId(int announ_id,int currentIndex,int pageSize);
+	
+	public int getCount(int anoun_id);
 }

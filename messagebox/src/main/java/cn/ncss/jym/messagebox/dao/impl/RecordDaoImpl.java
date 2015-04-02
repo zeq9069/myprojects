@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,7 +36,7 @@ public class RecordDaoImpl implements RecordDao {
 	}
 
 	@Override
-	public boolean add(Record record) {
+	public boolean create(Record record) {
 		this.getSession().save(record);
 		return true;
 	}
@@ -47,18 +49,53 @@ public class RecordDaoImpl implements RecordDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Record> getListByUId(String u_id) {
+	public List<Record> getListByUId(String u_id,int currentIndex,int pageSize) {
 		Criteria crit = this.getSession().createCriteria(Record.class);
 		crit.add(Restrictions.eq("user", u_id));
+		crit.setFirstResult((currentIndex-1)*pageSize);
+		crit.setMaxResults(pageSize);
 		return crit.list();
+	}
+	
+	@Override
+	public long getCount(String u_id) {
+		Criteria crit = this.getSession().createCriteria(Record.class);
+		crit.add(Restrictions.eq("user", u_id));
+		ProjectionList pro=Projections.projectionList();
+		pro.add(Projections.countDistinct("announ"));
+		crit.setProjection(pro);
+		return (long) crit.uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Record> getListByAnnounId(String announ_id) {
+	public List<Record> getListByAnnounId(int announ_id,int currentIndex,int pageSize) {
 		Criteria crit = this.getSession().createCriteria(Record.class);
 		crit.add(Restrictions.eq("announ", announ_id));
+		crit.setFirstResult((currentIndex-1)*pageSize);
+		crit.setMaxResults(pageSize);
 		return crit.list();
+	}
+	
+
+	@Override
+	public int getCount(int announ_id) {
+		Criteria crit = this.getSession().createCriteria(Record.class);
+		crit.add(Restrictions.eq("announ", announ_id));
+		ProjectionList pro=Projections.projectionList();
+		pro.add(Projections.countDistinct("user"));
+		crit.setProjection(pro);
+		return (int) crit.uniqueResult();
+	}
+	
+	@Override
+	public int getAnnounByViews(int announ_id) {
+		Criteria crit = this.getSession().createCriteria(Record.class);
+		crit.add(Restrictions.eq("announ", announ_id));
+		ProjectionList pro=Projections.projectionList();
+		pro.add(Projections.rowCount());
+		crit.setProjection(pro);
+		return (int) crit.uniqueResult();
 	}
 
 	@Override
@@ -68,4 +105,5 @@ public class RecordDaoImpl implements RecordDao {
 		crit.add(Restrictions.eq("announ", announ));
 		return crit.uniqueResult() == null ? false : true;
 	}
+
 }

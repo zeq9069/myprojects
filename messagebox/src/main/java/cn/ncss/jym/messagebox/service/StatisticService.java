@@ -1,6 +1,6 @@
 package cn.ncss.jym.messagebox.service;
 
-import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
+import java.util.Map;
 
 /**
  * ***********************
@@ -13,6 +13,6 @@ import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
  */
 public interface StatisticService {
 	
-	public SystemInfo getAllInfo();
+	public Map<String,Long> getAllInfo();
 
 }

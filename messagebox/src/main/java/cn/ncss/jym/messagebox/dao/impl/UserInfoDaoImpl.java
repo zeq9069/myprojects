@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.ncss.jym.messagebox.dao.UserInfoDao;
-import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.pojo.Record;
-import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
 import cn.ncss.jym.messagebox.utils.StringUtil;
@@ -86,61 +84,15 @@ public class UserInfoDaoImpl implements UserInfoDao {
 		return list;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<UserInfo> getUsersByGroup(int page, int pageSize, Group group) {
-		Session session = this.getSession();
-		Criteria crit = session.createCriteria(Relation.class);
-		crit.add(Restrictions.eq("group", group));
-		crit.setFirstResult((page - 1) * pageSize);
-		crit.setMaxResults(pageSize);
-		List<Relation> list = crit.list();
-		List<UserInfo> userList = new ArrayList<UserInfo>();
-		for (Relation ra : list) {
-			userList.add(ra.getUserInfo());
-		}
-		return userList;
-	}
-
 	@Override
 	public int getCount() {
 		Session session = this.getSession();
 		Criteria crit = session.createCriteria(UserInfo.class);
 		return crit.list().size();
 	}
-
-	@Override
-	public int getCountByGroup(Group group) {
-		Session session = this.getSession();
-		Criteria crit = session.createCriteria(Relation.class);
-		crit.add(Restrictions.eq("group", group));
-		return crit.list().size();
-	}
-
 	@Override
 	public UserInfo getById(String id) {
 		return (UserInfo) this.getSession().get(UserInfo.class, id);
-	}
-
-	@Override
-	public boolean addRelation(List<Relation> relations) {
-		Session session = this.getSession();
-		for (Relation r : relations) {
-			session.save(r);
-		}
-		session.flush();
-		return true;
-	}
-
-	@Override
-	public boolean isRelation(UserInfo user, Group group) {
-		Criteria crit = this.getSession().createCriteria(Relation.class);
-		crit.add(Restrictions.eq("userInfo", user));
-		crit.add(Restrictions.eq("group", group));
-		if (crit.list().size() > 0) {
-			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -153,38 +105,10 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	}
 
 	@Override
-	public boolean deleteRelation(UserInfo user, Group group) {
-		String hql = "delete Relation where userInfo=:user and group=:group";
-		Query query = this.getSession().createQuery(hql);
-		query.setParameter("user", user);
-		query.setParameter("group", group);
-		query.executeUpdate();
-		return true;
-	}
-	
-	@Override
-	public boolean deleteRelation(Group group){
-		String hql = "delete Relation where group=:group";
-		Query query = this.getSession().createQuery(hql);
-		query.setParameter("group", group);
-		query.executeUpdate();
-		return true;
-	}
-
-	@Override
 	public boolean addRecord(Record record) {
 		Session session = this.getSession();
 		session.save(record);
 		session.flush();
 		return true;
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Relation> getGroups(UserInfo user) {
-		Criteria crit = this.getSession().createCriteria(Relation.class);
-		crit.add(Restrictions.eq("userInfo", user));
-		return crit.list();
-	}
-
 }

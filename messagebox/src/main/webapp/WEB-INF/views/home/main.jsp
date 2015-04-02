@@ -72,8 +72,7 @@
 			<div class="col-md-2" style="border:2px solid #eeeeee;height:800px;border-bottom:0px;">
  				<div class="list-group" style="text-align:center;padding-top:30px;height:50%;">
 					<span  class="list-group-item active" style="font-size: 25px">控制台操作</span>
-					<a href="${webRoot}/home/groups" class="list-group-item" id="groups">群组操作</a> 
-					<a href="${webRoot}/home/users" class="list-group-item" id="users">用户操作</a> 
+					<a href="${webRoot}/home/receives" class="list-group-item" id="receives">接收公告</a> 
 					<a href="${webRoot}/home/send" class="list-group-item" id="announ-send">发布公告</a> 
 					<a href="${webRoot}/home/announs" class="list-group-item" id="announs">已发布公告</a>
 					<a href="${webRoot}/home/main" class="list-group-item" id="main">统计</a>
@@ -81,16 +80,11 @@
 			</div>
 			<div id="content-right" class="col-md-10" >
 					<div class="body">
-						<p>群组统计：</p>
-						<ul>
-							<c:forEach items="${systemInfo.groups}" var="group">
-								<li>${group.key}:${group.value}人</li>
-							</c:forEach>
-						</ul>
 						<p>公告统计：</p>
 						<ul>
-							<li>上线数量:${systemInfo.announs.announ_online_num}</li>
-							<li>下线数量:${systemInfo.announs.announ_offline_num}</li>
+							<li>发布的公告:${systemInfo.publish_num}</li>
+							<li>接收到的公告:${systemInfo.receive_num}</li>
+							<li>未查看的公告:${systemInfo.record_num}</li>
 						</ul>
 					</div> 
 			</div>

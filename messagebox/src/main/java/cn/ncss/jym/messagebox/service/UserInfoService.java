@@ -3,8 +3,6 @@ package cn.ncss.jym.messagebox.service;
 import java.util.List;
 import java.util.Map;
 
-import cn.ncss.jym.messagebox.pojo.Group;
-import cn.ncss.jym.messagebox.pojo.Relation;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
 
@@ -19,11 +17,9 @@ import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
  */
 public interface UserInfoService {
 
-	public boolean addOne(UserInfo userInfo);
+	/*public boolean create(UserInfo userInfo);
 
-	//	public boolean addList(List<UserInfo> userList);
-
-	public boolean deleteOne(UserInfo userInfo);
+	public boolean delete(UserInfo userInfo);
 
 	public boolean update(UserInfo userInfo);
 
@@ -33,18 +29,13 @@ public interface UserInfoService {
 
 	public List<UserInfo> getList(int page, int pageSize);
 
-	public List<UserInfo> getUsersByGroup(int page, int pageSize, Group group);
-
 	public int getCount();
-
-	public int getCountByGroup(Group group);
-
-	public Map<String, String> addRelations(List<Relation> relations);
-
-	public Map<String, String> deleteRelation(String u_id, String groupName);
+	*/
 	
-	public boolean addRecord(String u_id, int announ_id);
-	
-	public List<Group> getGroupsByUser(UserInfo user);
+	/**
+	 * 获取用户所在院校所属的学校类型列表
+	 * @return
+	 */
+	public List<String> getSchoolType();
 	
 }

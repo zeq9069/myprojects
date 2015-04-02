@@ -29,11 +29,8 @@ public class RecordServiceImpl implements RecordService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public boolean add(Record record) {
-		if (isExists(record.getUser(), record.getAnnoun())) {
-			return true;
-		}
-		return recordDao.add(record);
+	public boolean create(Record record) {
+		return recordDao.create(record);
 	}
 
 	@Transactional(readOnly = false)
@@ -47,15 +44,28 @@ public class RecordServiceImpl implements RecordService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Record> getListByUId(String u_id) {
-		return recordDao.getListByUId(u_id);
+	public List<Record> getListByUId(String u_id,int currentIndex,int pageSize) {
+		return recordDao.getListByUId(u_id,currentIndex,pageSize);
 	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public long getCount(String u_id) {
+		return recordDao.getCount(u_id);
+	}
+
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Record> getListByAnnounId(String announ_id) {
-		return recordDao.getListByAnnounId(announ_id);
+	public List<Record> getListByAnnounId(int announ_id,int currentIndex,int pageSize) {
+		return recordDao.getListByAnnounId(announ_id,currentIndex,pageSize);
 	}
+	@Transactional(readOnly = true)
+	@Override
+	public int getCount(int announ_id) {
+		return recordDao.getCount(announ_id);
+	}
+
 
 	@Transactional(readOnly = true)
 	public boolean isExists(UserInfo user, Announcement announ) {

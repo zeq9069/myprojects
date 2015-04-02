@@ -6,15 +6,16 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;
-import cn.ncss.jym.messagebox.pojo.Group_announ;
-import cn.ncss.jym.messagebox.pojo.Record;
+import cn.ncss.jym.messagebox.utils.SchoolType;
 
 /**
  * *************************
@@ -35,17 +36,8 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	}
 
 	@Override
-	public int add(Announcement announ) {
+	public int create(Announcement announ) {
 		return (int) this.getSession().save(announ);
-	}
-
-	@Override
-	public boolean addGroup_announ(List<Group_announ> lists) {
-		Session session = this.getSession();
-		for (Group_announ ga : lists) {
-			session.save(ga);
-		}
-		return true;
 	}
 
 	@Override
@@ -61,97 +53,72 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	}
 
 	@Override
-	public boolean updateOnline(int announ_id, String online) {
-		String hql = "update Announcement set online=:online where id=:id";
-		Query query = this.getSession().createQuery(hql);
-		query.setParameter("online", online);
-		query.setParameter("id", announ_id);
-		int res = query.executeUpdate();
-		if (res > 0) {
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	public Announcement get(int id) {
 		return (Announcement) this.getSession().get(Announcement.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Announcement> getListByOnline(String online) {
+	public List<Announcement> getListByUser(String publisherId,int currentIndex,int pageSize) {
 		Criteria crit = this.getSession().createCriteria(Announcement.class);
-		crit.add(Restrictions.eq("online", online));
-		return crit.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Announcement> getListByUser(String publisher) {
-		Criteria crit = this.getSession().createCriteria(Announcement.class);
-		crit.add(Restrictions.eq("publisher", publisher));
-		return crit.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Announcement> getListByType(String type, boolean online) {
-		Criteria crit = this.getSession().createCriteria(Announcement.class);
-		crit.add(Restrictions.eq("type", type));
-		crit.add(Restrictions.eq("online", online + ""));
-		return crit.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Announcement> getListByUser(String publisher, boolean online) {
-		Criteria crit = this.getSession().createCriteria(Announcement.class);
-		crit.add(Restrictions.eq("publisher", publisher));
-		crit.add(Restrictions.eq("online", online + ""));
-		return crit.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Announcement> getByStatus(int currentIndex,int pageSize,String status) {
-		Criteria crit = this.getSession().createCriteria(Announcement.class);
-		crit.add(Restrictions.eq("online", status));
+		crit.add(Restrictions.eq("publisher", publisherId));
 		crit.setFirstResult((currentIndex-1)*pageSize);
 		crit.setMaxResults(pageSize);
-		crit.addOrder(Order.desc("date"));
 		return crit.list();
 	}
 	
 	@Override
-	public int getByStatus(String status){
+	public long getCountByUser(String publisherId){
 		Criteria crit = this.getSession().createCriteria(Announcement.class);
-		crit.add(Restrictions.eq("online", status));
-		return crit.list().size();
+		crit.add(Restrictions.eq("publisher", publisherId));
+		ProjectionList pro=Projections.projectionList();
+		pro.add(Projections.rowCount());
+		crit.setProjection(pro);
+		return (long) crit.uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Group_announ> getGroups(Announcement announ) {
-		Criteria crit = this.getSession().createCriteria(Group_announ.class);
-		crit.add(Restrictions.eq("announ", announ));
+	public List<Announcement> getListByType(String publisherId,String type, int currentIndex,int pageSize) {
+		Criteria crit = this.getSession().createCriteria(Announcement.class);
+		crit.add(Restrictions.like("type", type,MatchMode.ANYWHERE));
+		crit.add(Restrictions.eq("publisher", publisherId));
+		crit.setFirstResult((currentIndex-1)*pageSize);
+		crit.setMaxResults(pageSize);
 		return crit.list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<Group_announ> getGroupsOfAnnoun(Announcement announ) {
-		Criteria crit = this.getSession().createCriteria(Group_announ.class);
-		crit.add(Restrictions.eq("announ", announ));
-		return crit.list();
+	public int getCount(List<String> typeList, String yxdm) {
+		String hql="from Announcement where targetYxdm like '%"+yxdm+"%'";
+		
+		String str=" or targetYxlx like '%"+SchoolType.SCHOOL_ALL.value()+"%'";
+		for(String type:typeList){
+			str+=" or targetYxlx like '%"+type+"%'";
+		}
+		hql=hql+str;
+		Query query=this.getSession().createQuery(hql);
+		return query.list().size();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<Record> getAnnounByViews(Announcement announ) {
-		Criteria crit = this.getSession().createCriteria(Record.class);
-		crit.add(Restrictions.eq("announ", announ));
-		return crit.list();
+	public int getCount(String provinceCode) {
+		Criteria crit=this.getSession().createCriteria(Announcement.class);
+		crit.add(Restrictions.like("targerProvinceCode", provinceCode));
+		ProjectionList pro=Projections.projectionList();
+		pro.add(Projections.rowCount());
+		crit.setProjection(pro);
+		return (int) crit.uniqueResult();
 	}
 
+	@Override
+	public int getCount(String yxdm, String szyx) {
+		Criteria crit=this.getSession().createCriteria(Announcement.class);
+		crit.add(Restrictions.eq("targerYxdm", yxdm));
+		crit.add(Restrictions.like("targerSzyx", szyx));
+		ProjectionList pro=Projections.projectionList();
+		pro.add(Projections.rowCount());
+		crit.setProjection(pro);
+		return (int) crit.uniqueResult();
+	}
 }

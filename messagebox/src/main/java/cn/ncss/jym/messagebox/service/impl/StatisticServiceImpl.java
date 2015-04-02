@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.ncss.jym.messagebox.dao.AnnouncementDao;
-import cn.ncss.jym.messagebox.dao.GroupDao;
-import cn.ncss.jym.messagebox.pojo.Group;
+import cn.ncss.jym.messagebox.dao.RecordDao;
+import cn.ncss.jym.messagebox.dao.UserInfoDao;
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
-import cn.ncss.jym.messagebox.service.GroupService;
+import cn.ncss.jym.messagebox.service.RecordService;
 import cn.ncss.jym.messagebox.service.StatisticService;
 import cn.ncss.jym.messagebox.service.UserInfoService;
-import cn.ncss.jym.messagebox.system.pojo.SystemInfo;
 import cn.ncss.jym.messagebox.utils.Constant;
 
 /**
@@ -32,42 +32,42 @@ import cn.ncss.jym.messagebox.utils.Constant;
 @Service
 public class StatisticServiceImpl implements StatisticService{
 
-
 	@Autowired
-	private GroupDao groupDao;
-
-	@Autowired
-	private AnnouncementDao announcementDao;
-
+	private RecordService recordService;
 	
-	@Transactional(readOnly=true)
+	@Autowired
+	private AnnouncementService announcementService;
+	
+	@Autowired
+	private UserInfoService userInfoService;
+	
+	/*
+	 * 统计登录用户发送的公告数、接收的公告数、未查阅的公告数
+	 */
 	@Override
-	public SystemInfo getAllInfo() {
-		Map<String, Integer> announs = getAnnounInfo();
-		Map<String, Integer> groups = getGroupInfo();
-		return new SystemInfo(groups, announs);
-	}
-	
-	private Map<String,Integer> getAnnounInfo(){
-		Map<String, Integer> announs_info = new HashMap<String, Integer>();
-		int online = announcementDao.getByStatus(Constant.ANNOUN_ONLINE);
-		int offline = announcementDao.getByStatus(Constant.ANNOUN_OFFLINE);
-		announs_info.put(Constant.ANNOUN_NUM, online + offline);
-		announs_info.put(Constant.ONLINE_NUM, online);
-		announs_info.put(Constant.OFFLINE_NUM, offline);
-		return announs_info;
-	}
-	
-	private Map<String,Integer> getGroupInfo(){
-		Map<String, Integer> groups = new HashMap<String, Integer>();
-		List<Object[]> list = groupDao.getGroupInfo();
-		if (list != null) {
-			for (Object[] obj : list) {
-				groups.put(((Group)obj[0]).getName(), Integer.parseInt(obj[1].toString()));
-			}
+	@Transactional(readOnly=true)
+	public Map<String,Long> getAllInfo() {
+		//在服务层获取用户
+		UserInfo userInfo=new UserInfo();
+		
+		long publish_num=announcementService.getCountByUser(userInfo.getId());
+		/*
+		if(省){
+			announcementDao.getCount(provinceCode);
+		}else if(院校){
+			announcementDao.getCount(typeList, yxdm)
+		}else if(院系){
+			announcementDao.getCount(yxdm, szyx)
 		}
-		return groups;
+		*/
+		List<String> typeList=userInfoService.getSchoolType();
+		long receive_num=announcementService.getCount(typeList, "yxdm");
+		long record_num=recordService.getCount(userInfo.getId());
+		Map<String,Long> map=new HashMap<String, Long>();
+		map.put("publish_num",publish_num);
+		map.put("receive_num",receive_num);
+		map.put("record_num", record_num);
+		return map;
 	}
-	
 	
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
-import cn.ncss.jym.messagebox.pojo.Group;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 
 /**
@@ -18,29 +17,50 @@ import cn.ncss.jym.messagebox.pojo.UserInfo;
  */
 public interface AnnouncementService {
 
-	public Map<String, String> add(Announcement announ, List<Group> groups);
-
+	public void create(Announcement announ);
+	
 	public boolean delete(Announcement announ);
 
 	public boolean update(Announcement announ);
 
-	public Map<String, String> updateOnline(int announ_id, String online);
-
 	public Announcement get(int id);
 
-	public List<Announcement> getListByOnline(String online);
+	public List<Announcement> getListByType(String publisherId,String type,int currentIndex,int pageSize );
 
-	public List<Announcement> getListByType(String type, boolean online);
+	public List<Announcement> getListByUser(String publisherId,int currentIndex,int pageSize);
 
-	public List<Announcement> getListByUser(String publisher);
-
-	public List<Announcement> getListByUser(String publisher, boolean online);
-
-	public List<Announcement> getListByOnline(int currentIndex,int pageSize,String online);
-
-
-	public List<Group> getGroupsOfAnnoun(Announcement announ);
-
-	public List<UserInfo> getAnnounByViews(Announcement announ);
+	
+	/**
+	 * 获取用户发布公告的数量
+	 * @param publisherId 发布者ID
+	 * @return
+	 */
+	public long getCountByUser(String publisherId);
+	
+	
+	public long getAnnounByViews(Announcement announ);
+	
+	/**
+	 * 学校用户查询所有发送给自己的公告
+	 * @param typeList 院校类型
+	 * @param yxdm 院校代码
+	 * @return
+	 */
+	public long getCount(List<String> typeList,String yxdm);
+	
+	/**
+	 * 省用户查询所有发送给自己的公告
+	 * @param provinceCode 省代码
+	 * @return
+	 */
+	public long getCount(String provinceCode);
+	
+	/**
+	 * 院系用户查询所有发送给自己的公告
+	 * @param provinceCode
+	 * @return
+	 */
+	public long getCount(String yxdm,String szyx);
+	
 
 }

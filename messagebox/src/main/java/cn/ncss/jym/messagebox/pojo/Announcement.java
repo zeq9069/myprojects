@@ -68,10 +68,28 @@ public class Announcement implements Serializable {
 	private String type;
 
 	/*
-	 * 是否上线
+	 *目标省代码列表，以逗号隔开 
 	 */
-	@Column(name = "ONLINE", nullable = false, length = 32)
-	private String online;
+	@Column(name="TARGET_PROVINCECODE")
+	private String targetProvinceCode;
+	
+	/*
+	 * 目标院校代码列表，以逗号隔开
+	 */
+	@Column(name="TARGET_YXDM")
+	private String targetYxdm;
+	
+	/*
+	 * 目标院系列表，以逗号隔开
+	 */
+	@Column(name="TARGET_DEPARTMENT")
+	private String targetDepartment;
+	
+	/*
+	 * 目标院校类型（比如211院校、985高校等的代码列表），以逗号隔开
+	 */
+	@Column(name="TARGET_YXLX")
+	private String targetYxlx;
 
 	public int getId() {
 		return id;
@@ -122,12 +140,35 @@ public class Announcement implements Serializable {
 		this.type = type;
 	}
 
-	public String getOnline() {
-		return online;
+	public String getTargetProvinceCode() {
+		return targetProvinceCode;
 	}
 
-	public void setOnline(String online) {
-		this.online = online;
+	public void setTargetProvinceCode(String targetProvinceCode) {
+		this.targetProvinceCode = targetProvinceCode;
 	}
 
+	public String getTargetYxdm() {
+		return targetYxdm;
+	}
+
+	public void setTargetYxdm(String targetYxdm) {
+		this.targetYxdm = targetYxdm;
+	}
+
+	public String getTargetDepartment() {
+		return targetDepartment;
+	}
+
+	public void setTargetDepartment(String targetDepartment) {
+		this.targetDepartment = targetDepartment;
+	}
+
+	public String getTargetYxlx() {
+		return targetYxlx;
+	}
+
+	public void setTargetYxlx(String targetYxlx) {
+		this.targetYxlx = targetYxlx;
+	}
 }

@@ -1,6 +1,7 @@
 package cn.ncss.jym.messagebox.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.joda.time.DateTime;
 
 /**
  * *************************
@@ -42,6 +45,10 @@ public class Record implements Serializable {
 	@JoinColumn(name = "ANNOUN_ID")
 	private Announcement announ;
 
+	@Column(name="DATE")
+	private Date date=new DateTime().toDate();
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -64,6 +71,14 @@ public class Record implements Serializable {
 
 	public void setAnnoun(Announcement announ) {
 		this.announ = announ;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 }

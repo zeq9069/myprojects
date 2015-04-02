@@ -3,8 +3,6 @@ package cn.ncss.jym.messagebox.dao;
 import java.util.List;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
-import cn.ncss.jym.messagebox.pojo.Group_announ;
-import cn.ncss.jym.messagebox.pojo.Record;
 
 /**
  * *************************
@@ -16,50 +14,47 @@ import cn.ncss.jym.messagebox.pojo.Record;
  *
  */
 public interface AnnouncementDao {
-
-	public int add(Announcement announ);
-
-	public boolean addGroup_announ(List<Group_announ> lists);
+	
+	public int create(Announcement announ);
 
 	public boolean delete(Announcement announ);
 
 	public boolean update(Announcement announ);
 
-	public boolean updateOnline(int announ_id, String online);
-
 	public Announcement get(int id);
 
-	public List<Announcement> getListByOnline(String type);
-
-	public List<Announcement> getListByType(String type, boolean online);
-
-	public List<Announcement> getListByUser(String publisher);
-
-	public List<Announcement> getListByUser(String publisher, boolean online);
-
-	/**
-	 * 根据online的状态分页查询
-	 * @param status online的状态
-	 * @return
-	 */
-	public List<Announcement> getByStatus(int currentIndex,int pageSize,String status);
+	public List<Announcement> getListByType(String publisherId,String type,int currentIndex,int pageSize);
+	
+	public List<Announcement> getListByUser(String publisherId,int currrentIndex,int pageSize);
 	
 	/**
-	 * 根据online查询数量
-	 * @param status
+	 * 获取用户发布公告的数量
+	 * @param publisherId 发布者ID
 	 * @return
 	 */
-	public int getByStatus(String status);
-
+	public long getCountByUser(String publisherId);
+	
 	/**
-	 * 获取公告发布的用户组
-	 * @param announ
+	 * 学校用户查询所有发送给自己的公告
+	 * @param typeList 院校类型
+	 * @param yxdm 院校代码
 	 * @return
 	 */
-	public List<Group_announ> getGroups(Announcement announ);
-
-	public List<Group_announ> getGroupsOfAnnoun(Announcement announ);
-
-	public List<Record> getAnnounByViews(Announcement announ);
-
+	public int getCount(List<String> typeList,String yxdm);
+	
+	/**
+	 * 省用户查询所有发送给自己的公告
+	 * @param provinceCode 省代码
+	 * @return
+	 */
+	public int getCount(String provinceCode);
+	
+	/**
+	 * 院系用户查询所有发送给自己的公告
+	 * @param provinceCode
+	 * @return
+	 */
+	public int getCount(String yxdm,String szyx);
+	
+	
 }
