@@ -1,27 +1,19 @@
 package cn.ncss.jym.messagebox.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
-import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.RecordService;
 import cn.ncss.jym.messagebox.service.StatisticService;
 import cn.ncss.jym.messagebox.service.UserInfoService;
-import cn.ncss.jym.messagebox.utils.Constant;
-import cn.ncss.jym.messagebox.utils.StringUtil;
 
 /**
  * **********************************
@@ -82,44 +74,16 @@ public class SystemController {
 		}
 
 	
-//	@RequestMapping(value = "groups", method = RequestMethod.POST)
-//	public Map<String, String> addGroup(Group group) {
-//		return groupService.add(group);
-//	}
-//
-//	@RequestMapping(value = "groups/{group_id}", method = RequestMethod.DELETE)
-//	public Map<String, String> deleteGroup(@PathVariable("group_id") int group_id) {
-//		return groupService.delete(group_id);
-//	}
-//	
-//	
-//	@RequestMapping(value="announs",method=RequestMethod.GET)
-//	public List<AnnounsInfo> announsInfoList(int currentIndex,int pageSize,String online){
-//		if(online==null || (!online.equals(Constant.ANNOUN_OFFLINE) && !online.equals(Constant.ANNOUN_ONLINE))){
-//			return null;
-//		}
-//		List<AnnounsInfo> resultlist = new ArrayList<AnnounsInfo>();
-//		List<Announcement> announs = announcementService.getListByOnline(currentIndex,pageSize,online);
-//
-//		for (Announcement announ : announs) {
-//			AnnounsInfo aInfo = new AnnounsInfo();
-//			aInfo.setAnnoun(announ);
-//			aInfo.setGroups(announcementService.getGroupsOfAnnoun(announ));
-//			List<UserInfo> list = announcementService.getAnnounByViews(announ);
-//			aInfo.setViews(list.size());
-//			resultlist.add(aInfo);
-//		}
-// 		return resultlist;
-//	} 
-//	
-//	@RequestMapping(value="announs/count",method=RequestMethod.GET)
-//	public int announsCount(String online){
-//		if(online==null || (!online.equals(Constant.ANNOUN_OFFLINE) && !online.equals(Constant.ANNOUN_ONLINE))){
-//			return 0;
-//		}
-//		List<Announcement> announs = announcementService.getListByOnline(online);
-// 		return announs==null?0:announs.size();
-//	} 
+
+	@RequestMapping(value="announs",method=RequestMethod.GET)
+	public List<Announcement> announsInfoList(int currentIndex,int pageSize){
+		return announcementService.getListByUser(currentIndex, pageSize);
+	} 
+	
+	@RequestMapping(value="announs/count",method=RequestMethod.GET)
+	public int announsCount(String online){
+		return 0;
+	} 
 //	
 //
 //	//发布公告

@@ -146,14 +146,14 @@ text-align:center;
 						</thead>
 						
 						<tbody class="itemListWrap">
-							<c:forEach items="${resultMap.notlookover}" var="announ">
+							<c:forEach items="${resultMap.notlookover}" var="an">
 								<tr>
-								<td><a href="">${announ.id}</a></td>
-								<td>${announ.title}</td>
-								<td>${announ.publisher}</td>
-								<td>${announ.date}</td>
-								<td>${announ.type}</td>
-							</tr>
+									<td><a href="">${an.id}</a></td>
+									<td>${an.title}</td>
+									<td>${an.user}</td>
+									<td>${an.date}</td>
+									<td>${an.type}</td>
+								</tr>
 							</c:forEach>
 						</tbody>
 					</table>

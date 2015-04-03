@@ -17,31 +17,11 @@
 	<!-- jsrender 模板-->
 	<script type="text/x-jsrender" id="listWrapTemp">
 							<tr>
+								<td>{{:announ.id}}</td>
 								<td><a href="${webRoot}/home/announs/look?announ_id={{:announ.id}}">{{:announ.title}}</a></td>
-								<td>{{:announ.publisher}}</td>
+								<td>{{:announ.user.username}}</td>
 								<td>{{:announ.date}}</td>
 								<td>{{:announ.type}}</td>
-								<td>
-									{{for groups}}
-										
-										<span>{{:name}}</span>
-									{{/for}}
-								</td>
-								<td>
-									{{:views}}
-								</td>
-								<td>
-								<span id="announ_status" data-user="{{:announ.id}}" data-value="{{:announ.online}}">
-								
-									{{if announ.online=='true'}}
-										上线
-									{{else announ.online=='false'}}
-										下线
-									{{else}}
-										异常
-									{{/if}}
-								</span>
-								</td>
 							</tr>
 	</script>
 	
@@ -158,22 +138,14 @@ text-align:center;
 			</div>
 			<div id="content-right" class="col-md-10" >
 					<div class="body">
-					筛选：
-					<select name="online">
-						<option value="true" selected="selected">上线</option>
-						<option value="false">下线</option>
-					</select>
 					<table class="online_table">
 						<thead>
 							<tr>
+								<td>ID</td>
 								<td>标题</td>
 								<td>发布者</td>
 								<td>发布时间</td>
-								<td>类型</td>
-								<!-- <td>内容</td> -->
-								<td>群组</td>
-								<td>查看量(人)</td>
-								<td>状态</td>
+								<td>公告类型</td>
 							</tr>
 						</thead>
 						<tbody class="itemListWrap">

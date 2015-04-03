@@ -2,7 +2,6 @@ package cn.ncss.jym.messagebox.service;
 
 import java.util.List;
 import cn.ncss.jym.messagebox.pojo.Announcement;
-import cn.ncss.jym.messagebox.pojo.UserInfo;
 
 /**
  * ***********************
@@ -23,16 +22,16 @@ public interface AnnouncementService {
 
 	public Announcement get(int id);
 
-	public List<Announcement> getListByType(String publisherId,String type,int currentIndex,int pageSize );
+	public List<Announcement> getListByType(String type,int currentIndex,int pageSize );
 
-	public List<Announcement> getListByUser(String publisherId,int currentIndex,int pageSize);
+	public List<Announcement> getListByUser(int currentIndex,int pageSize);
 	
 	/**
 	 * 获取用户发布公告的数量
 	 * @param publisherId 发布者ID
 	 * @return
 	 */
-	public long getCountByUser(String publisherId);
+	public long getCountByUser();
 	
 	
 	public long getAnnounByViews(Announcement announ);

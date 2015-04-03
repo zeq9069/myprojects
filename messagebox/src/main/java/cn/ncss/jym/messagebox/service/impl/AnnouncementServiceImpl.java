@@ -1,6 +1,5 @@
 package cn.ncss.jym.messagebox.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.dao.RecordDao;
-import cn.ncss.jym.messagebox.dao.UserInfoDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
@@ -60,14 +58,21 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Announcement> getListByType(String publisherId,String type,int currentIndex,int pageSize) {
-		return announcementDao.getListByType(publisherId,type, currentIndex,pageSize);
+	public List<Announcement> getListByType(String type,int currentIndex,int pageSize) {
+		//TODO 
+		//服务层获取用户信息
+		UserInfo userInfo=new UserInfo();
+		return announcementDao.getListByType(userInfo,type, currentIndex,pageSize);
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Announcement> getListByUser(String publisher,int currentIndex,int pageSize) {
-		return announcementDao.getListByUser(publisher,currentIndex,pageSize);
+	public List<Announcement> getListByUser(int currentIndex,int pageSize) {
+		//TODO 
+		//服务层获取用户信息
+				UserInfo userInfo=new UserInfo();
+				userInfo.setId("123");
+		return announcementDao.getListByUser(userInfo,currentIndex,pageSize);
 	}
 
 	@Override
@@ -82,8 +87,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	
 	@Transactional(readOnly=true)
 	@Override
-	public long getCountByUser(String publisherId) {
-		return announcementDao.getCountByUser(publisherId);
+	public long getCountByUser() {
+		//TODO 
+		//服务层获取用户信息
+		UserInfo userInfo=new UserInfo();
+		userInfo.setId("123");
+		return announcementDao.getCountByUser(userInfo);
 	}
 	
 	@Override
@@ -92,6 +101,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		//TODO 
 		//获取当前用户，根据用户来判断获取不同的分页
 		UserInfo userInfo=new UserInfo();
+		userInfo.setId("123");
 		/*
 		if(省){
 			announcementDao.getReceiveByProvince(provinceCode, currentIndex, pageSize);
@@ -102,7 +112,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		}
 		*/
 		List<String> typeList=userInfoService.getSchoolType();
-		return announcementDao.getReceiveByYxdm(typeList, userInfo.getOrgCode(), currentIndex, pageSize);
+		return announcementDao.getReceiveByYxdm(typeList, userInfo.getAreaCode(),userInfo.getOrgCode(), currentIndex, pageSize);
 	}
 	
 	@Transactional(readOnly=true)
@@ -121,7 +131,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		}
 		*/
 		List<String> typeList=userInfoService.getSchoolType();
-		return announcementDao.getCount(typeList, userInfo.getOrgCode());
+		return announcementDao.getCount(typeList, userInfo.getAreaCode(),userInfo.getOrgCode());
 	}
 	
 	@Transactional(readOnly=true)
@@ -139,38 +149,30 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 			announcementDao.getReceiveBySzyx(yxdm, szyx)
 		}
 		*/
-		List<Announcement> list=new ArrayList<Announcement>();
 		List<String> typeList=userInfoService.getSchoolType();
 		
-		List<Announcement> receiveList=announcementDao.getReceiveByYxdm(typeList, userInfo.getOrgCode());
+		List<Announcement> receiveList=announcementDao.getReceiveByYxdm(typeList, userInfo.getAreaCode(),userInfo.getOrgCode());
 		
 		if(receiveList==null || receiveList.size()==0){
-			return list;
+			return receiveList;
 		}
 		
-		List<Record> lookover=recordDao.getListByUId(userInfo.getId());
+		List<Record> lookover=recordDao.getListByUId(userInfo);
 		
 		if(lookover==null || lookover.size()==0){
 			return receiveList;
 		}
 		
-		//效率太慢,待优化
+		//效率待优化
 		 for(Announcement announ:receiveList){
-			 boolean flag=false;
 				for(Record record:lookover){
 					 if(record.getAnnoun().getId()==announ.getId()){
 						 receiveList.remove(announ);
-						 flag=true;
 					 }
 				}
-			if(flag==false){
-				UserInfo u= userInfoService.getById(announ.getPublisher());
-				announ.setPublisher(u.toString());
-				list.add(announ);
-			}
 		 }
 		 
-		return list;
+		return receiveList;
 	}
 
 }

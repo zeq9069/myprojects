@@ -36,7 +36,7 @@ public class UserInfo implements Serializable {
 	 */
 	@Id
 	@Column(name = "USER_ID", length = 32)
-	private String id;
+	private String id="123";
 	/*
 	 * 绑定的学信帐号的用户名
 	 */
@@ -52,7 +52,7 @@ public class UserInfo implements Serializable {
 	 * 所在省市或高校编码
 	 */
 	@Column(name = "ORG_CODE", length = 8, updatable = false)
-	private String orgCode;
+	private String orgCode="32";
 	/*
 	 * 工作单位或高校名称
 	 */
@@ -67,7 +67,7 @@ public class UserInfo implements Serializable {
 	 * 地区代码
 	 */
 	@Column(name = "AREA_CODE", length = 2, updatable = false)
-	private String areaCode;
+	private String areaCode="32";
 	/*
 	 * 联系人姓名
 	 */

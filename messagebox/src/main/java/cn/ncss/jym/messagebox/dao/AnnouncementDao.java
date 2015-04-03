@@ -3,6 +3,7 @@ package cn.ncss.jym.messagebox.dao;
 import java.util.List;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 
 /**
  * *************************
@@ -23,16 +24,42 @@ public interface AnnouncementDao {
 
 	public Announcement get(int id);
 
-	public List<Announcement> getListByType(String publisherId,String type,int currentIndex,int pageSize);
+	public List<Announcement> getListByType(UserInfo userInfo,String type,int currentIndex,int pageSize);
 	
-	public List<Announcement> getListByUser(String publisherId,int currrentIndex,int pageSize);
+	public List<Announcement> getListByUser(UserInfo userInfo,int currrentIndex,int pageSize);
 	
 	/**
 	 * 获取用户发布公告的数量
 	 * @param publisherId 发布者ID
 	 * @return
 	 */
-	public long getCountByUser(String publisherId);
+	public long getCountByUser(UserInfo userInfo);
+	
+	/***********************************************
+	 * 
+	 * 用户查询发给自己的公告的一些规则：
+	 * 
+	 *   暂定只能 省和学校发送公告 
+	 * 
+	 * <1>省
+	 * 需要满足一下条件：
+	 * 
+	 * publish_role='province' and targetProvinceCode=本省代码
+	 * 
+	 * <2>学校
+	 * 需要满足一下两个条件：
+	 * （1）publish_role='province' and publish_dm=当前用户的省代码
+	 *     and ( targetYxlx………… or targetYxdm=当前用户学校代码 )
+	 * （2）publish_role='school' and targetYxdm=当前用户的院校代码
+	 * 
+	 * <3>院系
+	 * 学要满足以下条件：
+	 *    publish_role='school' and publish_dm=当前用户的院校代码
+	 *     and targetSzyx=当前用户的szyx
+	 *   
+	 * 
+	 * 
+	 **********************************************/
 	
 	/**
 	 * 学校用户查询所有发送给自己的公告
@@ -40,11 +67,11 @@ public interface AnnouncementDao {
 	 * @param yxdm 院校代码
 	 * @return
 	 */
-	public int getCount(List<String> typeList,String yxdm);
+	public int getCount(List<String> typeList,String provinceCode,String yxdm);
 	
-	public List<Announcement> getReceiveByYxdm(List<String> typeList,String yxdm,int currentIndex,int pageSize);
+	public List<Announcement> getReceiveByYxdm(List<String> typeList,String provinceCode,String yxdm,int currentIndex,int pageSize);
 	
-	public List<Announcement> getReceiveByYxdm(List<String> typeList,String yxdm);
+	public List<Announcement> getReceiveByYxdm(List<String> typeList,String provinceCode,String yxdm);
 	
 	/**
 	 * 省用户查询所有发送给自己的公告

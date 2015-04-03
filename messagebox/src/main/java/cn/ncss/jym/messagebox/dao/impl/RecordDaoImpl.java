@@ -49,25 +49,25 @@ public class RecordDaoImpl implements RecordDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Record> getListByUId(String u_id,int currentIndex,int pageSize) {
+	public List<Record> getListByUId(UserInfo userInfo,int currentIndex,int pageSize) {
 		Criteria crit = this.getSession().createCriteria(Record.class);
-		crit.add(Restrictions.eq("user", u_id));
+		crit.add(Restrictions.eq("user", userInfo));
 		crit.setFirstResult((currentIndex-1)*pageSize);
 		crit.setMaxResults(pageSize);
 		return crit.list();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Record> getListByUId(String u_id){
+	public List<Record> getListByUId(UserInfo userInfo){
 		Criteria crit = this.getSession().createCriteria(Record.class);
-		crit.add(Restrictions.eq("user", u_id));
+		crit.add(Restrictions.eq("user", userInfo));
 		return crit.list();
 	}
 	
 	@Override
-	public long getCount(String u_id) {
+	public long getCount(UserInfo userInfo) {
 		Criteria crit = this.getSession().createCriteria(Record.class);
-		crit.add(Restrictions.eq("user", u_id));
+		crit.add(Restrictions.eq("user", userInfo));
 		ProjectionList pro=Projections.projectionList();
 		pro.add(Projections.countDistinct("announ"));
 		crit.setProjection(pro);

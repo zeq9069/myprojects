@@ -51,7 +51,7 @@ public class RecordServiceImpl implements RecordService {
 		UserInfo userInfo=new UserInfo();
 		
 		List<Announcement> list=new ArrayList<Announcement>();
-		List<Record> recordList=recordDao.getListByUId(userInfo.getId(),currentIndex,pageSize);
+		List<Record> recordList=recordDao.getListByUId(userInfo,currentIndex,pageSize);
 		if(recordList==null || recordList.size()==0){
 			return list;
 		}
@@ -71,7 +71,7 @@ public class RecordServiceImpl implements RecordService {
 		//服务层获取用户信息
 		UserInfo userInfo=new UserInfo();
 		
-		return recordDao.getCount(userInfo.getId());
+		return recordDao.getCount(userInfo);
 	}
 
 

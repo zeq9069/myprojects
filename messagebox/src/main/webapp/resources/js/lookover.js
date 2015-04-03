@@ -34,25 +34,6 @@ $(document).ready(function(){
 			
 	
 			
-//			
-//			/************************下拉框选择********************************/
-//			$("#group-select").on("change",function(){
-//				listPage=null;
-//				listPage = Page.setting({
-//					'itemListUrl': '/messagebox/system/receives',
-//					'itemCountUrl': '/messagebox/system/receives/count',
-//					'par': {
-//						'isLook':$("#group-select").val().trim()
-//					},
-//					'type': 'get',
-//					'listWrap': '.itemListWrap',
-//					'listWrapTemp': '#listWrapTemp',
-//					'pageWrap': '.itemPageWrap',
-//					'pageSize':20
-//				});
-//			});
-//			
-			
 		});
 });
 	

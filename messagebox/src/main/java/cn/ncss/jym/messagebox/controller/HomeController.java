@@ -44,14 +44,6 @@ public class HomeController {
 		return model;
 	}
 
-//	@RequestMapping(value = "groups", method = RequestMethod.GET)
-//	public ModelAndView groups(ModelAndView model) {
-//		Map<String, String> map = groupService.getGroups();
-//		model.setViewName("/home/groups");
-//		model.addObject("groups", map);
-//		return model;
-//	}
-//
 	@RequestMapping(value = "receives/notlookover", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView notLookover(ModelAndView model) {
@@ -73,22 +65,21 @@ public class HomeController {
 	}
 	
 	
-//
-//
-//	@RequestMapping(value = "send", method = RequestMethod.GET)
-//	@ResponseBody
-//	public ModelAndView send(ModelAndView model) {
-//		model.setViewName("/home/send");
-//		model.addObject("groups", groupService.getGroups());
-//		return model;
-//	}
-//
-//	@RequestMapping(value = "announs", method = RequestMethod.GET)
-//	@ResponseBody
-//	public ModelAndView announs(ModelAndView model) {
-//		model.setViewName("/home/announs");
-//		return model;
-//	}
+
+
+	@RequestMapping(value = "send", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView send(ModelAndView model) {
+		model.setViewName("/home/send");
+		return model;
+	}
+
+	@RequestMapping(value = "announs", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView announs(ModelAndView model) {
+		model.setViewName("/home/announs");
+		return model;
+	}
 //	
 //	@RequestMapping(value = "announs/look", method = RequestMethod.GET)
 //	@ResponseBody

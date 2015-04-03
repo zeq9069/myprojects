@@ -20,11 +20,11 @@ public interface RecordDao {
 
 	public boolean delete(Record record);
 
-	public List<Record> getListByUId(String u_id,int currentIndex,int pageSize);
+	public List<Record> getListByUId(UserInfo userInfo,int currentIndex,int pageSize);
 	
-	public List<Record> getListByUId(String u_id);
+	public List<Record> getListByUId(UserInfo userInfo);
 	
-	public long getCount(String u_id);
+	public long getCount(UserInfo userInfo);
 
 	public List<Record> getListByAnnounId(int announ_id,int currentIndex,int pageSize);
 	
