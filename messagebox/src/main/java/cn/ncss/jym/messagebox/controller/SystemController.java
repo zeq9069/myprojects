@@ -75,14 +75,15 @@ public class SystemController {
 
 	
 
-	@RequestMapping(value="announs",method=RequestMethod.GET)
+	@RequestMapping(value="announs/list",method=RequestMethod.GET)
 	public List<Announcement> announsInfoList(int currentIndex,int pageSize){
-		return announcementService.getListByUser(currentIndex, pageSize);
+		List<Announcement> list=announcementService.getListByUser(currentIndex, pageSize);
+		return list;
 	} 
 	
 	@RequestMapping(value="announs/count",method=RequestMethod.GET)
-	public int announsCount(String online){
-		return 0;
+	public long announsCount(String online){
+		return announcementService.getCountByUser();
 	} 
 //	
 //

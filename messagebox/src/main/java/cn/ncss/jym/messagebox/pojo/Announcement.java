@@ -83,7 +83,7 @@ public class Announcement implements Serializable {
 	/*
 	 * 发布者
 	 */
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "U_ID")
 	private UserInfo user;
 	

@@ -10,6 +10,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.ResultTransformer;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -65,15 +66,18 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		Criteria crit = this.getSession().createCriteria(Announcement.class);
 		crit.add(Restrictions.eq("user", userInfo));
 		ProjectionList pro=Projections.projectionList();
-		pro.add(Projections.property("id"));
-		pro.add(Projections.property("title"));
-		pro.add(Projections.property("date"));
-		pro.add(Projections.property("user"));
-		pro.add(Projections.property("type"));
+		pro.add(Projections.property("id"),"id");
+		pro.add(Projections.property("title"),"title");
+		pro.add(Projections.property("date"),"date");
+		pro.add(Projections.property("user"),"user");
+		pro.add(Projections.property("type"),"type");
 		crit.setProjection(pro);
+		crit.setResultTransformer(Transformers.aliasToBean(Announcement.class));
 		crit.setFirstResult((currentIndex-1)*pageSize);
 		crit.setMaxResults(pageSize);
-		return crit.list();
+		List<Announcement> list=crit.list();
+		int y=crit.list().size();
+		return list;
 	}
 	
 	@Override

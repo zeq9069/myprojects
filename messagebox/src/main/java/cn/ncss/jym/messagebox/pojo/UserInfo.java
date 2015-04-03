@@ -36,7 +36,7 @@ public class UserInfo implements Serializable {
 	 */
 	@Id
 	@Column(name = "USER_ID", length = 32)
-	private String id="123";
+	private String id="3333";
 	/*
 	 * 绑定的学信帐号的用户名
 	 */

@@ -39,7 +39,7 @@
 	padding-left: 150px;
 	width: 90%;
 }
-#users{
+#lookover{
 	background-color: #eeeeee;
 }
 #content {

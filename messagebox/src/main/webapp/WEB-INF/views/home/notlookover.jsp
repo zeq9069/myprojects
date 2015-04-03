@@ -22,7 +22,7 @@
 	padding-left: 150px;
 	width: 90%;
 }
-#users{
+#notlookover{
 	background-color: #eeeeee;
 }
 #content {
@@ -148,8 +148,8 @@ text-align:center;
 						<tbody class="itemListWrap">
 							<c:forEach items="${resultMap.notlookover}" var="an">
 								<tr>
-									<td><a href="">${an.id}</a></td>
-									<td>${an.title}</td>
+									<td>${an.id}</td>
+									<td><a href="${webRoot}/home/announs/look?announ_id=${an.id}">${an.title}</a></td>
 									<td>${an.user}</td>
 									<td>${an.date}</td>
 									<td>${an.type}</td>

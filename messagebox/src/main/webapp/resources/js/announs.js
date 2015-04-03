@@ -20,7 +20,7 @@ $(document).ready(function(){
 		require(["jquery",'page','bootstrap','jsrender'],function($,Page){
 			$(function(){
 				var listPage = Page.setting({
-					'itemListUrl': '/messagebox/system/announs',
+					'itemListUrl': '/messagebox/system/announs/list',
 					'itemCountUrl': '/messagebox/system/announs/count',
 					'type': 'get',
 					'listWrap': '.itemListWrap',

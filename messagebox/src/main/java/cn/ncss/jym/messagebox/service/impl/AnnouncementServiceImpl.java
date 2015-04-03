@@ -71,7 +71,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		//TODO 
 		//服务层获取用户信息
 				UserInfo userInfo=new UserInfo();
-				userInfo.setId("123");
 		return announcementDao.getListByUser(userInfo,currentIndex,pageSize);
 	}
 
@@ -91,7 +90,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		//TODO 
 		//服务层获取用户信息
 		UserInfo userInfo=new UserInfo();
-		userInfo.setId("123");
 		return announcementDao.getCountByUser(userInfo);
 	}
 	

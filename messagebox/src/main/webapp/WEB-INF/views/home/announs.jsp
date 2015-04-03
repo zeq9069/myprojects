@@ -17,11 +17,11 @@
 	<!-- jsrender 模板-->
 	<script type="text/x-jsrender" id="listWrapTemp">
 							<tr>
-								<td>{{:announ.id}}</td>
-								<td><a href="${webRoot}/home/announs/look?announ_id={{:announ.id}}">{{:announ.title}}</a></td>
-								<td>{{:announ.user.username}}</td>
-								<td>{{:announ.date}}</td>
-								<td>{{:announ.type}}</td>
+								<td>{{:id}}</td>
+								<td><a href="${webRoot}/home/announs/look?announ_id={{:id}}">{{:title}}</a></td>
+								<td>{{:user.username}}</td>
+								<td>{{:date}}</td>
+								<td>{{:type}}</td>
 							</tr>
 	</script>
 	
