@@ -63,8 +63,7 @@ public class SystemController {
 	@RequestMapping(value = "receives/lookover/list",method=RequestMethod.GET)
 	public List<Announcement> lookover(int currentIndex,int pageSize) {
 		//TODO
-		List<Announcement> list=recordService.getListByUId(currentIndex, pageSize);
-		return list;
+		return recordService.getListByUId(currentIndex, pageSize);
 	}
 	
 		//查询所有已经看过的公告
@@ -77,8 +76,7 @@ public class SystemController {
 
 	@RequestMapping(value="announs/list",method=RequestMethod.GET)
 	public List<Announcement> announsInfoList(int currentIndex,int pageSize){
-		List<Announcement> list=announcementService.getListByUser(currentIndex, pageSize);
-		return list;
+		return announcementService.getListByUser(currentIndex, pageSize);
 	} 
 	
 	@RequestMapping(value="announs/count",method=RequestMethod.GET)

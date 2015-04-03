@@ -75,9 +75,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		crit.setResultTransformer(Transformers.aliasToBean(Announcement.class));
 		crit.setFirstResult((currentIndex-1)*pageSize);
 		crit.setMaxResults(pageSize);
-		List<Announcement> list=crit.list();
-		int y=crit.list().size();
-		return list;
+		return crit.list();
 	}
 	
 	@Override
