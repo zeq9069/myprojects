@@ -134,7 +134,7 @@ select > targetYxdm{
 						<p>
 							省：
 							<select name="targetProvinceCode">
-								<option>请选择</option>
+								<option value="0">请选择</option>
 								<optgroup label="A">
 									<option value="34">安徽省</option>
 									<option value="82">澳门特别行政区</option>
@@ -205,27 +205,28 @@ select > targetYxdm{
 							<button type="button" name="add_targetProvinceCode">添加</button>
 						</p>
 						<p>
-							学校类型：
+							<label>学校类型：</label>
 							<select name="targetYxlx">
 								<option value="0">请选择</option>
-								<option value="">211高校</option>
-								<option value="">985高校</option>
-								<option value="">省属高校</option>
-								<option value="">部属高校</option>
+								<option value="school_all">全部</option>
+								<option value="school_985">985高校</option>
+								<option value="school_by_province">省属高校</option>
+								<option value="school_by_ministry">部属高校</option>
+								<option value="school_independent">独立高校</option>
+								<option value="school_bachelor_new">新建本科高校</option>
 							</select>
 							<button type="button" name="add_targetYxlx">添加</button>
 						</p>
 						<p>
-							学校：<input type="text" name=targetYxdm class="targetYxdm"><button type="button" name="add_targetYxdm">添加</button>
-							<!-- <select class="targetYxdm" name="targetYxdm">
-  								<option value="www" selected="selected">请选择</option>
-							</select> -->
+							<label>学校：</label>
+							<input type="text" name=targetYxdm class="targetYxdm">
+							<button type="button" name="add_targetYxdm">添加</button>
 						</p>
 						<p>
-							公告类型：<input type="text" name="type" ><button type="button" name="add_type">添加</button>
+							<label>公告类型：</label>
+							<input type="text" name="type" >
+							<button type="button" name="add_type">添加</button>
 						</p>
-						<div class="result_type">
-						</div>
 						<div class="result_list">
 							<p>已选择：</p>
 							<div id="result_targetProvinceCode">
@@ -245,7 +246,10 @@ select > targetYxdm{
 								<span>郑州大学</span><span>北京大学</span>
 							</div>
 							<div id="result_targetYxlx">
-								<span>公告</span><span>紧急</span>
+								<span>985高校</span><span>211高校</span>
+							</div>
+							<div id="result_type">
+								<span>群公告</span><span>重要</span>
 							</div>
 						</div>
 						<p>
