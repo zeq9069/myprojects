@@ -1,8 +1,9 @@
 package cn.ncss.jym.messagebox.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,6 +84,16 @@ public class SystemController {
 	public long announsCount(String online){
 		return announcementService.getCountByUser();
 	} 
+	
+	@RequestMapping(value = "list",method=RequestMethod.GET)
+	public List<Map<String,String>> list(String q) {
+		List<Map<String,String>> list=new ArrayList<Map<String,String>>();
+		Map<String,String> map=new HashMap<String, String>();
+		map.put("id", "01");
+		map.put("text", "北京大学");
+		list.add(map);
+		return list;
+	}
 //	
 //
 //	//发布公告

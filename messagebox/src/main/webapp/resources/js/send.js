@@ -28,6 +28,30 @@ $(document).ready(function(){
     		
         }    
     });
+    
+    
+    $(".targetYxdm").select2({
+    	placeholder:"请选择输入",
+    	minimumInputLength:2,//最小输入长度
+    	ajax:{
+    		url:"http://localhost:8080/messagebox/system/list",
+    		dataType:"json",
+    		quietMillis:20,
+    		data:function (term,page){
+    			return {q:term};
+    		},
+    		results:function(data,page){
+    			return {results:data};
+    		}
+    	}
+    	
+    });
+    
+    $("button[name='add_targetYxdm']").on("click",function(){
+    	alert($(".targetYxdm").select2("data").id);
+    });
+    
+    alert((".tartgetYxdm").select2("data").id);
 	
 //	$("#announ_submit").click(function(){
 //		

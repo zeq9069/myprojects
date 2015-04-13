@@ -11,9 +11,13 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>messageBox</title>
-<link href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css"
 
-	rel="stylesheet">
+<link href="${webRoot}/${initParam.resourceRoot}/css/bootstrap.min.css" rel="stylesheet">
+<link href="${webRoot}/${initParam.resourceRoot}/css/select2.css" rel="stylesheet" />
+<link href="${webRoot}/${initParam.resourceRoot}/css/select2-bootstrap.css" rel="stylesheet" />
+
+
+	
 <style type="text/css">
 .container {
 	margin-left: 0px;
@@ -36,6 +40,40 @@
 #title-error{
 color: red;
 }
+.result_list{
+border:1px solid #eeeeee;
+border-radius:5px;
+display:block;
+padding-left:10px;
+line-height: normal;
+padding-top:10px;
+padding-bottom: 10px;
+
+}
+
+.result_list > div{
+display:list-item;
+margin-top:30px;
+margin-bottom: 30px;
+padding-left:0px;
+line-height: normal;
+padding-bottom: 10px;
+margin-left:1px;
+}
+
+
+.result_list > div > span{
+margin-left:15px;
+ margin-top:10px;
+ border:1px solid #eeeeee;
+ padding:5px 10px 5px 10px;
+ border-radius:2px;
+ display:inline-block;
+}
+select > targetYxdm{
+ width: 100px;
+}
+
 </style>
 </head>
 <body>
@@ -94,19 +132,122 @@ color: red;
 </c:forEach>
 						</p>
 						<p>
-							<select id="type" name="type">
-								<option value="通知">通知</option>
+							省：
+							<select name="targetProvinceCode">
+								<option>请选择</option>
+								<optgroup label="A">
+									<option value="34">安徽省</option>
+									<option value="82">澳门特别行政区</option>
+								</optgroup>
+								
+								<optgroup label="B">
+									<option value="11">北京市</option>
+								</optgroup>
+								<optgroup label="C">
+									<option value="50">重庆市</option>
+								</optgroup>
+								<optgroup label="F">
+									<option value="35">福建省</option>
+								</optgroup>
+								<optgroup label="G">
+									<option value="62">甘肃省</option>
+									<option value="44">广东省</option>
+									<option value="52">贵州省</option>
+									<option value="45">广西壮族自治区</option>
+								</optgroup>
+								
+								<optgroup label="H">
+									<option value="13">河北省</option>
+									<option value="41">河南省</option>
+									<option value="42">湖北省</option>
+									<option value="43">湖南省</option>
+									<option value="46">海南省</option>
+									<option value="23">黑龙江</option>
+								</optgroup>
+								<optgroup label="J">
+									<option value="22">吉林省</option>
+									<option value="32">江苏省</option>
+									<option value="36">江西省</option>
+								</optgroup>
+								<optgroup label="L">
+									<option value="21">辽宁省</option>
+								</optgroup>
+								<optgroup label="N">
+									<option value="15">内蒙古自治区</option>
+									<option value="64">宁夏回族自治区</option>
+								</optgroup>
+								<optgroup label="Q">
+									<option value="63">青海省</option>
+								</optgroup>
+								<optgroup label="S">
+									<option value="31">上海市</option>
+									<option value="14">山西省</option>
+									<option value="37">山东省</option>
+									<option value="51">四川省</option>
+									<option value="61">陕西省</option>
+								</optgroup>
+								<optgroup label="T">
+									<option value="12">天津市</option>
+									<option value="71">台湾省</option>
+								</optgroup>
+								<optgroup label="X">
+									<option value="81">香港特别行政区</option>
+									<option value="54">西藏自治区</option>
+									<option value="65">新疆维吾尔自治区</option>
+								</optgroup>
+								<optgroup label="Y">
+									<option value="53">云南省</option>
+								</optgroup>
+								<optgroup label="Z">
+									<option value="33">浙江省</option>
+								</optgroup>
 							</select>
+							<button type="button" name="add_targetProvinceCode">添加</button>
 						</p>
 						<p>
-							<input type="hidden" name="publisher" id="publisher"
-								value="admin">
+							学校类型：
+							<select name="targetYxlx">
+								<option value="0">请选择</option>
+								<option value="">211高校</option>
+								<option value="">985高校</option>
+								<option value="">省属高校</option>
+								<option value="">部属高校</option>
+							</select>
+							<button type="button" name="add_targetYxlx">添加</button>
 						</p>
 						<p>
-							<input type="radio" name="online" id="online" value="true"
-								checked="checked">上线 <input type="radio" name="online"
-								id="online" value="false">暂不上线
+							学校：<input type="text" name=targetYxdm class="targetYxdm"><button type="button" name="add_targetYxdm">添加</button>
+							<!-- <select class="targetYxdm" name="targetYxdm">
+  								<option value="www" selected="selected">请选择</option>
+							</select> -->
 						</p>
+						<p>
+							公告类型：<input type="text" name="type" ><button type="button" name="add_type">添加</button>
+						</p>
+						<div class="result_type">
+						</div>
+						<div class="result_list">
+							<p>已选择：</p>
+							<div id="result_targetProvinceCode">
+								<span>河南省</span><span>北京市</span>
+								<span>河南省</span><span>北京市</span>
+								<span>河南省</span><span>北京市</span>
+								<span>河南省</span><span>北京市</span>
+								<span>河南省</span><span>北京市</span>
+								<span>河南省</span><span>北京市</span>
+								<span>河南省</span><span>北京市</span>
+								<span>河南省</span><span>北京市</span>
+								<span>河南省</span><span>北京市</span>
+								<span>河南省</span><span>北京市</span>
+								<span>河南省</span><span>北京市</span>
+							</div>
+							<div id="result_targetYxdm">
+								<span>郑州大学</span><span>北京大学</span>
+							</div>
+							<div id="result_targetYxlx">
+								<span>公告</span><span>紧急</span>
+							</div>
+						</div>
 						<p>
 							  <script id="editor" type="text/plain" style="width:1024px;height:500px;" ></script>
 						</p>
@@ -124,12 +265,11 @@ color: red;
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/validate/jquery.validate.js"></script>
 		<script src="${webRoot}/${initParam.resourceRoot}/js/validate/message.js"></script>
+		<script src="${webRoot}/${initParam.resourceRoot}/js/select2.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/send.js"></script>
 	
-	<script type="text/javascript" charset="utf-8" src="${webRoot}/${initParam.resourceRoot}/js/ueditor/ueditor.config.js"></script>
-	<script type="text/javascript" charset="utf-8" src="${webRoot}/${initParam.resourceRoot}/js/ueditor/ueditor.all.min.js">
-		
-	</script>
 	
+	<script type="text/javascript" charset="utf-8" src="${webRoot}/${initParam.resourceRoot}/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${webRoot}/${initParam.resourceRoot}/js/ueditor/ueditor.all.min.js"></script>
 </body>
 </html>
