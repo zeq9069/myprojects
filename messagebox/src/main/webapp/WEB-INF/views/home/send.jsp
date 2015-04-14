@@ -52,7 +52,7 @@ padding-bottom: 10px;
 }
 
 .result_list > div{
-display:list-item;
+display:block;
 margin-top:30px;
 margin-bottom: 30px;
 padding-left:0px;
@@ -70,8 +70,15 @@ margin-left:15px;
  border-radius:2px;
  display:inline-block;
 }
-select > targetYxdm{
- width: 100px;
+
+#search_type span{
+margin-left:15px;
+ margin-top:10px;
+ border:1px solid #eeeeee;
+ padding:5px 10px 5px 10px;
+ border-radius:2px;
+ display:inline-block;
+ margin-bottom: 5px;
 }
 
 </style>
@@ -129,11 +136,11 @@ select > targetYxdm{
 							<c:forEach items="${groups}" var="group">
 								<input type="checkbox" name="group"  id="${group.key}"
 									value="${group.value}">${group.value}
-</c:forEach>
+							</c:forEach>
 						</p>
 						<p>
-							省：
-							<select name="targetProvinceCode">
+							<label>省：</label>
+							<select name="targetProvinceCode" id="targetProvinceCode">
 								<option value="0">请选择</option>
 								<optgroup label="A">
 									<option value="34">安徽省</option>
@@ -202,11 +209,11 @@ select > targetYxdm{
 									<option value="33">浙江省</option>
 								</optgroup>
 							</select>
-							<button type="button" name="add_targetProvinceCode">添加</button>
+							<button type="button" id="add_targetProvinceCode" hidden="true">添加</button>
 						</p>
 						<p>
 							<label>学校类型：</label>
-							<select name="targetYxlx">
+							<select name="targetYxlx" id="targetYxlx">
 								<option value="0">请选择</option>
 								<option value="school_all">全部</option>
 								<option value="school_985">985高校</option>
@@ -215,38 +222,28 @@ select > targetYxdm{
 								<option value="school_independent">独立高校</option>
 								<option value="school_bachelor_new">新建本科高校</option>
 							</select>
-							<button type="button" name="add_targetYxlx">添加</button>
+							<button type="button"  id="add_targetYxlx" hidden="true">添加</button>
 						</p>
 						<p>
 							<label>学校：</label>
-							<input type="text" name=targetYxdm class="targetYxdm">
-							<button type="button" name="add_targetYxdm">添加</button>
+							<input type="text" name="targetYxdm" style="width: 150px;" id="targetYxdm" >
+							<button type="button" id="add_targetYxdm" >添加</button>
 						</p>
 						<p>
 							<label>公告类型：</label>
-							<input type="text" name="type" >
-							<button type="button" name="add_type">添加</button>
+							<input type="text" name="targetType" id="targetType" >
+							<button type="button" id="add_type" >添加</button>
 						</p>
+						
+							<div id="search_type" style="border:1px solid #eeeeee;display: none;" >
+							</div>
 						<div class="result_list">
 							<p>已选择：</p>
 							<div id="result_targetProvinceCode">
-								<span>河南省</span><span>北京市</span>
-								<span>河南省</span><span>北京市</span>
-								<span>河南省</span><span>北京市</span>
-								<span>河南省</span><span>北京市</span>
-								<span>河南省</span><span>北京市</span>
-								<span>河南省</span><span>北京市</span>
-								<span>河南省</span><span>北京市</span>
-								<span>河南省</span><span>北京市</span>
-								<span>河南省</span><span>北京市</span>
-								<span>河南省</span><span>北京市</span>
-								<span>河南省</span><span>北京市</span>
 							</div>
 							<div id="result_targetYxdm">
-								<span>郑州大学</span><span>北京大学</span>
 							</div>
 							<div id="result_targetYxlx">
-								<span>985高校</span><span>211高校</span>
 							</div>
 							<div id="result_type">
 								<span>群公告</span><span>重要</span>
@@ -268,8 +265,8 @@ select > targetYxdm{
 	<script src="${webRoot}/${initParam.resourceRoot}/js/jquery.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/bootstrap.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/validate/jquery.validate.js"></script>
-		<script src="${webRoot}/${initParam.resourceRoot}/js/validate/message.js"></script>
-		<script src="${webRoot}/${initParam.resourceRoot}/js/select2.min.js"></script>
+	<script src="${webRoot}/${initParam.resourceRoot}/js/validate/message.js"></script>
+	<script src="${webRoot}/${initParam.resourceRoot}/js/select2.min.js"></script>
 	<script src="${webRoot}/${initParam.resourceRoot}/js/send.js"></script>
 	
 	
