@@ -36,6 +36,7 @@ $(document).ready(function(){
      * 
      *------------------------
      */
+    var yxdmArray=new Array();
     $("#targetYxdm").select2({
     	placeholder:"请选择输入",
     	minimumInputLength:2,//最小输入长度
@@ -62,6 +63,7 @@ $(document).ready(function(){
     	var yx=$("#targetYxdm").select2("data").text;
     	
     	if($("#result_targetYxdm > span[data-code='"+yxdm+"']").length<=0){
+    		yxdmArray.push(yxdm);
     		$("#result_targetYxdm").append("<span data-code='"+yxdm+"'>"+yx+"</span>");
     	}else{
     		alert("您已经选择");
@@ -78,7 +80,7 @@ $(document).ready(function(){
      *
      * ------------------------------------
      */
-    
+    var provinceCodeArray=new Array();
     $("#targetProvinceCode").on("change",function(){
     	var value=$("#targetProvinceCode").val();
     	if(value=="0"){
@@ -92,7 +94,9 @@ $(document).ready(function(){
     	var provinceName=$("#targetProvinceCode")[0].options[$("#targetProvinceCode")[0].selectedIndex].text;//省名字
     	var provinceCode=$("#targetProvinceCode").val();//省代码
     	//判断是否已经添加
-    	if($("#result_targetProvinceCode > span[data-code='"+provinceCode+"']").length<=0){
+    	if($.inArray(provinceCode,provinceCodeArray)==-1){//不存在
+    	//if($("#result_targetProvinceCode > span[data-code='"+provinceCode+"']").length<=0){
+    		provinceCodeArray.push(provinceCode);
     		$("#result_targetProvinceCode").append("<span data-code='"+provinceCode+"'>"+provinceName+"</span>");
     	}else{
     		alert("您已经选择");
@@ -106,6 +110,7 @@ $(document).ready(function(){
      * 
      * --------------------------
      */
+    var yxlxArray=new Array();
     
     $("#targetYxlx").on("change",function(){
     	var value=$("#targetYxlx").val();
@@ -121,9 +126,13 @@ $(document).ready(function(){
     	var yxlxCode=$("#targetYxlx").val();
     	
     	if(yxlxCode=="school_all"){
+    		yxlxArray.splice(0, yxlxArray.length);//清空
     		$("#result_targetYxlx").empty();
+    		yxlxArray.push(yxlxCode);
     		$("#result_targetYxlx").append("<span data-code='"+yxlxCode+"'>"+yxlxName+"</span>");
-    	}else if($("#result_targetYxlx > span[data-code='"+yxlxCode+"']").length<=0){
+    	}else if($.inArray(yxlxCode,yxlxArray)==-1){//如果元素不存在
+    		//if($("#result_targetYxlx > span[data-code='"+yxlxCode+"']").length<=0){//如果元素不存在
+    		yxlxArray.push(yxlxCode);
     		$("#result_targetYxlx").append("<span data-code='"+yxlxCode+"'>"+yxlxName+"</span>");
     	}else{
     		alert("您已经选择");
@@ -184,6 +193,23 @@ $(document).ready(function(){
      *-------------------------
      */
     $(".result_list").on("click","div > span",function(){
+    	
+    	//从数组中删除type
+    	if($(this).parent().attr("id")=='result_type'){
+    		typeArray.splice($(this).text(), 1);
+    	}
+    	
+    	//从数组中删除yxdm
+    	if($(this).parent().attr("id")=='result_targetYxdm'){
+    		yxdmArray.splice($(this).text(), 1);
+    	}
+    	
+    	//从数组中删除provinceCode
+    	if($(this).parent().attr("id")=='result_targetProvinceCode'){
+    		provinceCodeArray.splice($(this).text(), 1);
+    	}
+    	
+    	//删除元素
     	$(this).remove();
     });
     

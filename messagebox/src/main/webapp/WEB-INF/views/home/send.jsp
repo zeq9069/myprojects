@@ -246,7 +246,6 @@ margin-left:15px;
 							<div id="result_targetYxlx">
 							</div>
 							<div id="result_type">
-								<span>群公告</span><span>重要</span>
 							</div>
 						</div>
 						<p>
