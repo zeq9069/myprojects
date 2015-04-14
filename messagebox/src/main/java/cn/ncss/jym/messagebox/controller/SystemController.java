@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.ncss.jym.messagebox.pojo.AnnounType;
 import cn.ncss.jym.messagebox.pojo.Announcement;
+import cn.ncss.jym.messagebox.service.AnnounTypeService;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.RecordService;
 import cn.ncss.jym.messagebox.service.StatisticService;
@@ -42,9 +44,10 @@ public class SystemController {
 	private UserInfoService userInfoService;
 	@Autowired
 	private AnnouncementService announcementService;
-	
 	@Autowired
 	private RecordService recordService;
+	@Autowired
+	private AnnounTypeService announTypeService;
 	
 
 	@RequestMapping(value = "info", method = RequestMethod.GET)
@@ -85,15 +88,35 @@ public class SystemController {
 		return announcementService.getCountByUser();
 	} 
 	
-	@RequestMapping(value = "list",method=RequestMethod.GET)
-	public List<Map<String,String>> list(String q) {
+	@RequestMapping(value="announs/type",method=RequestMethod.POST)
+	public void addAnnouncementType(String type){
+		announTypeService.create(type);
+	}
+	
+	//查询公告类型list，每次最多10条
+	@RequestMapping(value="announs/type/list")
+	public List<AnnounType> announTypeList(String key){
+		return announTypeService.announTypeList(key);
+	}
+	
+	
+	//[{"id":"101","text":"郑州大学"},{"id":"11","text":"北京大学"}]
+	//每次十条
+	@RequestMapping(value="school/list",method=RequestMethod.GET)
+	public List<Map<String,String>> searchSchool(String q){
 		List<Map<String,String>> list=new ArrayList<Map<String,String>>();
-		Map<String,String> map=new HashMap<String, String>();
-		map.put("id", "01");
-		map.put("text", "北京大学");
-		list.add(map);
+		for(int i=0;i<10;i++){
+			Map<String, String> map=new HashMap<String, String>();
+			map.put("id", q.hashCode()+""+i);
+			map.put("text", q+""+i+"大学");
+			list.add(map);
+		}
 		return list;
 	}
+	
+	
+	
+	
 //	
 //
 //	//发布公告

@@ -28,6 +28,13 @@ public class AnnounType implements Serializable{
 	private int id;
 	@Column(name="ANNOUN_TYPE",length=32,nullable=false,unique=true)
 	private String type;
+	public AnnounType(){
+		
+	}
+	public AnnounType(String type){
+		this.type=type;
+	}
+	
 	public int getId() {
 		return id;
 	}

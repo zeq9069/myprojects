@@ -1,6 +1,19 @@
 $(document).ready(function(){
 	
-	
+	//定义array函数
+	Array.prototype.indexOf = function(val) {
+		for (var i = 0; i < this.length; i++) {
+			if (this[i] == val) return i;
+		}
+		return -1;
+	};
+		
+		Array.prototype.remove = function(val) {
+			var index = this.indexOf(val);
+			if (index > -1) {
+				this.splice(index, 1);
+			}
+		};
 	
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
@@ -23,9 +36,6 @@ $(document).ready(function(){
     				alert(data.message);
     			}
     		});
-    		
-    		
-    		
         }    
     });
     
@@ -41,7 +51,7 @@ $(document).ready(function(){
     	placeholder:"请选择输入",
     	minimumInputLength:2,//最小输入长度
     	ajax:{
-    		url:"http://localhost:8080/messagebox/system/list",
+    		url:"http://localhost:8080/messagebox/system/school/list",
     		dataType:"json",
     		quietMillis:20,
     		data:function (term,page){
@@ -51,7 +61,6 @@ $(document).ready(function(){
     			return {results:data};
     		}
     	}
-    	
     });
     
     $("#add_targetYxdm").on("click",function(){
@@ -68,8 +77,6 @@ $(document).ready(function(){
     	}else{
     		alert("您已经选择");
     	}
-    	
-    	
     });
     
     
@@ -153,7 +160,22 @@ $(document).ready(function(){
     		$("#search_type").css("display","none");
     		return;
     	}
-    	$("#search_type").css("display","block");
+    	
+    	$.get("http://localhost:8080/messagebox/system/announs/type/list?key="+text,function(data,status){
+    		if(status=='success'){
+    			var array=data;
+    			var result="";
+    			if(array.length>0){
+    				for(var i=0;i<array.length;i++){
+    					result+="<span>"+data[i].type+"</span>";
+    				}
+    			}
+    		$("#search_type").empty();
+    		$("#search_type").append(result);
+    		$("#search_type").css("display","block");
+    		}
+    	});
+    	
     });
     
     //输入框获取焦点
@@ -176,6 +198,12 @@ $(document).ready(function(){
     
     $("#add_type").on("click",function(){
     	var type=$("#targetType").val().trim();
+    	//添加type到数据库
+    	$.post("http://localhost:8080/messagebox/system/announs/type",{
+    		type:type
+    	},function(data,status){
+    	});
+    
     	if(type!=''){
     		if($.inArray(type,typeArray)==-1){
     			typeArray.push(type);
@@ -196,17 +224,22 @@ $(document).ready(function(){
     	
     	//从数组中删除type
     	if($(this).parent().attr("id")=='result_type'){
-    		typeArray.splice($(this).text(), 1);
+    		typeArray.remove($(this).text());
     	}
     	
     	//从数组中删除yxdm
     	if($(this).parent().attr("id")=='result_targetYxdm'){
-    		yxdmArray.splice($(this).text(), 1);
+    		yxdmArray.remove($(this).attr("data-code"));
     	}
     	
     	//从数组中删除provinceCode
     	if($(this).parent().attr("id")=='result_targetProvinceCode'){
-    		provinceCodeArray.splice($(this).text(), 1);
+    		provinceCodeArray.remove($(this).attr("data-code"));
+    	}
+    	
+    	//从数组中删除yxlx
+    	if($(this).parent().attr("id")=='result_targetYxlx'){
+    		yxlxArray.remove($(this).attr("data-code"));
     	}
     	
     	//删除元素
