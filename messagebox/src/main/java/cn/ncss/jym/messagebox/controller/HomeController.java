@@ -43,12 +43,17 @@ public class HomeController {
 	public ModelAndView main(ModelAndView model) {
 		model.setViewName("/home/main");
 		model.addObject("systemInfo", statisticService.getAllInfo());
+		List<Announcement> list=announcementService.getAnnounsByNot();
+		model.addObject("notlook_count",list==null?0:list.size());
 		return model;
 	}
 
 	@RequestMapping(value = "receives/notlookover", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView notLookover(ModelAndView model) {
+		List<Announcement> notlist=announcementService.getAnnounsByNot();
+		model.addObject("notlook_count",notlist==null?0:notlist.size());
+		
 		List<Announcement> list=announcementService.getAnnounsByNot();
 		Map<String,List<Announcement>> resultMap=new HashMap<String, List<Announcement>>();
 		resultMap.put("notlookover", list);
@@ -63,6 +68,8 @@ public class HomeController {
 	@ResponseBody
 	public ModelAndView lookover(ModelAndView model) {
 		model.setViewName("/home/lookover");
+		List<Announcement> notlist=announcementService.getAnnounsByNot();
+		model.addObject("notlook_count",notlist==null?0:notlist.size());
 		return model;
 	}
 	
@@ -73,6 +80,8 @@ public class HomeController {
 	@ResponseBody
 	public ModelAndView send(ModelAndView model) {
 		model.setViewName("/home/send");
+		List<Announcement> notlist=announcementService.getAnnounsByNot();
+		model.addObject("notlook_count",notlist==null?0:notlist.size());
 		return model;
 	}
 
@@ -80,12 +89,18 @@ public class HomeController {
 	@ResponseBody
 	public ModelAndView announs(ModelAndView model) {
 		model.setViewName("/home/announs");
+		List<Announcement> notlist=announcementService.getAnnounsByNot();
+		model.addObject("notlook_count",notlist==null?0:notlist.size());
 		return model;
 	}
 	
 	@RequestMapping(value = "announs/look", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView announsLook(int announ_id,ModelAndView model) {
+		List<Announcement> notlist=announcementService.getAnnounsByNot();
+		model.addObject("notlook_count",notlist==null?0:notlist.size());
+		
+		
 		model.setViewName("/home/announ_info");
 		Announcement announ=announcementService.get(announ_id);
 		UserInfo userInfo=new UserInfo();

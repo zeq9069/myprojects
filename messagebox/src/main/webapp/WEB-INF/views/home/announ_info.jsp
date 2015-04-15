@@ -77,7 +77,7 @@ border-radius:3px;
 			<div class="col-md-2" style="border:2px solid #eeeeee;height:800px;border-bottom:0px;">
  				<div class="list-group" style="text-align:center;padding-top:30px;height:50%;">
 					<span  class="list-group-item active" style="font-size: 25px">控制台操作</span>
-					<a href="${webRoot}/home/receives/notlookover" class="list-group-item" id="notlookover">待查看</a> 
+					<a href="${webRoot}/home/receives/notlookover" class="list-group-item" id="notlookover">待查看<span class="badge badge-inverse">${notlook_count}</span></a> 
 					<a href="${webRoot}/home/receives/lookover" class="list-group-item" id="lookover">已查看</a> 
 					<a href="${webRoot}/home/announs" class="list-group-item" id="announs">已发布公告</a>
 					<a href="${webRoot}/home/send" class="list-group-item" id="announ-send">发布公告</a> 
