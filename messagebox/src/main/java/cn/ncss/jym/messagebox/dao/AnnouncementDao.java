@@ -67,11 +67,11 @@ public interface AnnouncementDao {
 	 * @param yxdm 院校代码
 	 * @return
 	 */
-	public int getCount(List<String> typeList,String provinceCode,String yxdm);
+	public int getCount(List<String> typeList,String provinceCode,String yxdm,UserInfo userInfo);
 	
-	public List<Announcement> getReceiveByYxdm(List<String> typeList,String provinceCode,String yxdm,int currentIndex,int pageSize);
+	public List<Announcement> getReceiveByYxdm(List<String> typeList,String provinceCode,String yxdm,UserInfo userInfo,int currentIndex,int pageSize);
 	
-	public List<Announcement> getReceiveByYxdm(List<String> typeList,String provinceCode,String yxdm);
+	public List<Announcement> getReceiveByYxdm(List<String> typeList,String provinceCode,String yxdm,UserInfo userinfo);
 	
 	/**
 	 * 省用户查询所有发送给自己的公告

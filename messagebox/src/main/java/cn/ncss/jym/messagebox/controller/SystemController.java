@@ -17,6 +17,7 @@ import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.RecordService;
 import cn.ncss.jym.messagebox.service.StatisticService;
 import cn.ncss.jym.messagebox.service.UserInfoService;
+import cn.ncss.jym.messagebox.utils.Constant;
 
 /**
  * **********************************
@@ -70,11 +71,11 @@ public class SystemController {
 		return recordService.getListByUId(currentIndex, pageSize);
 	}
 	
-		//查询所有已经看过的公告
-		@RequestMapping(value = "receives/lookover/count",method=RequestMethod.GET)
-		public long lookoverCount() {
-			return recordService.getCountByUser();
-		}
+	//查询所有已经看过的公告
+	@RequestMapping(value = "receives/lookover/count",method=RequestMethod.GET)
+	public long lookoverCount() {
+		return recordService.getCountByUser();
+	}
 
 	
 
@@ -114,59 +115,20 @@ public class SystemController {
 		return list;
 	}
 	
-	
-	
-	
-//	
-//
-//	//发布公告
-//	@RequestMapping(value = "announs", method = RequestMethod.POST)
-//	public Map<String, String> publisAnnoun(HttpServletRequest request, HttpServletResponse response) {
-//		Map<String, String> resultMap = new HashMap<String, String>();
-//
-//		if (request == null) {
-//			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
-//			resultMap.put(Constant.HTTP_MESSAGE, "请求出错");
-//			return resultMap;
-//		}
-//
-//		/******************获取参数************************/
-//		String title = request.getParameter("title");
-//		String[] group = request.getParameterValues("group");
-//		String type = request.getParameter("type");
-//		String content = request.getParameter("editorValue");
-//		String online = request.getParameter("online");
-//		String publisher = request.getParameter("publisher");
-//
-//		if (!StringUtil.hasText(title) || group == null || group.length == 0 || !StringUtil.hasText(type)
-//				|| !StringUtil.hasText(content) || !StringUtil.hasText(online) || !StringUtil.hasText(publisher)) {
-//			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
-//			resultMap.put(Constant.HTTP_MESSAGE, "请求参数缺失");
-//			return resultMap;
-//		}
-//
-//		/******************处理级联***********************/
-//		Announcement announ = new Announcement();
-//		announ.setContent(content);
-//		announ.setOnline(online);
-//		announ.setPublisher(publisher);
-//		announ.setTitle(title);
-//		announ.setType(type);
-//
-//		List<Group> groupList = new ArrayList<Group>();
-//
-//		for (String str : group) {
-//			Group g = groupService.get(str);
-//			if (g == null) {
-//				resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
-//				resultMap.put(Constant.HTTP_MESSAGE, "包含不存在的群组");
-//				return resultMap;
-//			} else {
-//				groupList.add(g);
-//			}
-//		}
-//		return announcementService.add(announ, groupList);
-//	}
+
+	//发布公告
+	@RequestMapping(value = "announs", method = RequestMethod.POST)
+	public Map<String, String> publisAnnoun(Announcement announcement) {
+		Map<String, String> resultMap = new HashMap<String, String>();
+
+		if (announcement == null) {
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "发布出错");
+			return resultMap;
+		}
+		
+		return announcementService.create(announcement);
+	}
 //	
 //	@RequestMapping(value = "announs/{announ_id}",method=RequestMethod.PUT)
 //	public Map<String, String> updateOnline(@PathVariable("announ_id") String announ_id,  String online) {

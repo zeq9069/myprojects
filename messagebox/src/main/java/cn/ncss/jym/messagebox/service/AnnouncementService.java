@@ -1,6 +1,8 @@
 package cn.ncss.jym.messagebox.service;
 
 import java.util.List;
+import java.util.Map;
+
 import cn.ncss.jym.messagebox.pojo.Announcement;
 
 /**
@@ -14,7 +16,7 @@ import cn.ncss.jym.messagebox.pojo.Announcement;
  */
 public interface AnnouncementService {
 
-	public void create(Announcement announ);
+	public Map<String,String> create(Announcement announ);
 	
 	public boolean delete(Announcement announ);
 

@@ -1,6 +1,8 @@
 package cn.ncss.jym.messagebox.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.UserInfoService;
+import cn.ncss.jym.messagebox.utils.Constant;
 /**
  * ***********************
  * 
@@ -34,9 +37,34 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	@Autowired
 	private UserInfoService userInfoService;
 
+	@Transactional(readOnly=false)
 	@Override
-	public void create(Announcement announ) {
-		announcementDao.create(announ);
+	public Map<String,String> create(Announcement announ) {
+		//TODO 业务层获取用户信息，初始化announcement的部分信息
+		Map<String,String> resultMap=new HashMap<String, String>();
+		
+		/*
+		 * 
+		 * if(province){
+			announ.setPublish_role("province");
+			announ.setPublish_dm(provinceCode);
+		}else if(school){
+			announ.setPublish_role("school");
+			announ.setPublish_dm(yxdm);
+		}*/
+		UserInfo u=new UserInfo();
+		announ.setPublish_dm(u.getOrgCode());
+		announ.setPublish_role("school");
+		announ.setUser(u);
+		try{
+			announcementDao.create(announ);
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_SUCCESS);
+			resultMap.put(Constant.HTTP_MESSAGE, "发布成功");
+		}catch(Exception e){
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "发布失败");
+		}
+		return resultMap;
 	}
 	@Transactional(readOnly = false)
 	@Override
@@ -99,7 +127,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		//TODO 
 		//获取当前用户，根据用户来判断获取不同的分页
 		UserInfo userInfo=new UserInfo();
-		userInfo.setId("123");
 		/*
 		if(省){
 			announcementDao.getReceiveByProvince(provinceCode, currentIndex, pageSize);
@@ -110,7 +137,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		}
 		*/
 		List<String> typeList=userInfoService.getSchoolType();
-		return announcementDao.getReceiveByYxdm(typeList, userInfo.getAreaCode(),userInfo.getOrgCode(), currentIndex, pageSize);
+		return announcementDao.getReceiveByYxdm(typeList, userInfo.getAreaCode(),userInfo.getOrgCode(), userInfo,currentIndex, pageSize);
 	}
 	
 	@Transactional(readOnly=true)
@@ -129,7 +156,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		}
 		*/
 		List<String> typeList=userInfoService.getSchoolType();
-		return announcementDao.getCount(typeList, userInfo.getAreaCode(),userInfo.getOrgCode());
+		return announcementDao.getCount(typeList, userInfo.getAreaCode(),userInfo.getOrgCode(),userInfo);
 	}
 	
 	@Transactional(readOnly=true)
@@ -149,7 +176,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		*/
 		List<String> typeList=userInfoService.getSchoolType();
 		
-		List<Announcement> receiveList=announcementDao.getReceiveByYxdm(typeList, userInfo.getAreaCode(),userInfo.getOrgCode());
+		List<Announcement> receiveList=announcementDao.getReceiveByYxdm(typeList, userInfo.getAreaCode(),userInfo.getOrgCode(),userInfo);
 		
 		if(receiveList==null || receiveList.size()==0){
 			return receiveList;
@@ -163,13 +190,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		
 		//效率待优化
 		 for(Announcement announ:receiveList){
-				for(Record record:lookover){
-					 if(record.getAnnoun().getId()==announ.getId()){
-						 receiveList.remove(announ);
-					 }
-				}
+			for(Record record:lookover){
+				 if(record.getAnnoun().getId()==announ.getId()){
+					 receiveList.remove(announ);
+				 }
+			}
 		 }
-		 
 		return receiveList;
 	}
 

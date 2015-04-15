@@ -108,10 +108,9 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Announcement> getReceiveByYxdm(List<String> typeList,
-			String provinceCode,String yxdm,int currentIndex,int pageSize) {
+	public List<Announcement> getReceiveByYxdm(List<String> typeList,String provinceCode,String yxdm,UserInfo userInfo,int currentIndex,int pageSize) {
 		String hql="select announ.id as id, announ.title as title, announ.date as date, announ.user as user, announ.type as type from Announcement announ "
-				+ "where (announ.publish_role='province' and announ.publish_dm=:publish_dm and (announ.targetYxdm like '%"+yxdm+"%'";
+				+ "where announ.user <>:user and (announ.publish_role='province' and announ.publish_dm=:publish_dm and (announ.targetYxdm like '%"+yxdm+"%'";
 		
 		String str=" or announ.targetYxlx like '%"+SchoolType.SCHOOL_ALL.value()+"%'";
 		for(String type:typeList){
@@ -120,6 +119,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		hql=hql+str+" )) or (announ.publish_role='school' and announ.targetYxdm like '%"+yxdm+"%' )";
 		Query query=this.getSession().createQuery(hql);
 		query.setParameter("publish_dm", provinceCode);
+		query.setParameter("user", userInfo);
 		query.setFirstResult((currentIndex-1)*pageSize);
 		query.setMaxResults(pageSize);
 		query.setResultTransformer(Transformers.aliasToBean(Announcement.class));
@@ -128,34 +128,36 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Announcement> getReceiveByYxdm(List<String> typeList,String provinceCode,String yxdm) {
+	public List<Announcement> getReceiveByYxdm(List<String> typeList,String provinceCode,String yxdm,UserInfo userInfo) {
 		String hql="select announ.id as id, announ.title as title, announ.date as date, announ.user as user, announ.type as type from Announcement announ "
-				+ "where (announ.publish_role='province' and announ.publish_dm=:publish_dm and (announ.targetYxdm like '%"+yxdm+"%'";
+				+ "where announ.user <>:user and ((announ.publish_role='province' and announ.publish_dm=:publish_dm and (announ.targetYxdm like '%"+yxdm+"%'";
 		
 		String str=" or announ.targetYxlx like '%"+SchoolType.SCHOOL_ALL.value()+"%'";
 		for(String type:typeList){
 			str+=" or announ.targetYxlx like '%"+type+"%'";
 		}
-		hql=hql+str+" )) or (announ.publish_role='school' and announ.targetYxdm like '%"+yxdm+"%' )";
+		hql=hql+str+" )) or (announ.publish_role='school' and announ.targetYxdm like '%"+yxdm+"%' ))";
 		Query query=this.getSession().createQuery(hql);
 		query.setParameter("publish_dm", provinceCode);
+		query.setParameter("user", userInfo);
 		query.setResultTransformer(Transformers.aliasToBean(Announcement.class));
 		return query.list();
 	}
 
 
 	@Override
-	public int getCount(List<String> typeList, String provinceCode,String yxdm) {
+	public int getCount(List<String> typeList, String provinceCode,String yxdm,UserInfo userInfo) {
 		String hql="select announ.id as id, announ.title as title, announ.date as date, announ.user as user, announ.type as type from Announcement announ "
-				+ "where (announ.publish_role='province' and announ.publish_dm=:publish_dm and (announ.targetYxdm like '%"+yxdm+"%'";
+				+ "where announ.user <>:user and ((announ.publish_role='province' and announ.publish_dm=:publish_dm and (announ.targetYxdm like '%"+yxdm+"%'";
 		
 		String str=" or announ.targetYxlx like '%"+SchoolType.SCHOOL_ALL.value()+"%'";
 		for(String type:typeList){
 			str+=" or announ.targetYxlx like '%"+type+"%'";
 		}
-		hql=hql+str+" )) or (announ.publish_role='school' and announ.targetYxdm like '%"+yxdm+"%' )";
+		hql=hql+str+" )) or (announ.publish_role='school' and announ.targetYxdm like '%"+yxdm+"%' ))";
 		Query query=this.getSession().createQuery(hql);
 		query.setParameter("publish_dm", provinceCode);
+		query.setParameter("user", userInfo);
 		query.setResultTransformer(Transformers.aliasToBean(Announcement.class));
 		return query.list().size();
 	}

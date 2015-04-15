@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	
-	//定义array函数
+	//定义array.remove函数
 	Array.prototype.indexOf = function(val) {
 		for (var i = 0; i < this.length; i++) {
 			if (this[i] == val) return i;
@@ -8,12 +8,12 @@ $(document).ready(function(){
 		return -1;
 	};
 		
-		Array.prototype.remove = function(val) {
-			var index = this.indexOf(val);
-			if (index > -1) {
-				this.splice(index, 1);
-			}
-		};
+	Array.prototype.remove = function(val) {
+		var index = this.indexOf(val);
+		if (index > -1) {
+			this.splice(index, 1);
+		}
+	};
 	
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
@@ -130,7 +130,7 @@ $(document).ready(function(){
     
     $("#add_targetYxlx").on("click",function(){
     	var yxlxName=$("#targetYxlx")[0].options[$("#targetYxlx")[0].selectedIndex].text;
-    	var yxlxCode=$("#targetYxlx").val();
+    	var yxlxCode=$("#targetYxlx").val().trim();
     	
     	if(yxlxCode=="school_all"){
     		yxlxArray.splice(0, yxlxArray.length);//清空
@@ -155,8 +155,8 @@ $(document).ready(function(){
    
     //输入关键字
     $("#targetType").on("keyup",function(){
-    	var text=$("#targetType").val();
-    	if(text.trim()==''){
+    	var text=$("#targetType").val().trim();
+    	if(text==''){
     		$("#search_type").css("display","none");
     		return;
     	}
@@ -180,15 +180,15 @@ $(document).ready(function(){
     
     //输入框获取焦点
     $("#targetType").on("focus",function(){
-    	var value=$("#targetType").val();
-    	if(value.trim()!=''){
+    	var value=$("#targetType").val().trim();
+    	if(value!=''){
     		$("#search_type").css("display","block");
     	}
     });
     
     //选中结果
     $("#search_type").on("click","span",function(){
-    	var text=$(this).text();
+    	var text=$(this).text().trim();
     	$("#targetType").val(text);
     	$("#search_type").css("display","none");
     });
@@ -198,6 +198,10 @@ $(document).ready(function(){
     
     $("#add_type").on("click",function(){
     	var type=$("#targetType").val().trim();
+    	if(type==''){
+    		alert("填写公告类型");
+    		return;
+    	}
     	//添加type到数据库
     	$.post("http://localhost:8080/messagebox/system/announs/type",{
     		type:type
@@ -248,18 +252,34 @@ $(document).ready(function(){
     
     
 	
-//	$("#announ_submit").click(function(){
-//		
-//		var value=UE.getEditor('editor').getContent();
-//		
-//		$.post("/messagebox/system/announs/add",$("form").serialize(),function(data){
-//			if(data.status=="success"){
-//				alert("添加成功!");
-//			}else{
-//				alert(data.message);
-//			}
-//		});
-//	});
+	$("#announ_submit").click(function(){
+		var title=$("#title").val().trim();
+		if(title==''){
+			alert("标题不能为空");
+			return false;
+		}
+		
+		var value=UE.getEditor('editor').getContent();
+		if(value==''){
+			alert("内容不能为空");
+			return false;
+		}
+		
+		$.post("/messagebox/system/announs",{
+			title:title,
+			targetProvinceCode:provinceCodeArray.join(","),
+			targetYxdm:yxdmArray.join(","),
+			targetYxlx:yxlxArray.join(","),
+			type:typeArray.join(","),
+			content:value
+		},function(data){
+			if(data.status=="success"){
+				alert("添加成功!");
+			}else{
+				alert(data);
+			}
+		});
+	});
 	
 });
 

@@ -130,13 +130,7 @@ margin-left:15px;
 				<div class="body">
 					<form id="announ_form" name="announ_form">
 						<p>
-							<input type="text" name="title" id="title" placeholder="标题名" class="required" >
-						</p>
-						<p>
-							<c:forEach items="${groups}" var="group">
-								<input type="checkbox" name="group"  id="${group.key}"
-									value="${group.value}">${group.value}
-							</c:forEach>
+							<input type="text" name="title" id="title" placeholder="标题名">
 						</p>
 						<p>
 							<label>省：</label>
@@ -252,7 +246,7 @@ margin-left:15px;
 							  <script id="editor" type="text/plain" style="width:1024px;height:500px;" ></script>
 						</p>
 						<p>
-							<button type="submit" id="announ_submit" name="announ_submit">发布</button>
+							<button type="button" id="announ_submit" name="announ_submit">发布</button>
 						</p>
 					</form>
 				</div>
