@@ -80,21 +80,14 @@ public class HomeController {
 		model.setViewName("/home/announs");
 		return model;
 	}
-//	
-//	@RequestMapping(value = "announs/look", method = RequestMethod.GET)
-//	@ResponseBody
-//	public ModelAndView announsLook(int announ_id,ModelAndView model) {
-//		model.setViewName("/home/announ_info");
-//		Announcement announ=announcementService.get(announ_id);
-//		AnnounsInfo announsInfo=new AnnounsInfo();
-//		if(announ!=null){
-//			announsInfo.setAnnoun(announ);
-//			announsInfo.setGroups(announcementService.getGroupsOfAnnoun(announ));
-//			announsInfo.setViews(announcementService.getAnnounByViews(announ).size());
-//		}
-//		model.addObject("announsInfo", announsInfo);
-//		return model;
-//	}
-//	
+	
+	@RequestMapping(value = "announs/look", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView announsLook(int announ_id,ModelAndView model) {
+		model.setViewName("/home/announ_info");
+		Announcement announ=announcementService.get(announ_id);
+		model.addObject("announsInfo", announ);
+		return model;
+	}
 	
 }
