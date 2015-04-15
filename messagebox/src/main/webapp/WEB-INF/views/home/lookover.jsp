@@ -22,7 +22,7 @@
 							<tr>
 								<td>{{:id}}</td>
 								<td>{{:title}}</td>
-								<td>{{:publisher}}</td>
+								<td>{{:user}}</td>
 								<td>{{:date}}</td>
 								<td>{{:type}}</td>
 							</tr>

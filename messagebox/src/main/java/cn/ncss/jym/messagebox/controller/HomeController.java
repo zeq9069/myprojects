@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
+import cn.ncss.jym.messagebox.pojo.Record;
+import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.RecordService;
 import cn.ncss.jym.messagebox.service.StatisticService;
@@ -86,6 +88,12 @@ public class HomeController {
 	public ModelAndView announsLook(int announ_id,ModelAndView model) {
 		model.setViewName("/home/announ_info");
 		Announcement announ=announcementService.get(announ_id);
+		UserInfo userInfo=new UserInfo();
+		Record record=new Record();
+		record.setAnnoun(announ);
+		userInfo.setId("123");
+		record.setUser(userInfo);
+		recordService.create(record);
 		model.addObject("announsInfo", announ);
 		return model;
 	}

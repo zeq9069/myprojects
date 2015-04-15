@@ -81,7 +81,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	@Transactional(readOnly = true)
 	@Override
 	public Announcement get(int id) {
-		return announcementDao.get(id);
+		//TODO 服务层获取用户信息 初始化
+		Announcement announcement=announcementDao.get(id);
+		return announcement;
 	}
 
 	@Transactional(readOnly = true)

@@ -31,6 +31,9 @@ public class RecordServiceImpl implements RecordService {
 	@Transactional(readOnly = false)
 	@Override
 	public boolean create(Record record) {
+		if(isExists(record.getUser(), record.getAnnoun())){
+			return true;
+		}
 		return recordDao.create(record);
 	}
 
