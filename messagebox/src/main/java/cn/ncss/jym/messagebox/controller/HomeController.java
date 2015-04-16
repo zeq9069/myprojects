@@ -100,7 +100,6 @@ public class HomeController {
 		List<Announcement> notlist=announcementService.getAnnounsByNot();
 		model.addObject("notlook_count",notlist==null?0:notlist.size());
 		
-		
 		model.setViewName("/home/announ_info");
 		Announcement announ=announcementService.get(announ_id);
 		UserInfo userInfo=new UserInfo();
