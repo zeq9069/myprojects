@@ -51,8 +51,7 @@ public class HomeController {
 	@RequestMapping(value = "receives/notlookover", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView notLookover(ModelAndView model) {
-		List<Announcement> notlist=announcementService.getAnnounsByNot();
-		model.addObject("notlook_count",notlist==null?0:notlist.size());
+		
 		
 		List<Announcement> list=announcementService.getAnnounsByNot();
 		Map<String,List<Announcement>> resultMap=new HashMap<String, List<Announcement>>();
@@ -61,6 +60,7 @@ public class HomeController {
 		model.setViewName("/home/notlookover");
 		model.addObject("resultMap", resultMap);
 		model.addObject("count",list.size());
+		model.addObject("notlook_count",list==null?0:list.size());
 		return model;
 	}
 	

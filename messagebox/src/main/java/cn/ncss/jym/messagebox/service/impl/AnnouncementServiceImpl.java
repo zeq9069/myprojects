@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.ncss.jym.messagebox.ThreadFactory.ThreadFactory;
 import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.dao.RecordDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;
@@ -176,20 +178,17 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 			announcementDao.getReceiveBySzyx(yxdm, szyx)
 		}
 		*/
+		
 		List<String> typeList=userInfoService.getSchoolType();
-		
 		List<Announcement> receiveList=announcementDao.getReceiveByYxdm(typeList, userInfo.getAreaCode(),userInfo.getOrgCode(),userInfo);
-		
 		if(receiveList==null || receiveList.size()==0){
 			return receiveList;
 		}
-		
 		List<Record> lookover=recordDao.getListByUId(userInfo);
-		
 		if(lookover==null || lookover.size()==0){
 			return receiveList;
 		}
-		
+	
 		//效率待优化
 		 for(Announcement announ:receiveList){
 			for(Record record:lookover){
@@ -198,6 +197,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 				 }
 			}
 		 }
+		
 		return receiveList;
 	}
 
