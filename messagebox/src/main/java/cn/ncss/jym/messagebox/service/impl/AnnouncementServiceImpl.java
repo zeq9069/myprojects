@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.ncss.jym.messagebox.ThreadFactory.ThreadFactory;
 import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.dao.RecordDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;

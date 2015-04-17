@@ -1,6 +1,5 @@
 package cn.ncss.jym.messagebox.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.ncss.jym.messagebox.pojo.Record;

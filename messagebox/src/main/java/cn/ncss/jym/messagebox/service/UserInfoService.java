@@ -1,10 +1,8 @@
 package cn.ncss.jym.messagebox.service;
 
 import java.util.List;
-import java.util.Map;
 
 import cn.ncss.jym.messagebox.pojo.UserInfo;
-import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
 
 /**
  * *************************

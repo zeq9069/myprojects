@@ -48,6 +48,12 @@ public class Record implements Serializable {
 	@Column(name="DATE")
 	private Date date=new DateTime().toDate();
 	
+	/*
+	 * 查看状态：0->未读，1->已读
+	 * 默认未读
+	 */
+	@Column(name="STATUS",length=1,nullable=false)
+	private int status=RecordType.UNREAD.getValue();
 	
 	public int getId() {
 		return id;
@@ -80,5 +86,15 @@ public class Record implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+	
+	public enum RecordType{
+		READ(1),UNREAD(0);
+		private int value;
+		RecordType(int value){
+			this.value=value;
+		}
+		public int getValue(){
+			return this.value;
+		}
+	}
 }

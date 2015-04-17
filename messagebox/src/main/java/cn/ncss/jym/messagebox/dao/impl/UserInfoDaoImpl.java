@@ -1,6 +1,5 @@
 package cn.ncss.jym.messagebox.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
