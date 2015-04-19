@@ -38,6 +38,27 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return userInfoDao.getById(id);
 	}
 
+	@Transactional(readOnly=true)
+	@Override
+	public List<UserInfo> getCurrentProvinceSchoolAndAllProvinceUsers(
+			String currentProvinceCode, String userID) {
+		return userInfoDao.getCurrentProvinceSchoolAndAllProvinceUsers(currentProvinceCode, userID);
+	}
+	@Transactional(readOnly=true)
+	@Override
+	public List<UserInfo> getCurrentProvinceSchoolAndSchoolDepartmentUsers(
+			String provinceCode, String yxdm, String yxmc, String fxmc,
+			String userID) {
+		return userInfoDao.getCurrentProvinceSchoolAndSchoolDepartmentUsers(provinceCode, yxdm, yxmc, fxmc, userID);
+	}
+	@Transactional(readOnly=true)
+	@Override
+	public List<UserInfo> getCurrentSchoolAllDepartmentUsers(
+			String provinceCode, String yxdm, String yxmc, String fxmc,
+			String userID) {
+		return userInfoDao.getCurrentSchoolAllDepartmentUsers(provinceCode, yxdm, yxmc, fxmc, userID);
+	}
+
 	/*
 	@Autowired
 	private UserInfoDao userInfoDao;

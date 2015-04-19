@@ -4,11 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import cn.ncss.jym.messagebox.pojo.AnnounType;
 import cn.ncss.jym.messagebox.pojo.Announcement;
@@ -17,6 +26,7 @@ import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.RecordService;
 import cn.ncss.jym.messagebox.service.StatisticService;
 import cn.ncss.jym.messagebox.service.UserInfoService;
+import cn.ncss.jym.messagebox.system.pojo.TargetSchool;
 import cn.ncss.jym.messagebox.utils.Constant;
 
 /**
@@ -108,8 +118,9 @@ public class SystemController {
 		List<Map<String,String>> list=new ArrayList<Map<String,String>>();
 		for(int i=0;i<10;i++){
 			Map<String, String> map=new HashMap<String, String>();
-			map.put("id", q.hashCode()+""+i);
-			map.put("text", q+""+i+"大学");
+			map.put("id", q.hashCode()+""+i);//院校代码
+			map.put("text", q+""+i+"大学"+"[fxmc"+i+"]");  //院校名称
+			map.put("fxmc", q+"fxmc"+i);    //分校名称
 			list.add(map);
 		}
 		return list;
@@ -117,17 +128,60 @@ public class SystemController {
 	
 
 	//发布公告
+	@SuppressWarnings({  "unused" })
 	@RequestMapping(value = "announs", method = RequestMethod.POST)
-	public Map<String, String> publisAnnoun(Announcement announcement) {
+	public Map<String, String> publisAnnoun(HttpServletRequest request) {
+		
 		Map<String, String> resultMap = new HashMap<String, String>();
-
+		Announcement announcement=new Announcement();
+		
+		String title=request.getParameter("title");
+		String content=request.getParameter("content");
+		String targetProvinceCode=request.getParameter("targetProvinceCode");
+		String jsontargetSchools= request.getParameter("targetSchools");
+		String targetYxlx= request.getParameter("targetYxlx");
+		String type=request.getParameter("type");
+		JSONArray array=JSON.parseArray(jsontargetSchools);
+		
+		announcement.setTitle(title);
+		announcement.setContent(content);
+		announcement.setTargetProvinceCode(targetProvinceCode);
+		announcement.setTargetYxlx(targetYxlx);
+		announcement.setType(type);
+		
+		List<TargetSchool> targetSchoolList=new ArrayList<TargetSchool>();
+		
+		for(Object obj:array){
+			JSONObject json=(JSONObject) JSON.toJSON(obj);
+			TargetSchool school=JSON.toJavaObject(json, TargetSchool.class);
+			targetSchoolList.add(school);
+		}
+		
 		if (announcement == null) {
 			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
 			resultMap.put(Constant.HTTP_MESSAGE, "发布出错");
 			return resultMap;
 		}
 		
-		return announcementService.create(announcement);
+		
+		try {
+			return announcementService.create(announcement,targetSchoolList);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "发布出错");
+			return resultMap;
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "发布出错");
+			return resultMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
+			resultMap.put(Constant.HTTP_MESSAGE, "发布出错");
+			return resultMap;
+		}
 		
 	}
 //	
@@ -192,45 +246,5 @@ public class SystemController {
 //		return userInfoService.deleteRelation(u_id, groupName);
 //	}
 
-	/*@RequestMapping(value = "users/record/add", method = RequestMethod.GET)
-	public Map<String, String> addRecord(String u_id, int announ_id) {
-		Map<String, String> resultMap = new HashMap<String, String>();
-		if (!StringUtil.hasText(u_id) || !StringUtil.hasText("" + announ_id)) {
-			resultMap.put(Constant.HTTP_STATUS, Constant.HTTP_ERROR);
-			resultMap.put(Constant.HTTP_MESSAGE, "参数异常");
-			return resultMap;
-		}
-		return systemService.addRecord(u_id, announ_id);
-	}*/
-	/*
-		@RequestMapping(value = "users/get", method = RequestMethod.GET)
-		public Map<String, Object> getUser(String u_id) {
-			UserInfo u = systemService.getUser(u_id);
-			List<String> list1 = new ArrayList<String>();
-			List<String> list2 = new ArrayList<String>();
-			Set<Relation> rset = u.getRelations();
-			Set<Record> recordset = u.getRecords();
-			Map<String, Object> map = new HashMap<String, Object>();
-
-			//已经查看的公告
-			for (Record rr : recordset) {
-				list2.add(rr.getAnnoun().getTitle());
-			}
-
-			//全部可以查看的公告
-			for (Relation r : rset) {
-				Set<Group_announ> gaset = r.getGroup().getGroup_announs();
-				for (Group_announ gg : gaset) {
-					list1.add(gg.getAnnoun().getTitle());
-				}
-			}
-
-			//还没有读取的公告
-			list1.removeAll(list2);
-
-			map.put("num1", list1);
-			map.put("num2", list2);
-
-			return map;
-		}*/
+	
 }

@@ -47,7 +47,7 @@ public class UserInfo implements Serializable {
 	 */
 	@Enumerated(EnumType.STRING)
 	@Column(name = "USER_TYPE", updatable = false)
-	private UserType userType;
+	private UserType userType=UserType.school;
 	/*
 	 * 所在省市或高校编码
 	 */
@@ -290,6 +290,30 @@ public class UserInfo implements Serializable {
 
 	public void setAreaCode(String areaCode) {
 		this.areaCode = StringUtils.trimWhitespace(areaCode);
+	}
+	
+	public boolean is211(){
+		return true;
+	}
+	
+	public boolean is985(){
+		return true;
+	}
+	
+	public boolean isByprovince(){
+		return true;
+	}
+	
+	public boolean isByministry(){
+		return true;
+	}
+	
+	public boolean isIndependent(){
+		return true;
+	}
+	
+	public boolean isNew(){
+		return true;
 	}
 
 	@Override

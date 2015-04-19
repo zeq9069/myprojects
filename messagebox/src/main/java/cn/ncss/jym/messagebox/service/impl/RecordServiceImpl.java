@@ -88,9 +88,7 @@ public class RecordServiceImpl implements RecordService {
 	public int getCountByAnnoun(int announ_id) {
 		return recordDao.getCount(announ_id);
 	}
-
-
-	@Transactional(readOnly = true)
+	
 	public boolean isExists(UserInfo user, Announcement announ) {
 		return recordDao.isExists(user, announ);
 	}

@@ -28,7 +28,7 @@ import org.joda.time.DateTime;
  */
 @Entity
 @Table(name = "RECORD")
-public class Record implements Serializable {
+public class Record implements Serializable,Cloneable{
 
 	private static final long serialVersionUID = -495618146977401328L;
 
@@ -87,6 +87,11 @@ public class Record implements Serializable {
 		this.date = date;
 	}
 	
+	@Override
+	public Record clone() throws CloneNotSupportedException {
+		return (Record) super.clone();
+	}
+	
 	public enum RecordType{
 		READ(1),UNREAD(0);
 		private int value;
@@ -97,4 +102,6 @@ public class Record implements Serializable {
 			return this.value;
 		}
 	}
+	
+	
 }

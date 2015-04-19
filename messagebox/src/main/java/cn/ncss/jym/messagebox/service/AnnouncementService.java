@@ -2,8 +2,10 @@ package cn.ncss.jym.messagebox.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import cn.ncss.jym.messagebox.pojo.Announcement;
+import cn.ncss.jym.messagebox.system.pojo.TargetSchool;
 
 /**
  * ***********************
@@ -16,7 +18,7 @@ import cn.ncss.jym.messagebox.pojo.Announcement;
  */
 public interface AnnouncementService {
 
-	public Map<String,String> create(Announcement announ);
+	public Map<String,String> create (Announcement announ,List<TargetSchool> targetSchoolList)  throws InterruptedException, ExecutionException, Exception;
 	
 	public boolean delete(Announcement announ);
 

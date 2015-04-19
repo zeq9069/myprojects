@@ -37,14 +37,24 @@ public class RecordDaoImpl implements RecordDao {
 
 	@Override
 	public boolean create(Record record) {
+		try{
 		this.getSession().save(record);
 		return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public boolean delete(Record record) {
-		this.getSession().delete(record);
-		return true;
+		try{
+			this.getSession().delete(record);
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@SuppressWarnings("unchecked")

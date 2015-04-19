@@ -3,7 +3,10 @@ $(document).ready(function(){
 	//定义array.remove函数
 	Array.prototype.indexOf = function(val) {
 		for (var i = 0; i < this.length; i++) {
-			if (this[i] == val) return i;
+			var obj=this[i];
+			if (obj.id==val.id && obj.text==val.text && obj.fxmc==val.fxmc) {
+				return i;
+			}
 		}
 		return -1;
 	};
@@ -14,6 +17,8 @@ $(document).ready(function(){
 			this.splice(index, 1);
 		}
 	};
+	
+	
 	
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
@@ -68,12 +73,14 @@ $(document).ready(function(){
     		alert("请输入学校名称");
     		return false;
     	}
-    	var yxdm=$("#targetYxdm").select2("data").id;
-    	var yx=$("#targetYxdm").select2("data").text;
+    	var result=$("#targetYxdm").select2("data");
+    	var yxdm=result.id;
+    	var yxmcAndFxmc=result.text;
+    	var fxmc=result.fxmc;
     	
-    	if($("#result_targetYxdm > span[data-code='"+yxdm+"']").length<=0){
-    		yxdmArray.push(yxdm);
-    		$("#result_targetYxdm").append("<span data-code='"+yxdm+"'>"+yx+"</span>");
+    	if($.inArray(result,yxdmArray)==-1){
+    		yxdmArray.push(result);
+    		$("#result_targetYxdm").append("<span data-yxmcAndFxmc='"+yxmcAndFxmc+"' data-yxdm='"+yxdm+"' data-fxmc='"+fxmc+"'>"+yxmcAndFxmc+"</span>");
     	}else{
     		alert("您已经选择");
     	}
@@ -233,7 +240,9 @@ $(document).ready(function(){
     	
     	//从数组中删除yxdm
     	if($(this).parent().attr("id")=='result_targetYxdm'){
-    		yxdmArray.remove($(this).attr("data-code"));
+    		//g构造json对象
+    		var obj={"fxmc":$(this).attr("data-fxmc"),"id":$(this).attr("data-yxdm"),"text":$(this).attr("data-yxmcAndFxmc")};
+    		yxdmArray.remove(obj);
     	}
     	
     	//从数组中删除provinceCode
@@ -264,19 +273,19 @@ $(document).ready(function(){
 			alert("内容不能为空");
 			return false;
 		}
-		
+		alert(yxdmArray.length);
 		$.post("/messagebox/system/announs",{
 			title:title,
 			targetProvinceCode:provinceCodeArray.join(","),
-			targetYxdm:yxdmArray.join(","),
+			targetSchools:JSON.stringify(yxdmArray),
 			targetYxlx:yxlxArray.join(","),
 			type:typeArray.join(","),
 			content:value
-		},function(data){
-			if(data.status=="success"){
+		},function(data,status){
+			if(data.message=="success"){
 				alert("添加成功!");
 			}else{
-				alert(data);
+				alert(data.message);
 			}
 		});
 	});

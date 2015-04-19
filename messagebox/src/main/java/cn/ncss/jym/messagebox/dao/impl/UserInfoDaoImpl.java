@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 import cn.ncss.jym.messagebox.dao.UserInfoDao;
 import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
-import cn.ncss.jym.messagebox.pojo.UserInfo.UserType;
-import cn.ncss.jym.messagebox.utils.StringUtil;
 
 /**
  * *************************
@@ -33,43 +31,6 @@ public class UserInfoDaoImpl implements UserInfoDao {
 
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
-	}
-
-	@Override
-	public boolean addOne(UserInfo userInfo) {
-		this.getSession().save(userInfo);
-		return true;
-	}
-
-	@Override
-	public boolean deleteOne(UserInfo userInfo) {
-		this.getSession().delete(userInfo);
-		return true;
-	}
-
-	@Override
-	public boolean update(UserInfo userInfo) {
-		this.getSession().update(userInfo);
-		return true;
-	}
-
-	@Override
-	public UserInfo get(String areaCode, String orgCode, String orgName, String fxmc, UserType type) {
-		Criteria crit = this.getSession().createCriteria(UserInfo.class);
-		if (StringUtil.hasText(areaCode)) {
-			crit.add(Restrictions.eq("areaCode", areaCode));
-		}
-		if (StringUtil.hasText(orgCode)) {
-			crit.add(Restrictions.eq("orgCode", orgCode));
-		}
-		if (StringUtil.hasText(orgName)) {
-			crit.add(Restrictions.eq("orgName", orgName));
-		}
-		if (StringUtil.hasText(fxmc)) {
-			crit.add(Restrictions.eq("fxmc", fxmc));
-		}
-		crit.add(Restrictions.eq("userType", type));
-		return (UserInfo) crit.uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -95,19 +56,51 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	}
 
 	@Override
-	public boolean deleteRelationByUser(UserInfo userInfo) {
-		String hql = "delete Relation where userInfo=:user";
-		Query query = this.getSession().createQuery(hql);
-		query.setParameter("user", userInfo);
-		query.executeUpdate();
-		return true;
-	}
-
-	@Override
 	public boolean addRecord(Record record) {
 		Session session = this.getSession();
 		session.save(record);
 		session.flush();
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserInfo> getCurrentProvinceSchoolAndAllProvinceUsers(
+			String currentProvinceCode, String userID) {
+		Criteria cri=this.getSession().createCriteria(UserInfo.class);
+		cri.add(Restrictions.and(Restrictions.eq("areaCode",currentProvinceCode), Restrictions.eq("userType", "school")));
+		cri.add(Restrictions.and(Restrictions.ne("id",userID), Restrictions.eq("userType", "province")));
+		return cri.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserInfo> getCurrentProvinceSchoolAndSchoolDepartmentUsers(String provinceCode,
+			String yxdm, String yxmc, String fxmc, String userID) {
+		String hql="from UserInfo where (areaCode=:areaCode and userType='school') or (orgCode=:orgCode and orgName=:orgName and fxmc=:fxmc and userType='deparment') and id<>:id";
+		
+		Query query=this.getSession().createQuery(hql);
+		query.setParameter("areaCode", provinceCode);
+		query.setParameter("orgCode", yxdm);
+		query.setParameter("orgName", yxmc);
+		query.setParameter("fxmc", fxmc);
+		query.setParameter("areaCode", provinceCode);
+		query.setParameter("id", userID);
+		List<UserInfo> list=query.list();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserInfo> getCurrentSchoolAllDepartmentUsers(String provinceCode,String yxdm,
+			String yxmc, String fxmc, String userID) {
+		Criteria cri=this.getSession().createCriteria(UserInfo.class);
+		cri.add(Restrictions.eq("areaCode",provinceCode));
+		cri.add( Restrictions.eq("orgCode",yxdm));
+		cri.add( Restrictions.eq("fxmc",fxmc));
+		cri.add( Restrictions.eq("orgName",yxmc));
+		cri.add(Restrictions.eq("userType", "department"));
+		cri.add(Restrictions.ne("id", userID));
+		return cri.list();
 	}
 }

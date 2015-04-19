@@ -1,7 +1,11 @@
 package cn.ncss.jym.messagebox.ThreadFactory;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import javax.security.auth.callback.Callback;
 
 /**
  * ***********************
@@ -17,6 +21,10 @@ import java.util.concurrent.Executors;
 public abstract class AbstractThreadFactory {
 
 	public static ExecutorService executor=Executors.newCachedThreadPool();
+	
+	public  static <T> Future<T> submit(Callable<T> call){
+		return executor.submit(call);
+	}
 	
 	public static  void shutdown(){
 		executor.shutdown();

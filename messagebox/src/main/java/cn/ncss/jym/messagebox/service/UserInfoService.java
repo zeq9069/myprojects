@@ -37,4 +37,28 @@ public interface UserInfoService {
 	 */
 	public List<String> getSchoolType();
 	
+	
+	/**
+	 * 获取当前省得所有学校用户和所有省（当前省用户除外）
+	 * @param provinceCode
+	 * @return
+	 */
+	public List<UserInfo> getCurrentProvinceSchoolAndAllProvinceUsers(String currentProvinceCode,String userID);
+	
+	/**
+	 * 获取当前学校所在省得所有学校用户和本校的所有院系用户（当前学校用户除外）
+	 * @return
+	 */
+	public  List<UserInfo> getCurrentProvinceSchoolAndSchoolDepartmentUsers(String provinceCode,String yxdm,String yxmc,String fxmc,String userID);
+	
+	/**
+	 * 获取本院系所在学校的所有院系用户（当前院系用户除外）
+	 * @param yxdm 当前用户的
+	 * @param yxmc
+	 * @param fxmc
+	 * @param szyx
+	 * @return
+	 */
+	public List<UserInfo> getCurrentSchoolAllDepartmentUsers(String provinceCode,String yxdm,String yxmc,String fxmc,String userID);
+	
 }
