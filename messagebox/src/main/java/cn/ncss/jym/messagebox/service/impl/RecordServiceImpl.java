@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.ncss.jym.messagebox.dao.AnnouncementDao;
 import cn.ncss.jym.messagebox.dao.RecordDao;
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
+import cn.ncss.jym.messagebox.pojo.Record.RecordType;
 import cn.ncss.jym.messagebox.service.RecordService;
 
 /**
@@ -27,6 +29,9 @@ public class RecordServiceImpl implements RecordService {
 
 	@Autowired
 	private RecordDao recordDao;
+	
+	@Autowired
+	private AnnouncementDao announcementDao;
 
 	@Transactional(readOnly = false)
 	@Override
@@ -46,48 +51,107 @@ public class RecordServiceImpl implements RecordService {
 		return recordDao.delete(record);
 	}
 
-	@Transactional(readOnly = true)
+
+	@Transactional(readOnly=false)
 	@Override
-	public List<Announcement> getListByUId(int currentIndex,int pageSize) {
+	public boolean updateStatus(int announ_id) {
 		//TODO
-		//服务层获取用户信息
 		UserInfo userInfo=new UserInfo();
-		
-		List<Announcement> list=new ArrayList<Announcement>();
-		List<Record> recordList=recordDao.getListByUId(userInfo,currentIndex,pageSize);
-		if(recordList==null || recordList.size()==0){
-			return list;
-		}
-		
-		for(Record record:recordList){
-			Announcement announ=record.getAnnoun();
-			announ.setContent("");
-			list.add(announ);
-		}
-		return list;
+		Announcement announ=announcementDao.get(announ_id);
+		Record record=recordDao.getRecord(announ, userInfo);
+		record.setStatus(RecordType.READ.getValue());
+		return recordDao.updateStatus(record);
 	}
-	
-	@Transactional(readOnly = true)
+
 	@Override
-	public long getCountByUser() {
-		//TODO 
-		//服务层获取用户信息
+	public List<Announcement> getListByView() {
 		UserInfo userInfo=new UserInfo();
-		
+		List<Record> list=recordDao.getListByStatus(userInfo, RecordType.READ.getValue());
+		List<Announcement> announList=new ArrayList<Announcement>();
+		if(list==null){
+			return announList;
+		}
+		for(Record record:list){
+			announList.add(record.getAnnoun());
+		}
+		return announList;
+	}
+
+	@Override
+	public List<Announcement> getListByView(int currentIndex, int pageSize) {
+		UserInfo userInfo=new UserInfo();
+		List<Record> list=recordDao.getListByStatus(userInfo, RecordType.READ.getValue(),currentIndex,pageSize);
+		List<Announcement> announList=new ArrayList<Announcement>();
+		if(list==null){
+			return announList;
+		}
+		for(Record record:list){
+			announList.add(record.getAnnoun());
+		}
+		return announList;
+	}
+
+	@Override
+	public long getCountByView() {
+		UserInfo userInfo=new UserInfo();
+		return recordDao.getCountByStatus(userInfo, RecordType.READ.getValue());
+	}
+
+	@Override
+	public List<Announcement> getListByNotView() {
+		UserInfo userInfo=new UserInfo();
+		List<Record> list=recordDao.getListByStatus(userInfo, RecordType.UNREAD.getValue());
+		List<Announcement> announList=new ArrayList<Announcement>();
+		if(list==null){
+			return announList;
+		}
+		for(Record record:list){
+			announList.add(record.getAnnoun());
+		}
+		return announList;
+	}
+
+	@Override
+	public List<Announcement> getListByNotView(int currentIndex, int pageSize) {
+		UserInfo userInfo=new UserInfo();
+		List<Record> list=recordDao.getListByStatus(userInfo, RecordType.UNREAD.getValue(),currentIndex,pageSize);
+		List<Announcement> announList=new ArrayList<Announcement>();
+		if(list==null){
+			return announList;
+		}
+		for(Record record:list){
+			announList.add(record.getAnnoun());
+		}
+		return announList;
+	}
+
+	@Override
+	public long getCountByNotView() {
+		UserInfo userInfo=new UserInfo();
+		return recordDao.getCountByStatus(userInfo, RecordType.UNREAD.getValue());
+	}
+
+	@Override
+	public List<Announcement> getList(int currentIndex, int pageSize) {
+		UserInfo userInfo=new UserInfo();
+		List<Record> list=recordDao.getList(userInfo,currentIndex,pageSize);
+		List<Announcement> announList=new ArrayList<Announcement>();
+		if(list==null){
+			return announList;
+		}
+		for(Record record:list){
+			announList.add(record.getAnnoun());
+		}
+		return announList;
+	}
+
+	@Override
+	public long getCount() {
+		UserInfo userInfo=new UserInfo();
 		return recordDao.getCount(userInfo);
 	}
-
-
-	@Transactional(readOnly = true)
-	@Override
-	public List<Record> getListByAnnounId(int announ_id,int currentIndex,int pageSize) {
-		return recordDao.getListByAnnounId(announ_id,currentIndex,pageSize);
-	}
-	@Transactional(readOnly = true)
-	@Override
-	public int getCountByAnnoun(int announ_id) {
-		return recordDao.getCount(announ_id);
-	}
+	
+	
 	
 	public boolean isExists(UserInfo user, Announcement announ) {
 		return recordDao.isExists(user, announ);

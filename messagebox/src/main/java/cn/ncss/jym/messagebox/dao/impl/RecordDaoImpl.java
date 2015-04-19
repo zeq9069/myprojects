@@ -56,65 +56,79 @@ public class RecordDaoImpl implements RecordDao {
 			return false;
 		}
 	}
+	
+	@Override
+	public Record getRecord(Announcement announ,UserInfo userInfo){
+		Criteria cri=this.getSession().createCriteria(Record.class);
+		cri.add(Restrictions.eq("user", userInfo));
+		cri.add(Restrictions.eq("announ", announ));
+		return (Record) cri.uniqueResult();
+	}
+	
+
+	@Override
+	public boolean updateStatus(Record record) {
+		try{
+			this.getSession().update(record);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Record> getListByUId(UserInfo userInfo,int currentIndex,int pageSize) {
+	public List<Record> getListByStatus(UserInfo userInfo, int status) {
 		Criteria crit = this.getSession().createCriteria(Record.class);
 		crit.add(Restrictions.eq("user", userInfo));
+		crit.add(Restrictions.eq("status", status));
+		return crit.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Record> getListByStatus(UserInfo userInfo, int status,
+			int currentIndex, int pageSize) {
+		Criteria crit = this.getSession().createCriteria(Record.class);
+		crit.add(Restrictions.eq("user", userInfo));
+		crit.add(Restrictions.eq("status", status));
 		crit.setFirstResult((currentIndex-1)*pageSize);
 		crit.setMaxResults(pageSize);
 		return crit.list();
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Record> getListByUId(UserInfo userInfo){
-		Criteria crit = this.getSession().createCriteria(Record.class);
-		crit.add(Restrictions.eq("user", userInfo));
-		return crit.list();
-	}
-	
+
 	@Override
-	public long getCount(UserInfo userInfo) {
+	public long getCountByStatus(UserInfo userInfo,int status) {
 		Criteria crit = this.getSession().createCriteria(Record.class);
 		crit.add(Restrictions.eq("user", userInfo));
+		crit.add(Restrictions.eq("status", status));
 		ProjectionList pro=Projections.projectionList();
-		pro.add(Projections.countDistinct("announ"));
+		pro.add(Projections.rowCount());
 		crit.setProjection(pro);
 		return (long) crit.uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Record> getListByAnnounId(int announ_id,int currentIndex,int pageSize) {
+	public List<Record> getList(UserInfo userInfo,
+			int currentIndex, int pageSize) {
 		Criteria crit = this.getSession().createCriteria(Record.class);
-		crit.add(Restrictions.eq("announ", announ_id));
+		crit.add(Restrictions.eq("user", userInfo));
 		crit.setFirstResult((currentIndex-1)*pageSize);
 		crit.setMaxResults(pageSize);
 		return crit.list();
 	}
-	
 
 	@Override
-	public int getCount(int announ_id) {
+	public long getCount(UserInfo userInfo) {
 		Criteria crit = this.getSession().createCriteria(Record.class);
-		crit.add(Restrictions.eq("announ", announ_id));
-		ProjectionList pro=Projections.projectionList();
-		pro.add(Projections.countDistinct("user"));
-		crit.setProjection(pro);
-		return (int) crit.uniqueResult();
-	}
-	
-	@Override
-	public int getAnnounByViews(int announ_id) {
-		Criteria crit = this.getSession().createCriteria(Record.class);
-		crit.add(Restrictions.eq("announ", announ_id));
+		crit.add(Restrictions.eq("user", userInfo));
 		ProjectionList pro=Projections.projectionList();
 		pro.add(Projections.rowCount());
 		crit.setProjection(pro);
-		return (int) crit.uniqueResult();
+		return (long) crit.uniqueResult();
 	}
-
+	
 	@Override
 	public boolean isExists(UserInfo user, Announcement announ) {
 		Criteria crit = this.getSession().createCriteria(Record.class);

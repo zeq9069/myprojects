@@ -2,15 +2,11 @@ package cn.ncss.jym.messagebox.service.impl;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.ncss.jym.messagebox.ThreadFactory.ThreadFactory;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.RecordService;
 import cn.ncss.jym.messagebox.service.StatisticService;
@@ -42,42 +38,17 @@ public class StatisticServiceImpl implements StatisticService{
 	/*
 	 * 统计登录用户发送的公告数、接收的公告数、未查阅的公告数
 	 */
-	@SuppressWarnings("static-access")
 	@Override
 	@Transactional(readOnly=true)
 	public Map<String,Long> getAllInfo() {
 		
-		Future<Long> record_num=ThreadFactory.getInstance().executor.submit(new Callable<Long>() {
-			@Override
-			public Long call() throws Exception {
-				return recordService.getCountByUser();
-			}
-		});
-		
-		Future<Long> publish_num=ThreadFactory.getInstance().executor.submit(new Callable<Long>() {
-			@Override
-			public Long call() throws Exception {
-				return announcementService.getCountByUser();
-			}
-		});
-		
-		Future<Long> receive_num=ThreadFactory.getInstance().executor.submit(new Callable<Long>() {
-			@Override
-			public Long call() throws Exception {
-				return announcementService.getReceiveCount();
-			}
-		});
-		
+		long  announ_by_view_num=recordService.getCountByNotView();
+		long publish_num= announcementService.getCount();
+		long receive_num= recordService.getCount();
 		Map<String,Long> map=new HashMap<String, Long>();
-		try {
-			map.put("publish_num",publish_num.get());
-			map.put("receive_num",receive_num.get());
-			map.put("record_num", record_num.get());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
+		map.put("publish_num",publish_num);
+		map.put("receive_num",receive_num);
+		map.put("record_num", announ_by_view_num);
 		return map;
 	}
 	

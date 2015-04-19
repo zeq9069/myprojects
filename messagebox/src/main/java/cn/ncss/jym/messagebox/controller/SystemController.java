@@ -11,13 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import cn.ncss.jym.messagebox.pojo.AnnounType;
 import cn.ncss.jym.messagebox.pojo.Announcement;
@@ -68,9 +66,8 @@ public class SystemController {
 	
 
 	@RequestMapping(value = "receives/notlookover/count",method=RequestMethod.GET)
-	public int getCount(String group) {
-		List<Announcement> list=announcementService.getAnnounsByNot();
-		return list==null?0:list.size();
+	public Long getCount() {
+		return recordService.getCountByNotView();
 	}
 	
 
@@ -78,13 +75,13 @@ public class SystemController {
 	@RequestMapping(value = "receives/lookover/list",method=RequestMethod.GET)
 	public List<Announcement> lookover(int currentIndex,int pageSize) {
 		//TODO
-		return recordService.getListByUId(currentIndex, pageSize);
+		return recordService.getListByView(currentIndex, pageSize);
 	}
 	
 	//查询所有已经看过的公告
 	@RequestMapping(value = "receives/lookover/count",method=RequestMethod.GET)
 	public long lookoverCount() {
-		return recordService.getCountByUser();
+		return recordService.getCountByView();
 	}
 
 	
@@ -95,8 +92,8 @@ public class SystemController {
 	} 
 	
 	@RequestMapping(value="announs/count",method=RequestMethod.GET)
-	public long announsCount(String online){
-		return announcementService.getCountByUser();
+	public long announsCount(){
+		return announcementService.getCount();
 	} 
 	
 	@RequestMapping(value="announs/type",method=RequestMethod.POST)

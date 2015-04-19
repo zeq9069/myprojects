@@ -87,11 +87,22 @@ public class Record implements Serializable,Cloneable{
 		this.date = date;
 	}
 	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	
 	@Override
 	public Record clone() throws CloneNotSupportedException {
 		return (Record) super.clone();
 	}
 	
+	
+
 	public enum RecordType{
 		READ(1),UNREAD(0);
 		private int value;

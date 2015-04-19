@@ -43,8 +43,7 @@ public class HomeController {
 	public ModelAndView main(ModelAndView model) {
 		model.setViewName("/home/main");
 		model.addObject("systemInfo", statisticService.getAllInfo());
-		List<Announcement> list=announcementService.getAnnounsByNot();
-		model.addObject("notlook_count",list==null?0:list.size());
+		model.addObject("notlook_count",recordService.getCountByNotView());
 		return model;
 	}
 
@@ -53,14 +52,14 @@ public class HomeController {
 	public ModelAndView notLookover(ModelAndView model) {
 		
 		
-		List<Announcement> list=announcementService.getAnnounsByNot();
+		List<Announcement> list=recordService.getListByNotView();
 		Map<String,List<Announcement>> resultMap=new HashMap<String, List<Announcement>>();
 		resultMap.put("notlookover", list);
 		
 		model.setViewName("/home/notlookover");
 		model.addObject("resultMap", resultMap);
 		model.addObject("count",list.size());
-		model.addObject("notlook_count",list==null?0:list.size());
+		model.addObject("notlook_count",recordService.getCountByNotView());
 		return model;
 	}
 	
@@ -68,8 +67,7 @@ public class HomeController {
 	@ResponseBody
 	public ModelAndView lookover(ModelAndView model) {
 		model.setViewName("/home/lookover");
-		List<Announcement> notlist=announcementService.getAnnounsByNot();
-		model.addObject("notlook_count",notlist==null?0:notlist.size());
+		model.addObject("notlook_count",recordService.getCountByNotView());
 		return model;
 	}
 	
@@ -80,8 +78,7 @@ public class HomeController {
 	@ResponseBody
 	public ModelAndView send(ModelAndView model) {
 		model.setViewName("/home/send");
-		List<Announcement> notlist=announcementService.getAnnounsByNot();
-		model.addObject("notlook_count",notlist==null?0:notlist.size());
+		model.addObject("notlook_count",recordService.getCountByNotView());
 		return model;
 	}
 
@@ -89,16 +86,14 @@ public class HomeController {
 	@ResponseBody
 	public ModelAndView announs(ModelAndView model) {
 		model.setViewName("/home/announs");
-		List<Announcement> notlist=announcementService.getAnnounsByNot();
-		model.addObject("notlook_count",notlist==null?0:notlist.size());
+		model.addObject("notlook_count",recordService.getCountByNotView());
 		return model;
 	}
 	
 	@RequestMapping(value = "announs/look", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView announsLook(int announ_id,ModelAndView model) {
-		List<Announcement> notlist=announcementService.getAnnounsByNot();
-		model.addObject("notlook_count",notlist==null?0:notlist.size());
+		model.addObject("notlook_count",recordService.getCountByNotView());
 		
 		model.setViewName("/home/announ_info");
 		Announcement announ=announcementService.get(announ_id);
@@ -107,7 +102,7 @@ public class HomeController {
 		record.setAnnoun(announ);
 		userInfo.setId("123");
 		record.setUser(userInfo);
-		recordService.create(record);
+		recordService.updateStatus(announ_id);
 		model.addObject("announsInfo", announ);
 		return model;
 	}

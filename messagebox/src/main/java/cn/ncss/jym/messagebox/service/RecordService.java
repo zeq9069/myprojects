@@ -20,11 +20,41 @@ public interface RecordService {
 
 	public boolean delete(Record record);
 
-	public List<Announcement> getListByUId(int currentIndex,int pageSize);
+	/**
+	 * 更改查看状态,更改为“已经查看”
+	 * @param announ_id 
+	 * @param status
+	 * @return
+	 */
+	public boolean updateStatus(int announ_id);
 	
-	public long getCountByUser();
-
-	public List<Record> getListByAnnounId(int announ_id,int currentIndex,int pageSize);
+	/**
+	 * 获取已经查看过的公告
+	 * @return
+	 */
+	public List<Announcement> getListByView();
 	
-	public int getCountByAnnoun(int anoun_id);
+	public List<Announcement> getListByView(int currentIndex,int pageSize);
+	
+	public long getCountByView();
+	
+	
+	/**
+	 * 获取未查看过的公告
+	 * @return
+	 */
+	public List<Announcement> getListByNotView();
+	
+	public List<Announcement> getListByNotView(int currentIndex,int pageSize);
+	
+	public long getCountByNotView();
+	
+	/**
+	 * 获取接收到的公告
+	 * @return
+	 */
+	
+	public List<Announcement> getList(int currentIndex,int pageSize);
+	
+	public long getCount();
 }
