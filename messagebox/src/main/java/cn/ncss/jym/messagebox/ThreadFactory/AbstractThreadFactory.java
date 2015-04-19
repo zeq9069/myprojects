@@ -26,6 +26,10 @@ public abstract class AbstractThreadFactory {
 		return executor.submit(call);
 	}
 	
+	public  static Future<?> submit(Runnable run){
+		return executor.submit(run);
+	}
+	
 	public static  void shutdown(){
 		executor.shutdown();
 	}

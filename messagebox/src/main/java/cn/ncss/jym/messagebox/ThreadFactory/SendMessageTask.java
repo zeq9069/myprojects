@@ -33,17 +33,18 @@ import freemarker.log.Logger;
  * @date [2015年4月17日]
  *
  */
-public class SendMessageTask implements Callable<Boolean>{
+public class SendMessageTask implements Runnable{
 	
 	private static Logger logger=Logger.getLogger(SendMessageTask.class.getName());
 
-	public SendMessageTask(Announcement announ,UserInfo userInfo,List<TargetSchool> targetSchoolList,UserInfoService userInfoService,RecordService recordService) {
+	public SendMessageTask() {
 		
 	}
+
 	@Override
-	public Boolean call() throws Exception {
+	public void run() {
 		
-		return true;
 	}
+	
 	
 }
