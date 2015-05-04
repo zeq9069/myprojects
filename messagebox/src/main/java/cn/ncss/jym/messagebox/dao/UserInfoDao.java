@@ -16,6 +16,8 @@ import cn.ncss.jym.messagebox.pojo.UserInfo;
 public interface UserInfoDao {
 
 
+	public boolean insert(UserInfo userInfo);
+	
 	public UserInfo getById(String id);
 
 	public List<UserInfo> getList(int page, int pageSize);

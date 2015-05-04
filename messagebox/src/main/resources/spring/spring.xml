@@ -11,7 +11,7 @@
        default-autowire="byName" default-lazy-init="true">
 
     <context:annotation-config/>
-    <context:component-scan base-package="cn.ncss.jym.messagebox.*" />
+    <context:component-scan base-package="cn.ncss.jym.messagebox" />
 	
 	<!-- 让	@Transaction起作用 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>

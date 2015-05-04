@@ -4,19 +4,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.Props;
+import cn.ncss.jym.messagebox.akka.InsertActor;
+import cn.ncss.jym.messagebox.akka.SendMessageActor;
 import cn.ncss.jym.messagebox.pojo.Announcement;
 import cn.ncss.jym.messagebox.pojo.Record;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.AnnouncementService;
 import cn.ncss.jym.messagebox.service.RecordService;
 import cn.ncss.jym.messagebox.service.StatisticService;
+import cn.ncss.jym.messagebox.service.UserInfoService;
 
 /**
  * ***********************
@@ -38,9 +49,19 @@ public class HomeController {
 	
 	@Autowired
 	private RecordService recordService;
+	
+	@Autowired
+	private UserInfoService userInfoService;
 
 	@RequestMapping(value = { "main", "" }, method = RequestMethod.GET)
-	public ModelAndView main(ModelAndView model) {
+	public ModelAndView main(ModelAndView model,HttpSession session) {
+//		ActorSystem system=ActorSystem.create("mySystem");
+//		ActorRef ref=system.actorOf(Props.create(SendMessageActor.class,WebApplicationContextUtils.getWebApplicationContext(session.getServletContext())),"sendMessage");
+//		ref.tell("send", ref);
+		ActorSystem system=ActorSystem.create("mySystem");
+		ActorRef ref=system.actorOf(Props.create(InsertActor.class,WebApplicationContextUtils.getWebApplicationContext(session.getServletContext()),session),"insertActor");
+		ref.tell("insert", ref);
+		system.shutdown();
 		model.setViewName("/home/main");
 		model.addObject("systemInfo", statisticService.getAllInfo());
 		model.addObject("notlook_count",recordService.getCountByNotView());

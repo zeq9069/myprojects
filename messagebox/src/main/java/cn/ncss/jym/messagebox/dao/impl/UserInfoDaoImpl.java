@@ -23,7 +23,7 @@ import cn.ncss.jym.messagebox.pojo.UserInfo;
  * @author zeq [2015年3月10日]
  *
  */
-@Repository
+@Repository("userInfoDao")
 public class UserInfoDaoImpl implements UserInfoDao {
 
 	@Autowired
@@ -33,6 +33,20 @@ public class UserInfoDaoImpl implements UserInfoDao {
 		return sessionFactory.getCurrentSession();
 	}
 
+	
+	
+	public boolean insert(UserInfo userInfo){
+		Session session=sessionFactory.openSession();
+		try{
+			this.getSession().save(userInfo);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+	}
+	
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserInfo> getList(int page, int pageSize) {
@@ -46,9 +60,17 @@ public class UserInfoDaoImpl implements UserInfoDao {
 
 	@Override
 	public int getCount() {
-		Session session = this.getSession();
+//		Session session = this.getSession();
+//		Criteria crit = session.createCriteria(UserInfo.class);
+//		return crit.list().size();
+		System.out.println("----------------");
+		Session session=sessionFactory.openSession();
 		Criteria crit = session.createCriteria(UserInfo.class);
-		return crit.list().size();
+		int count=crit.list().size();
+		session.close();
+		return count;
+		
+		
 	}
 	@Override
 	public UserInfo getById(String id) {
@@ -103,4 +125,5 @@ public class UserInfoDaoImpl implements UserInfoDao {
 		cri.add(Restrictions.ne("id", userID));
 		return cri.list();
 	}
+	
 }

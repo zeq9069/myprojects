@@ -3,10 +3,11 @@ package cn.ncss.jym.messagebox.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import cn.ncss.jym.messagebox.dao.UserInfoDao;
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 import cn.ncss.jym.messagebox.service.UserInfoService;
@@ -20,11 +21,25 @@ import cn.ncss.jym.messagebox.service.UserInfoService;
  * @author zeq [2015年3月10日]
  *
  */
-@Service
+@Service("userInfoService")
 public class UserInfoServiceImpl implements UserInfoService {
 
 	@Autowired
 	private UserInfoDao userInfoDao;
+	
+	@Transactional(readOnly=false)
+	@Override
+	public boolean insert(HttpSession session) throws Exception{
+		UserInfo userInfo=new UserInfo();
+		userInfo.setId("3232323");
+		userInfo.setAreaCode("13");
+		userInfo.setDepartment("");
+		userInfo.setOrgCode("12");
+		userInfo.setOrgName("wwwwww");
+		userInfo.setRealName("wwww");
+		userInfo.setUsername("wwwww");
+		return userInfoDao.insert(userInfo);
+	}
 	
 	@Override
 	public List<String> getSchoolType() {

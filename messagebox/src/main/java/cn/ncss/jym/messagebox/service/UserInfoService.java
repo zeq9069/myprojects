@@ -2,6 +2,8 @@ package cn.ncss.jym.messagebox.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import cn.ncss.jym.messagebox.pojo.UserInfo;
 
 /**
@@ -28,6 +30,9 @@ public interface UserInfoService {
 
 	public int getCount();
 	*/
+	
+	public boolean insert(HttpSession session) throws Exception;
+
 	
 	public UserInfo getById(String id);
 	
